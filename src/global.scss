@@ -28,11 +28,15 @@
 /* Font face */
 @import "../src/theme/fonts.scss";
 
-ion-card {
-  box-shadow:
-    0 1px 1px rgba(0,0,0,0.04),
-    0 2px 2px rgba(0,0,0,0.04),
-    0 4px 4px rgba(0,0,0,0.04),
-    0 8px 8px rgba(0,0,0,0.04),
-    0 16px 16px rgba(0,0,0,0.04);
+ion-card, ion-header::after {
+  background-image: none !important;
+  box-shadow: 0 2px 0px rgba(0,0,0,0.04) !important;
+}
+
+.shadow {
+  box-shadow: 0 2px 0px rgba(0,0,0,0.04);
+}
+
+.shadow-reversed {
+  box-shadow: 0 -2px 0px rgba(0,0,0,0.04);
 }

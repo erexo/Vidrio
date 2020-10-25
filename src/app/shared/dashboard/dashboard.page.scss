@@ -1,3 +1,58 @@
-.rotate-180 {
-  transform: rotate(180deg);
+.toolbar {
+  border-radius: 15px 15px 0 0;
+  height: 15px;
+  
+  .handle {
+    align-items: center;
+    display: flex;
+    height: 15px;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  
+    .bar {
+      background-color: var(--ion-tab-bar-color, var(--ion-color-step-600, #666666));
+      border-radius: 5px;
+      height: 3px;
+      width: 48px;
+    }
+  }
+}
+
+.tabbar {
+  border: 0;
+
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+}
+
+ion-buttons {
+  height: 56px;
+  justify-content: center;
+
+  ion-button {
+    height: 56px;
+    max-width: 168px;
+    width: 100%;
+    --ripple-color: var(--ion-color-primary);
+    --background-hover-opacity: 0;
+
+    &:hover * {
+      color: var(--ion-color-primary);
+    }
+
+    ion-label {
+      color: var(--ion-tab-bar-color, var(--ion-color-step-600, #666666));
+      font-size: 12px;
+      letter-spacing: initial;
+      margin-right: 5px;
+      text-transform: none;
+    }
+
+    ion-icon {
+      color: var(--ion-tab-bar-color, var(--ion-color-step-600, #666666));
+    }
+  }
 }

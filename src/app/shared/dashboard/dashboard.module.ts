@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
+import { IonicPullupModule } from 'ionic-pullup';
+
 import { DashboardPage } from './dashboard.page';
 
 @NgModule({
@@ -12,7 +14,8 @@ import { DashboardPage } from './dashboard.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    DashboardPageRoutingModule
+    DashboardPageRoutingModule,
+    IonicPullupModule
   ],
   declarations: [DashboardPage]
 })

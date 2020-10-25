@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IonPullUpFooterState } from 'ionic-pullup';
 
 @Component({
   selector: 'app-temperature',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class TemperaturePage {
 
+  public footerState: IonPullUpFooterState;
+
   constructor() {}
+
+  ngOnInit() {
+    this.footerState = IonPullUpFooterState.Collapsed;
+  }
+
+  public toggleFooter(): void {
+    this.footerState = this.footerState === IonPullUpFooterState.Collapsed
+      ? IonPullUpFooterState.Expanded
+      : IonPullUpFooterState.Collapsed;
+  }
 
 }

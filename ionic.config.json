@@ -1,5 +1,7 @@
 {
   "name": "Vidrio",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

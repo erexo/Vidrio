@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../lights/lights.module').then(m => m.LightsPageModule)
       },
       {
+        path: 'settings',
+        loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
+      },
+      {
         path: '',
         redirectTo: '/dashboard/temperature',
         pathMatch: 'full'
