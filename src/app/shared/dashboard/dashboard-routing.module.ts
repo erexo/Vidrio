@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardPage } from './dashboard.page';
+
+import { DashboardPage } from '@shared/dashboard/dashboard.page';
 
 const routes: Routes = [
   {
@@ -9,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: 'temperature',
-        loadChildren: () => import('../temperature/temperature.module').then(m => m.TemperaturePageModule)
+        loadChildren: () => import('@shared/temperature/temperature.module').then(m => m.TemperaturePageModule)
       },
       {
         path: 'blinds',
-        loadChildren: () => import('../blinds/blinds.module').then(m => m.BlindsPageModule)
+        loadChildren: () => import('@shared/blinds/blinds.module').then(m => m.BlindsPageModule)
       },
       {
         path: 'lights',
-        loadChildren: () => import('../lights/lights.module').then(m => m.LightsPageModule)
+        loadChildren: () => import('@shared/lights/lights.module').then(m => m.LightsPageModule)
       },
       {
         path: 'settings',
-        loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
+        loadChildren: () => import('@shared/settings/settings.module').then( m => m.SettingsPageModule)
       },
       {
         path: '',

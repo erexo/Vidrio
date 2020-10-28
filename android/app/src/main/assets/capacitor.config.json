@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.vidrio.vidrio",
   "appName": "Vidrio",
   "bundledWebRuntime": false,
   "npmClient": "npm",

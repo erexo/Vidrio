@@ -1,3 +1,8 @@
+::ng-deep .toast {
+  --max-width: 500px;
+  text-align: center;
+}
+
 .grid {
   align-items: center;
   background: url('../../../assets/images/login-background.jpg') center no-repeat;
@@ -23,6 +28,10 @@
     border: 2px solid transparent;
     border-radius: .5em;
     --padding-bottom: 5px;
+
+    &:not(.item-has-focus).ion-touched.ion-invalid {
+      border: 2px solid var(--ion-color-danger);
+    }
 
     &.item-has-focus {
       border: 2px solid var(--ion-color-primary);

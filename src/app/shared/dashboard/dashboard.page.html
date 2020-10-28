@@ -5,13 +5,32 @@
     [toolbarTopMargin]="getTopMargin()"
     [minBottomVisible]="-112"
   >
-    <ion-toolbar class="toolbar shadow-reversed" (click)="toggleFooter()" #ionDragFooter>
+    <ion-fab
+      class="footer-icon"
+      horizontal="end"
+      slot="fixed"
+      vertical="top"
+    >
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+    <ion-toolbar
+      #ionDragFooter
+      (click)="toggleFooter()"
+      class="toolbar shadow-reversed"
+    >
       <div class="handle">
         <div class="bar"></div>
       </div>
     </ion-toolbar>
 
-    <ion-tab-bar class="tabbar" slot="bottom">
+    <ion-tab-bar
+      #ionDragFooter
+      class="tabbar"
+      slot="bottom"
+    >
       <ion-tab-button tab="temperature">
         <ion-icon name="thermometer-outline"></ion-icon>
         <ion-label>Temperture</ion-label>

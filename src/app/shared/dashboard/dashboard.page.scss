@@ -1,3 +1,12 @@
+::ng-deep .footer {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.footer-icon {
+  top: -70px;
+}
+
 .toolbar {
   border-radius: 15px 15px 0 0;
   height: 15px;
