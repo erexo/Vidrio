@@ -1,0 +1,26 @@
+:host {
+  min-width: 0;
+  
+  ion-card {
+    margin: 0;
+
+    &.active {
+      box-shadow: 0 0 0 2px var(--ion-color-primary) !important;
+    }
+
+    ion-card-header {
+      --background: rgb(255 255 255 / 5%);
+
+      ion-card-title {
+        overflow: hidden;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    ion-card-content {
+      padding-top: 13px;
+    }
+  }
+}

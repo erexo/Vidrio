@@ -1,0 +1,21 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+
+  ion-button {
+    --box-shadow: 0;
+    margin: 0 0 12px 0;
+
+    &.transparent {
+      --background: var(--ion-color-medium) !important;
+    }
+
+    &:last-child {
+      margin: 0;
+    }
+
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+}

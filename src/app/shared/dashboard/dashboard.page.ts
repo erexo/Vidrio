@@ -12,6 +12,7 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 export class DashboardPage implements OnInit {
 
   public footerState: IonPullUpFooterState;
+  public minBottomVisible: number;
 
   constructor(
     private platform: Platform,
@@ -19,7 +20,8 @@ export class DashboardPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.footerState = IonPullUpFooterState.Expanded;
+    this.footerState = IonPullUpFooterState.Collapsed;
+    this.minBottomVisible = -112;
   }
 
   public toggleFooter(): void {

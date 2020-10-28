@@ -28,15 +28,29 @@
 /* Font face */
 @import "../src/theme/fonts.scss";
 
-ion-card, ion-header::after {
+ion-header::after {
   background-image: none !important;
-  box-shadow: 0 2px 0px rgba(0,0,0,0.04) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.04) !important;
+}
+
+ion-card {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.04) !important;
+  transition: all .2s ease-in-out;
+}
+
+.popover-container {
+  --backdrop-opacity: 0;
+
+  .popover-content {
+    --width: auto !important;
+    padding: 1em;
+  }
 }
 
 .shadow {
-  box-shadow: 0 2px 0px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.04);
 }
 
 .shadow-reversed {
-  box-shadow: 0 -2px 0px rgba(0,0,0,0.04);
+  box-shadow: 0 -2px 0 rgba(0,0,0,0.04);
 }

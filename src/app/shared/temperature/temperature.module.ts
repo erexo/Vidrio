@@ -2,16 +2,19 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TemperaturePage } from './temperature.page';
 
 import { TemperaturePageRoutingModule } from './temperature-routing.module';
+import { TileModule } from '../tile/tile.module';
+
+import { TemperaturePage } from './temperature.page';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    TemperaturePageRoutingModule
+    TemperaturePageRoutingModule,
+    TileModule
   ],
   declarations: [TemperaturePage]
 })

@@ -1,0 +1,14 @@
+<ion-card
+  (press)="showMenu($event)"
+  [ngClass]="{ 'active': menuVisible }"
+>
+  <ion-card-header>
+    <ion-card-title text-wrap>
+      {{ title }}
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ng-content></ng-content>
+  </ion-card-content>
+</ion-card>
