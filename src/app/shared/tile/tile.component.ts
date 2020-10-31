@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
-import { TileMenuComponent } from './tile-menu/tile-menu.component';
 
 @Component({
   selector: 'app-tile',
@@ -11,30 +9,20 @@ export class TileComponent implements OnInit {
 
   @Input() title: string;
 
-  public menuVisible = false;
+  public menuHidden = true;
 
-  constructor(private popoverController: PopoverController) { }
+  constructor() { }
 
   ngOnInit() {}
 
-  public showMenu(event: any): void {
-    this.menuVisible = true;
-    this.presentPopover(event);
+  public toggleMenu(): void {
+    this.menuHidden = !this.menuHidden;
   }
 
-  public async presentPopover(event: any): Promise<void> {
-    const popover = await this.popoverController.create({
-      cssClass: 'popover-container',
-      component: TileMenuComponent,
-      event,
-      translucent: true
-    });
-
-    popover.onWillDismiss().then(_ => {
-      this.menuVisible = false;
-    });
-
-    return await popover.present();
+  public getToggleIconName(): string {
+    return this.menuHidden
+      ? 'chevron-forward-outline'
+      : 'close-outline';
   }
 
 }

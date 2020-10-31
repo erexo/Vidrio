@@ -9,6 +9,24 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 export class TemperaturePage {
 
   public footerState: IonPullUpFooterState;
+  public tiles = [
+    {
+      title: 'Livingroom',
+      value: '18°C'
+    },
+    {
+      title: 'Bathroom',
+      value: '24°C'
+    },
+    {
+      title: 'Bedroom',
+      value: '16°C'
+    },
+    {
+      title: 'Kitchen',
+      value: '15°C'
+    }
+  ];
 
   constructor() {}
 

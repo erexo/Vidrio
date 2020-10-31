@@ -41,16 +41,17 @@ export class LoginPage implements OnInit, OnDestroy {
     form.markAllAsTouched();
 
     if (form.valid) {
-      this.loginSubscription = this.userState.login(form.value)
-        .subscribe(status => {
-          if (status === 200 || status === 202) {
             this.router.navigate(['dashboard']);
-          } else {
-            this.presentToast(`Login request was denied (Status Code: ${status})`);
-          }
+      // this.loginSubscription = this.userState.login(form.value)
+      //   .subscribe(status => {
+      //     if (status === 200 || status === 202) {
+      //       this.router.navigate(['dashboard']);
+      //     } else {
+      //       this.presentToast(`Login request was denied (Status Code: ${status})`);
+      //     }
 
-          this.form.reset();
-        });
+      //     this.form.reset();
+      //   });
       return;
     }
     

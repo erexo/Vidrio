@@ -3,22 +3,16 @@
     <ion-title>
       Temperature
     </ion-title>
+    <ion-chip>
+      <ion-label>No. of sensors: {{ tiles.length }}</ion-label>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="grid">
-    <app-tile [title]="'Livingroom'">
-      <span class="temperature">10°C</span>
-    </app-tile>
-    <app-tile [title]="'Bathroom'">
-      <span class="temperature">31°C</span>
-    </app-tile>
-    <app-tile [title]="'Bedroom'">
-      <span class="temperature">23°C</span>
-    </app-tile>
-    <app-tile [title]="'Kitchen'">
-      <span class="temperature">15°C</span>
+  <div class="grid" dragula="DRAGULA_FACTS" [(dragulaModel)]="tiles">
+    <app-tile *ngFor="let tile of tiles" [title]="tile.title">
+      <span class="temperature">{{ tile.value }}</span>
     </app-tile>
   </div>
 </ion-content>

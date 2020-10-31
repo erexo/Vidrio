@@ -28,14 +28,54 @@
 /* Font face */
 @import "../src/theme/fonts.scss";
 
-ion-header::after {
-  background-image: none !important;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.04) !important;
+ion-card {
+  background: rgba(var(--ion-card-background-rgb), 0.4);
+  backdrop-filter: blur(6px);
+  border-radius: 1.5em;
+  box-shadow: -1px 1px 2px rgba(0,0,0,0.07), 
+    -2px 2px 4px rgba(0,0,0,0.07), 
+    -4px 4px 8px rgba(0,0,0,0.07), 
+    -8px 8px 16px rgba(0,0,0,0.07);
+  transition: all .2s ease-in-out;
 }
 
-ion-card {
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.04) !important;
-  transition: all .2s ease-in-out;
+ion-content {
+  --background: url('../src/assets/images/login-background.jpg') no-repeat center center / cover;
+}
+
+ion-header {
+  --min-height: 20vh;
+  text-align: center;
+
+  &::after {
+    background-image: none !important;
+  }
+
+  ion-title {
+    color: rgba(var(--ion-text-color-rgb), 0.7);
+    font-size: 2em;
+  }
+
+  ion-toolbar {
+    --background: transparent;
+    --min-height: 20vh;
+
+    ion-chip {
+      background: rgba(var(--ion-card-background-rgb), 0.2);
+      box-shadow: -1px 1px 2px rgba(0,0,0,0.07), 
+        -2px 2px 4px rgba(0,0,0,0.07), 
+        -4px 4px 8px rgba(0,0,0,0.07), 
+        -8px 8px 16px rgba(0,0,0,0.07);
+      color: rgba(var(--ion-text-color-rgb), 0.7);
+    }
+  }
+}
+
+ion-fab-button {
+  --box-shadow: -1px 1px 2px rgba(var(--ion-color-primary-rgb), 0.07), 
+    -2px 2px 4px rgba(var(--ion-color-primary-rgb), 0.07), 
+    -4px 4px 8px rgba(var(--ion-color-primary-rgb), 0.07), 
+    -8px 8px 16px rgba(var(--ion-color-primary-rgb), 0.07);
 }
 
 .popover-container {
@@ -53,4 +93,31 @@ ion-card {
 
 .shadow-reversed {
   box-shadow: 0 -2px 0 rgba(0,0,0,0.04);
+}
+
+// Dragulla styles
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+
+.gu-hide {
+  display: none !important;
+}
+
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
 }

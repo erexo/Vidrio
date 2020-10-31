@@ -1,15 +1,13 @@
 .grid {
   display: grid;
   grid-auto-rows: auto;
-  grid-gap: 1em;
+  grid-gap: .75em;
   grid-template-columns: repeat(2, 1fr);
-  padding: 1em;
+  padding: .75em;
 
   .temperature {
+    color: rgba(var(--ion-text-color-rgb), 0.7);
     font-size: 48px;
     font-weight: 700;
-    background: -webkit-linear-gradient(-45deg, #eee, var(--ion-color-primary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 }

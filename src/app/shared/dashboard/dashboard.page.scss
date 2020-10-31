@@ -7,29 +7,66 @@
   top: -70px;
 }
 
-.toolbar {
-  border-radius: 15px 15px 0 0;
-  height: 15px;
-  
-  .handle {
-    align-items: center;
-    display: flex;
+ion-toolbar {
+  --background: rgba(var(--ion-card-background-rgb), 0.4);
+  backdrop-filter: blur(6px);
+
+  &.toolbar {
+    border-radius: 15px 15px 0 0;
     height: 15px;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  
-    .bar {
-      background-color: var(--ion-tab-bar-color, var(--ion-color-step-600, #666666));
-      border-radius: 5px;
-      height: 3px;
-      width: 48px;
+    
+    .handle {
+      align-items: center;
+      display: flex;
+      height: 15px;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    
+      .bar {
+        background-color: rgba(var(--ion-text-color-rgb), 0.6);
+        border-radius: 5px;
+        height: 3px;
+        width: 48px;
+      }
     }
   }
+
+  ion-buttons {
+    height: 56px;
+    justify-content: center;
+
+    ion-button {
+      --background-hover-opacity: 0;
+      --ripple-color: var(--ion-color-primary);
+      height: 56px;
+      max-width: 168px;
+      width: 100%;
+
+      &:hover * {
+        color: var(--ion-color-primary);
+      }
+
+      ion-label {
+        color: rgba(var(--ion-text-color-rgb), 0.6);
+        font-size: 12px;
+        letter-spacing: initial;
+        margin-right: 5px;
+        text-transform: none;
+      }
+
+      ion-icon {
+        color: rgba(var(--ion-text-color-rgb), 0.6);
+      }
+    }
+  }
+  
 }
 
-.tabbar {
+ion-tab-bar {
+  --background: rgba(var(--ion-card-background-rgb), 0.4);
+  backdrop-filter: blur(6px);
   border-color: rgb(0 0 0 / 4%);
   border-style: solid;
   border-width: 0 2px;
@@ -37,33 +74,13 @@
   .rotate-180 {
     transform: rotate(180deg);
   }
-}
 
-ion-buttons {
-  height: 56px;
-  justify-content: center;
+  ion-tab-button {
+    --background: transparent;
+    color: rgba(var(--ion-text-color-rgb), 0.6);
 
-  ion-button {
-    height: 56px;
-    max-width: 168px;
-    width: 100%;
-    --ripple-color: var(--ion-color-primary);
-    --background-hover-opacity: 0;
-
-    &:hover * {
+    &.tab-selected {
       color: var(--ion-color-primary);
-    }
-
-    ion-label {
-      color: var(--ion-tab-bar-color, var(--ion-color-step-600, #666666));
-      font-size: 12px;
-      letter-spacing: initial;
-      margin-right: 5px;
-      text-transform: none;
-    }
-
-    ion-icon {
-      color: var(--ion-tab-bar-color, var(--ion-color-step-600, #666666));
     }
   }
 }
