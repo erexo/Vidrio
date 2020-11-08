@@ -9,9 +9,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
-import { DragulaModule, DragulaService } from 'ng2-dragula';
 
 import { AppComponent } from './app.component';
+import { DragulaModule, DragulaService } from 'ng2-dragula';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {

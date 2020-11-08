@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { DragulaModule, DragulaService } from 'ng2-dragula';
 import { TemperaturePageRoutingModule } from './temperature-routing.module';
+
+import { ChartModule } from '../chart/chart.module';
+import { DragulaModule } from 'ng2-dragula';
+import { TemperaturePage } from './temperature.page';
 import { TileModule } from '../tile/tile.module';
 
-import { TemperaturePage } from './temperature.page';
 
 @NgModule({
   imports: [
@@ -16,6 +18,7 @@ import { TemperaturePage } from './temperature.page';
     FormsModule,
     DragulaModule,
     TemperaturePageRoutingModule,
+    ChartModule,
     TileModule
   ],
   declarations: [TemperaturePage]

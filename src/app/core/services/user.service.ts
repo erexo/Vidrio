@@ -3,19 +3,19 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { LoginInfo } from '@core/interfaces/login/login-info.interface';
-import { LoginUser } from '@core/interfaces/login/login-user.interface';
+import { ILoginInfo } from '@core/interfaces/login/login-info.interface';
+import { ILoginUser } from '@core/interfaces/login/login-user.interface';
+
+import { apiUrl } from '@core/config/config.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private readonly apiUrl: string = 'http://149.202.86.49:4235';
-
   constructor(private httpClient: HttpClient) { }
 
-  public login(user: LoginUser): Observable<HttpResponse<LoginInfo>> {
-    return <Observable<HttpResponse<LoginInfo>>>
-      this.httpClient.post(`${this.apiUrl}/login`, user, { observe: 'response' });
+  public login(user: ILoginUser): Observable<HttpResponse<ILoginInfo>> {
+    return <Observable<HttpResponse<ILoginInfo>>>
+      this.httpClient.post(`${apiUrl}/login`, user, { observe: 'response' });
   }
 }

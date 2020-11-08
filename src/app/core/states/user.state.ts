@@ -4,22 +4,24 @@ import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
-import { Computed, DataAction, StateRepository } from '@ngxs-labs/data/decorators';
+import { Computed, DataAction, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
 
 import { UserService } from '@core/services/user.service';
 
-import { LoginUser } from '@core/interfaces/login/login-user.interface';
+import { ILoginUser } from '@core/interfaces/login/login-user.interface';
 import { User } from '@core/models/user/user.model';
 import { UserRole } from '@core/enums/user/user-role.enum';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { LoginInfo } from '../interfaces/login/login-info.interface';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ILoginInfo } from '../interfaces/login/login-info.interface';
 import { Observable, of } from 'rxjs';
+import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
 
 export interface UserModel {
   accessToken: string;
   user: User;
 }
 
+@Persistence()
 @StateRepository()
 @State({
   name: 'user',
@@ -36,22 +38,34 @@ export class UserState extends NgxsDataRepository<UserModel> {
   }
 
   @Computed()
-  public get userRole(): UserRole {
-    return this.snapshot.user.role;
+  public get userAccessHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.snapshot.accessToken}`
+    });
   }
 
-  @DataAction()
-  login(user: LoginUser): Observable<number> {
+  @Computed()
+  public get userRole(): UserRole {
+    return this.snapshot.user.role;
+  } 
+
+  login(user: ILoginUser): Observable<HTTPStatusCode> {
     return this.userService.login(user).pipe(
-      filter((res: HttpResponse<LoginInfo>) => !!res.body),
-      tap((res: HttpResponse<LoginInfo>) => {
-        this.ctx.setState({
+      filter((res: HttpResponse<ILoginInfo>) => !!res.body),
+      tap((res: HttpResponse<ILoginInfo>) => {
+        this.patchState({
           accessToken: res.body.accessToken,
           user: new User(user.password, res.body.role, user.username)
         })
       }),
-      map((res: HttpResponse<LoginInfo>) => res.status),
+      map((res: HttpResponse<ILoginInfo>) => res.status),
       catchError((err: HttpErrorResponse) => of(err.status))
     );
+  }
+
+  @DataAction()
+  logout(): void {
+    this.reset();
   }
 }

@@ -1,6 +1,6 @@
 import { UserRole } from '@core/enums/user/user-role.enum';
 
-export interface LoginInfo {
+export interface ILoginInfo {
   accessToken: string;
   role: UserRole;
 } 

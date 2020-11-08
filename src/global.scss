@@ -37,6 +37,13 @@ ion-card {
     -4px 4px 8px rgba(0,0,0,0.07), 
     -8px 8px 16px rgba(0,0,0,0.07);
   transition: all .2s ease-in-out;
+
+  ion-card-title {
+    color: rgba(var(--ion-color-dark-rgb), 0.6);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 ion-content {
@@ -78,13 +85,15 @@ ion-fab-button {
     -8px 8px 16px rgba(var(--ion-color-primary-rgb), 0.07);
 }
 
-.popover-container {
-  --backdrop-opacity: 0;
-
-  .popover-content {
-    --width: auto !important;
-    padding: 1em;
-  }
+.popover-container .popover-content {
+  background: var(--ion-card-background);
+  border-radius: 1.5em;
+  transition: all .2s ease-in-out;
+  --max-height: 500px;
+  height: 90vw;
+  --max-width: 500px;
+  width: 90vw;
+  padding: 15px;
 }
 
 .shadow {
@@ -107,13 +116,6 @@ ion-fab-button {
 
 .gu-hide {
   display: none !important;
-}
-
-.gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
 }
 
 .gu-transit {
