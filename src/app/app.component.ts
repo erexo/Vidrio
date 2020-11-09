@@ -1,6 +1,11 @@
 import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
+import { Plugins } from '@capacitor/core';
+// import 'capacitor-dark-mode';
+
+const { DarkMode } = Plugins;
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -12,24 +17,24 @@ export class AppComponent {
     private platform: Platform,
     private renderer: Renderer2
   ) {
-    // if (this.platform.is("android") || this.platform.is("ios")) {
-    //   this.initializeThemeListener();
-    // }
+    if (this.platform.is("android") || this.platform.is("ios")) {
+      this.initializeThemeListener();
+    }
   }
 
-  // private async initializeThemeListener(): Promise<void> {
-  //   const darkMode: { isDarkModeOn: boolean } = await DarkMode.isDarkModeOn();
-  //   this.setAppTheme(darkMode.isDarkModeOn);
+  private async initializeThemeListener(): Promise<void> {
+    const darkMode: { isDarkModeOn: boolean } = await DarkMode.isDarkModeOn();
+    this.setAppTheme(darkMode.isDarkModeOn);
     
-  //   DarkMode.addListener("darkModeStateChanged", state => {
-  //     this.setAppTheme(state.isDarkModeOn);
-  //     this.changeDetectorRef.detectChanges();
-  //   });
-  // }
+    DarkMode.addListener("darkModeStateChanged", state => {
+      this.setAppTheme(state.isDarkModeOn);
+      this.changeDetectorRef.detectChanges();
+    });
+  }
 
-  // private setAppTheme(darkTheme: boolean): void {
-  //   darkTheme
-  //     ? this.renderer.addClass(document.body, 'dark')
-  //     : this.renderer.removeClass(document.body, 'dark');
-  // }
+  private setAppTheme(darkTheme: boolean): void {
+    darkTheme
+      ? this.renderer.addClass(document.body, 'dark')
+      : this.renderer.removeClass(document.body, 'dark');
+  }
 }

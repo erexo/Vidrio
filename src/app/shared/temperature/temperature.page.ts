@@ -136,6 +136,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
 
   private async presentAlertPrompt(id?: number): Promise<void> {
     const alert = await this.alertController.create({
+      cssClass: 'alert-container',
       header: id === undefined ? 'Create a thermometer' : 'Edit a thermometer',
       inputs: [
         {

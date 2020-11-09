@@ -57,12 +57,7 @@ export class DataState extends NgxsDataRepository<DataModel> {
 
   public createThermometer(info: ThermometerInfo): Observable<APIResponse<void>> {
     return this.temperatureService.createThermometer(info).pipe(
-      tap(_ => {
-        this.fetchThermometers();
-        this.patchState({
-          itemMenu: null
-        });
-      }),
+      tap(_ => this.fetchThermometers()),
       map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
       catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
     );
