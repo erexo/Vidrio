@@ -96,7 +96,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
       )
       .subscribe(res => {
         this.selectedThermometerID = null;
-        this.presentPopover(res.body);
+        this.presentPopover(res.body, `${thermometer.name} temperature`);
         this.changeDetectorRef.markForCheck();
       });
 
@@ -142,6 +142,8 @@ export class TemperaturePage implements OnInit, OnDestroy {
   }
 
   private async presentAlertPrompt(id?: number): Promise<void> {
+    const thermometer: Thermometer
+      = this.thermometers.find(thermometer => thermometer.id === id);
     const alert = await this.alertController.create({
       cssClass: 'alert-container',
       header: id === undefined ? 'Create a thermometer' : 'Edit a thermometer',
@@ -149,12 +151,14 @@ export class TemperaturePage implements OnInit, OnDestroy {
         {
           name: 'name',
           type: 'text',
-          placeholder: 'Name'
+          placeholder: 'Name',
+          value: thermometer?.name
         },
         {
           name: 'sensor',
           type: 'text',
-          placeholder: 'Sensor'
+          placeholder: 'Sensor',
+          value: thermometer?.sensor
         }
       ],
       buttons: [
@@ -178,10 +182,10 @@ export class TemperaturePage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  private async presentPopover(data: IThermometerData[]): Promise<void> {
+  private async presentPopover(data: IThermometerData[], title: string): Promise<void> {
     const popover = await this.popoverController.create({
       component: ChartComponent,
-      componentProps: { label: 'Temperature Chart', data },
+      componentProps: { label: title, data },
       cssClass: 'popover-container',
       translucent: true
     });
