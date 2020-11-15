@@ -84,12 +84,12 @@ export class TemperaturePage implements OnInit, OnDestroy {
       return;
     }
 
-    const startDate = Math.round((Date.now() - 86400000) / 1000);
-    const endDate = Math.round(Date.now() / 1000);
+    const startDate: number = Math.round((new Date().setDate(new Date().getDate() - 1)) / 1000);
+    const endDate: number = Math.round(Date.now() / 1000);
 
     this.selectedThermometerID = id;
 
-    const thermometerData = new ThermometerData(id, startDate, endDate);
+    const thermometerData: ThermometerData = new ThermometerData(id, startDate, endDate);
     const thermometerDataSubscription: Subscription = this.dataState.getThermometersData(thermometerData)
       .pipe(
         filter(res => this.responseFilter(res.status, ResponseType.Read, 'Thermometers data', true))
@@ -131,7 +131,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
   }
 
   private async presentToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({
+    const toast: HTMLIonToastElement = await this.toastController.create({
       color: 'light',
       cssClass: 'toast',
       duration: 2000,
@@ -144,7 +144,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
   private async presentAlertPrompt(id?: number): Promise<void> {
     const thermometer: Thermometer
       = this.thermometers.find(thermometer => thermometer.id === id);
-    const alert = await this.alertController.create({
+    const alert: HTMLIonAlertElement = await this.alertController.create({
       cssClass: 'alert-container',
       header: id === undefined ? 'Create a thermometer' : 'Edit a thermometer',
       inputs: [
@@ -183,7 +183,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
   }
 
   private async presentPopover(data: IThermometerData[], title: string): Promise<void> {
-    const popover = await this.popoverController.create({
+    const popover: HTMLIonPopoverElement = await this.popoverController.create({
       component: ChartComponent,
       componentProps: { label: title, data },
       cssClass: 'popover-container',
@@ -227,7 +227,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
       .find(thermometer => thermometer.id === id);
     const updatedThermometer: Thermometer = { ...editedThermometer, ...data }
 
-    const updateThermometerSubscription = this.dataState.updateThermometer(updatedThermometer)
+    const updateThermometerSubscription: Subscription = this.dataState.updateThermometer(updatedThermometer)
       .pipe(
         filter(res => this.responseFilter(res.status, ResponseType.Update, 'Thermometer'))
       )

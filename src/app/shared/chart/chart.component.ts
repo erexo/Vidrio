@@ -45,7 +45,7 @@ export class ChartComponent implements ViewDidEnter {
   }
 
   private createChart(): void {
-    const data: any[] = this.navParams.get('data').slice(0, 100);
+    const data: any[] = this.navParams.get('data');
     const label: string = this.navParams.get('label');
 
     const dataKeys: string[] = Object.keys(data[0]);
