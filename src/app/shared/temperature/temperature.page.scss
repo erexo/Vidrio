@@ -2,14 +2,22 @@
   display: grid;
   grid-auto-rows: auto;
   grid-gap: .75em;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: .75em;
 
   .temperature {
-    color: rgba(var(--ion-text-color-rgb), 0.7);
-    font-size: 54px;
     font-weight: 700;
     line-height: 54px;
+
+    &--data {
+      color: rgba(var(--ion-text-color-rgb), 0.7);
+      font-size: 4em;
+    }
+
+    &--no-data {
+      color: rgba(var(--ion-text-color-rgb), 0.5);
+      font-size: 2em;
+    }
 
     sup {
       font-size: 40%;

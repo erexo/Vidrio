@@ -38,9 +38,19 @@
       (itemDeleted)="onItemDelete(thermometer.id)"
       [title]="thermometer.name"
     >
-      <span class="temperature">
+      <span
+        *ngIf="thermometer.celsius !== null"
+        class="temperature temperature--data"
+      >
         {{ thermometer.celsius }}
         <sup>°C</sup>
+      </span>
+
+      <span
+        *ngIf="thermometer.celsius === null"
+        class="temperature temperature--no-data"
+      >
+        No data
       </span>
 
       <div

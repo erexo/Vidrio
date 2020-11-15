@@ -76,6 +76,14 @@ export class TemperaturePage implements OnInit, OnDestroy {
   }
 
   public onItemDoubleTapped(id: number): void {
+    const thermometer: Thermometer
+      = this.thermometers.find(thermometer => thermometer.id === id);
+
+    if (thermometer.celsius === null) {
+      this.selectedThermometerID = null;
+      return;
+    }
+
     const startDate = Math.round((Date.now() - 86400000) / 1000);
     const endDate = Math.round(Date.now() / 1000);
 
@@ -110,13 +118,12 @@ export class TemperaturePage implements OnInit, OnDestroy {
   }
 
   public onTileMove(orderedThermometers: Thermometer[]): void {
-    const orderedThermometerIDs : number[] = orderedThermometers.map(thermometer => thermometer.id);
-
+    const orderedThermometerIDs: number[] = orderedThermometers.map(thermometer => thermometer.id);
     const changeOrderSubscription: Subscription = this.dataState.changeThermometersOrder(orderedThermometerIDs)
       .pipe(
         filter(res => this.responseFilter(res.status, ResponseType.Update, 'Order', true))
       )
-      .subscribe();
+      .subscribe(_ => this.fetchData());
 
     this.dataSubscription.add(changeOrderSubscription);
     this.tileMove = false;
@@ -162,6 +169,10 @@ export class TemperaturePage implements OnInit, OnDestroy {
             : this.updateThermometer(data, id)
         }
       ]
+    });
+
+    alert.onDidDismiss().then(_ => {
+      this.dataState.itemMenuOpened(null);
     });
 
     await alert.present();
