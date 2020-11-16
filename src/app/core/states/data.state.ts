@@ -14,12 +14,10 @@ import { APIResponse } from '../models/http/api-response.model';
 import { ThermometerInfo } from '../models/temperature/thermometer-info.model';
 import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
 import { patch, removeItem, updateItem } from '@ngxs/store/operators';
-import { ThermometerData } from '../models/temperature/thermometer-data.model';
-import { IThermometerData } from '../interfaces/temperature/thermometer-data.interface';
 
 export interface DataModel {
   thermometers: Thermometer[];
-  itemMenu: string; 
+  itemMenu: string;
 }
 
 @StateRepository()
@@ -99,17 +97,9 @@ export class DataState extends NgxsDataRepository<DataModel> {
   }
 
   @DataAction()
-  getThermometersData(data: ThermometerData): Observable<APIResponse<IThermometerData[]>> {
-    return this.temperatureService.getThermometersData(data).pipe(
-      map((res: HttpResponse<IThermometerData[]>) => new APIResponse(res.body, res.status)),
-      catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
-    );
-  }
-
-  @DataAction()
-  itemMenuOpened(pageName: string): void {
+  itemMenuOpened(itemMenu: string): void {
     this.ctx.patchState({
-      itemMenu: pageName
+      itemMenu
     });
   }
 }

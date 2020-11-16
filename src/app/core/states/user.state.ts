@@ -50,7 +50,7 @@ export class UserState extends NgxsDataRepository<UserModel> {
     return this.snapshot.user.role;
   } 
 
-  login(user: ILoginUser): Observable<HTTPStatusCode> {
+  public login(user: ILoginUser): Observable<HTTPStatusCode> {
     return this.userService.login(user).pipe(
       filter((res: HttpResponse<ILoginInfo>) => !!res.body),
       tap((res: HttpResponse<ILoginInfo>) => {

@@ -10,14 +10,13 @@ import { filter, map } from 'rxjs/operators';
 
 import { DataState } from '@app/core/states/data.state';
 
-import { HTTPStatusCode } from '@app/core/enums/http/http-status-code.enum';
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 
 import { Thermometer } from '@app/core/models/temperature/thermometer.model';
-import { ThermometerData } from '@app/core/models/temperature/thermometer-data.model';
 import { ThermometerInfo } from '@app/core/models/temperature/thermometer-info.model';
-import { IThermometerData } from '@app/core/interfaces/temperature/thermometer-data.interface';
 import { ChartComponent } from '../chart/chart.component';
+import { ChartState } from '@app/core/states/chart.state';
+import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-temperature',
@@ -29,7 +28,6 @@ export class TemperaturePage implements OnInit, OnDestroy {
   public readonly dragModel = 'THERMOMETERS';
 
   public footerState: IonPullUpFooterState;
-  public selectedThermometerID: number;
   public thermometers: Thermometer[] = [];
   public tileMove = false;
 
@@ -38,6 +36,7 @@ export class TemperaturePage implements OnInit, OnDestroy {
   constructor(
     private alertController: AlertController,
     private changeDetectorRef: ChangeDetectorRef,
+    private chartState: ChartState,
     private dataState: DataState,
     private dragulaService: DragulaService,
     private popoverController: PopoverController,
@@ -55,10 +54,11 @@ export class TemperaturePage implements OnInit, OnDestroy {
     this.dataSubscription.unsubscribe();
   }
 
-  public fetchData(errorOnly = false, event?: any): void {
+  public async fetchData(errorOnly = false, event?: any): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const thermometerSubscription: Subscription = this.dataState.fetchThermometers()
       .pipe(
-        filter(res => this.responseFilter(res.status, ResponseType.Read, 'Thermometers', errorOnly))
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Read, 'Thermometers', errorOnly))
       )
       .subscribe(thermometers => {
         this.thermometers = thermometers.body;
@@ -75,30 +75,23 @@ export class TemperaturePage implements OnInit, OnDestroy {
       : IonPullUpFooterState.Collapsed;
   }
 
-  public onItemDoubleTapped(id: number): void {
+  public async fetchThermometersData(id: number): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const thermometer: Thermometer
       = this.thermometers.find(thermometer => thermometer.id === id);
 
-    if (thermometer.celsius === null) {
-      this.selectedThermometerID = null;
+    if (thermometer?.celsius === null || thermometer?.celsius === undefined) {
+      this.chartState.resetSelectedID();
       return;
     }
 
-    const startDate: number = Math.round((new Date().setDate(new Date().getDate() - 1)) / 1000);
-    const endDate: number = Math.round(Date.now() / 1000);
+    this.chartState.setSelectedID(id);
 
-    this.selectedThermometerID = id;
-
-    const thermometerData: ThermometerData = new ThermometerData(id, startDate, endDate);
-    const thermometerDataSubscription: Subscription = this.dataState.getThermometersData(thermometerData)
+    const thermometerDataSubscription: Subscription = this.chartState.fetchThermometersData(id)
       .pipe(
-        filter(res => this.responseFilter(res.status, ResponseType.Read, 'Thermometers data', true))
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Read, 'Thermometers data', true))
       )
-      .subscribe(res => {
-        this.selectedThermometerID = null;
-        this.presentPopover(res.body, `${thermometer.name} temperature`);
-        this.changeDetectorRef.markForCheck();
-      });
+      .subscribe(res => this.presentPopover(`${thermometer.name} temperature`, res.body));
 
     this.dataSubscription.add(thermometerDataSubscription);
   }
@@ -107,38 +100,31 @@ export class TemperaturePage implements OnInit, OnDestroy {
     this.presentAlertPrompt(id);
   }
 
-  public onItemDelete(id: number): void {
+  public async onItemDelete(id: number): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const deleteThermometerSubscription: Subscription = this.dataState.deleteThermometer(id)
       .pipe(
-        filter(res => this.responseFilter(res.status, ResponseType.Delete, 'Thermometer'))
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Delete, 'Thermometer'))
       )
       .subscribe(_ => this.fetchData());
 
     this.dataSubscription.add(deleteThermometerSubscription);
   }
 
-  public onTileMove(orderedThermometers: Thermometer[]): void {
+  public async onTileMove(orderedThermometers: Thermometer[]): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const orderedThermometerIDs: number[] = orderedThermometers.map(thermometer => thermometer.id);
     const changeOrderSubscription: Subscription = this.dataState.changeThermometersOrder(orderedThermometerIDs)
       .pipe(
-        filter(res => this.responseFilter(res.status, ResponseType.Update, 'Order', true))
+        filter(res => {
+          return responseFilter(toastInstance, res.status, ResponseType.Update, 'Order', true);
+        })
       )
       .subscribe(_ => this.fetchData());
 
     this.dataSubscription.add(changeOrderSubscription);
     this.tileMove = false;
     this.changeDetectorRef.detectChanges();
-  }
-
-  private async presentToast(message: string): Promise<void> {
-    const toast: HTMLIonToastElement = await this.toastController.create({
-      color: 'light',
-      cssClass: 'toast',
-      duration: 2000,
-      message,
-      translucent: true
-    });
-    toast.present();
   }
 
   private async presentAlertPrompt(id?: number): Promise<void> {
@@ -182,12 +168,16 @@ export class TemperaturePage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  private async presentPopover(data: IThermometerData[], title: string): Promise<void> {
+  private async presentPopover(title: string, data: any[]): Promise<void> {
     const popover: HTMLIonPopoverElement = await this.popoverController.create({
       component: ChartComponent,
       componentProps: { label: title, data },
       cssClass: 'popover-container',
       translucent: true
+    });
+
+    popover.onDidDismiss().then(_ => {
+      this.chartState.reset();
     });
 
     await popover.present();
@@ -212,38 +202,30 @@ export class TemperaturePage implements OnInit, OnDestroy {
     this.dataSubscription.add(tileDragSubscription);
   }
 
-  private createThermometer(data: ThermometerInfo): void {
+  private async createThermometer(data: ThermometerInfo): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const createThermometerSubscription: Subscription = this.dataState.createThermometer(data)
       .pipe(
-        filter(res => this.responseFilter(res.status, ResponseType.Create, 'Thermometer'))
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Create, 'Thermometer'))
       )
       .subscribe(_ => this.fetchData());
 
     this.dataSubscription.add(createThermometerSubscription);
   }
 
-  private updateThermometer(data: ThermometerInfo, id: number): void {
+  private async updateThermometer(data: ThermometerInfo, id: number): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const editedThermometer: Thermometer = this.thermometers
       .find(thermometer => thermometer.id === id);
     const updatedThermometer: Thermometer = { ...editedThermometer, ...data }
 
     const updateThermometerSubscription: Subscription = this.dataState.updateThermometer(updatedThermometer)
       .pipe(
-        filter(res => this.responseFilter(res.status, ResponseType.Update, 'Thermometer'))
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Update, 'Thermometer'))
       )
       .subscribe(_ => this.fetchData());
 
     this.dataSubscription.add(updateThermometerSubscription);
-  }
-
-  private responseFilter(status: HTTPStatusCode, responseType: ResponseType, dataType: string, errorOnly = false): boolean {
-    if (status === HTTPStatusCode.OK || status === HTTPStatusCode.Accepted) {
-      !errorOnly && this.presentToast(`${dataType} ${responseType}`);
-      return true;
-    }
-    
-    this.presentToast(`${dataType} could not be ${responseType} (Status Code: ${status})`);
-    return false;
   }
 
 }

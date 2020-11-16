@@ -33,7 +33,7 @@
   >
     <app-tile
       *ngFor="let thermometer of thermometers"
-      (itemDoubleTapped)="onItemDoubleTapped(thermometer.id)"
+      (itemDoubleTapped)="fetchThermometersData(thermometer.id)"
       (itemEdited)="onItemEdit(thermometer.id)"
       (itemDeleted)="onItemDelete(thermometer.id)"
       [title]="thermometer.name"
@@ -54,7 +54,7 @@
       </span>
 
       <div
-        *ngIf="selectedThermometerID === thermometer.id"
+        *ngIf="chartState.selectedID === thermometer.id"
         class="loader"
       >
         <ion-progress-bar type="indeterminate"></ion-progress-bar>

@@ -48,7 +48,7 @@ export class TemperatureService {
       });
   }
 
-  public getThermometersData(data: ThermometerData): Observable<HttpResponse<IThermometerData[]>> {
+  public fetchThermometersData(data: ThermometerData): Observable<HttpResponse<IThermometerData[]>> {
     return <Observable<HttpResponse<IThermometerData[]>>>
       this.httpClient.post(`${apiUrl}/thermal/data`, data, {
         headers: this.userState.userAccessHeaders,

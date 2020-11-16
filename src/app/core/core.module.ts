@@ -6,6 +6,7 @@ import { NGXS_DATA_STORAGE_PLUGIN } from '@ngxs-labs/data/storage';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 
+import { ChartState } from './states/chart.state';
 import { DataState } from './states/data.state';
 import { UserState } from './states/user.state';
 
@@ -14,6 +15,7 @@ import { environment } from 'src/environments/environment';
 @NgModule({
   imports: [
     NgxsModule.forRoot([
+      ChartState,
       DataState,
       UserState
     ], { developmentMode: !environment.production }),
