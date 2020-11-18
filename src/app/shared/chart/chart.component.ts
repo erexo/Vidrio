@@ -1,13 +1,18 @@
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { flatten } from '@angular/compiler';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { ChartState } from '@app/core/states/chart.state';
 import { NavParams, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
+import { last } from 'lodash-es';
+
 import { Chart } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import 'chartjs-adapter-date-fns';
+import { fromUnixTime, format } from 'date-fns';
 
 @Component({
   selector: 'app-chart',
@@ -19,11 +24,14 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
 
   @ViewChild('chartContainer') chartContainer: ElementRef;
 
+  public timestamp: string;
+
   private chart: any;
   private chartContainerPopover: any;
   private dataSubscription: Subscription = new Subscription();
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private chartState: ChartState,
     private elementRef: ElementRef,
@@ -43,25 +51,26 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
     this.dataSubscription.unsubscribe();
   }
 
-  public async onChartSwipe(): Promise<void> {
+  public loadPreviousData() {
+    if (this.chartState.dateOffset > 1) {
+      this.chartState.decrementChartDateOffset();
+      this.updateData(this.chartState.sliceOfData);
+    }
+  }
+
+  public async loadData(): Promise<void> {
     this.chartState.incrementChartDateOffset();
 
-    const pageName: string[] = this.router.url.split('/');
+    const pageName: string = last(this.router.url.split('/'));
     const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
-    const chartDataSubscription: Subscription = this.chartState.fetchData(pageName[pageName.length - 1]).pipe(
+    const dataSubscription: Subscription = this.chartState.fetchData(pageName).pipe(
       filter(res =>
         responseFilter(toastInstance, res.status, ResponseType.Read, 'Thermometers data', true) && this.chart),
       map(res => res.body)
     )
-    .subscribe(data => {
-      const dataKeys: string[] = Object.keys(data[0]);
-      const labels: number[] = data.map(item => item[dataKeys[1]]);
-      const values: any[] = data.map(item => item[dataKeys[0]]);
+    .subscribe(data => this.updateData(data));
 
-      this.prependData(this.chart, labels, values);
-    });
-
-    this.dataSubscription.add(chartDataSubscription);
+    this.dataSubscription.add(dataSubscription);
   }
 
   private setChartContainerWidth(): void {
@@ -88,6 +97,9 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
     const labels: number[] = data.map(item => item[dataKeys[1]]);
     const values: any[] = data.map(item => item[dataKeys[0]]);
 
+    this.timestamp = format(fromUnixTime(data[0].timestamp), 'dd.MM');
+    this.changeDetectorRef.markForCheck();
+
     this.chart = new Chart(this.chartContainer.nativeElement, {
       type: 'line',
       data: {
@@ -104,10 +116,12 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
           xAxes: [{
             type: 'time',
             time: {
+              parser: value => fromUnixTime(value),
+              unit: 'hour',
               displayFormats: {
-                second: 'D h:mm'
+                hour: 'HH:mm'
               }
-            }
+            },
           }],
           yAxes: [{
             ticks: {
@@ -119,10 +133,16 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
     });
   }
 
-  private prependData(chart: any, label: any[], data: any[]): void {
-    chart.data.labels.unshift(...label);
-    chart.data.datasets.forEach(dataset => dataset.data.unshift(...data));
-    chart.update();
+  private updateData(data: any[]): void {
+    const dataKeys: string[] = Object.keys(data[0]);
+    const labels: number[] = data.map(item => item[dataKeys[1]]);
+    const values: any[] = data.map(item => item[dataKeys[0]]);
+
+    this.timestamp = format(fromUnixTime(data[0].timestamp), 'dd.MM');
+    this.chart.data.labels = labels;
+    this.chart.data.datasets[0].data = values;
+    this.chart.update();
+    this.changeDetectorRef.markForCheck();
   }
 
 }

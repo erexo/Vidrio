@@ -1,7 +1,10 @@
 <canvas
   #chartContainer
-  (swiperight)="onChartSwipe()"
+  (swipeleft)="loadPreviousData()"
+  (swiperight)="loadData()"
   aria-label="Chart container"
   role="img"
 >
 </canvas>
+
+<ion-badge>{{ timestamp }}</ion-badge>

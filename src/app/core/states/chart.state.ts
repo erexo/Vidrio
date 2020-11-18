@@ -12,9 +12,9 @@ import { TemperatureService } from '../services/temperature.service';
 import { APIResponse } from '../models/http/api-response.model';
 import { ThermometerData } from '../models/temperature/thermometer-data.model';
 import { IThermometerData } from '../interfaces/temperature/thermometer-data.interface';
-import { patch, append, updateItem, insertItem } from '@ngxs/store/operators';
+import { patch, append, insertItem } from '@ngxs/store/operators';
 import { getUnixTime, sub } from 'date-fns';
-import { DataState } from './data.state';
+import { last } from 'lodash-es';
 
 export interface ChartModel {
   dateOffset: number;
@@ -27,7 +27,8 @@ export interface ChartModel {
   name: 'chart',
   defaults: {
     dateOffset: 1,
-    data: []
+    data: [],
+    selectedID: null
   }
 })
 
@@ -35,6 +36,21 @@ export interface ChartModel {
 export class ChartState extends NgxsDataRepository<ChartModel> {
   constructor(private temperatureService: TemperatureService) {
     super();
+  }
+
+  @Computed()
+  public get data(): any[][] {
+    return this.snapshot.data;
+  }
+
+  @Computed()
+  public get sliceOfData(): any[] {
+    return this.snapshot.data[this.dateOffset - 1];
+  }
+
+  @Computed()
+  public get dataLength(): number {
+    return this.snapshot.data.length;
   }
 
   @Computed()
@@ -57,7 +73,7 @@ export class ChartState extends NgxsDataRepository<ChartModel> {
       tap((res: HttpResponse<IThermometerData[]>) => {
         this.setState(
           patch({
-            data: insertItem(res.body, 0)
+            data: insertItem(res.body, this.dateOffset)
           })
         );
       }),
@@ -76,6 +92,13 @@ export class ChartState extends NgxsDataRepository<ChartModel> {
     }
 
     return fetchedData$;
+  }
+
+  @DataAction()
+  decrementChartDateOffset(): void {
+    this.ctx.patchState({
+      dateOffset: this.dateOffset - 1
+    });
   }
 
   @DataAction()

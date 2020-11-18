@@ -80,11 +80,6 @@ export class TemperaturePage implements OnInit, OnDestroy {
     const thermometer: Thermometer
       = this.thermometers.find(thermometer => thermometer.id === id);
 
-    if (thermometer?.celsius === null || thermometer?.celsius === undefined) {
-      this.chartState.resetSelectedID();
-      return;
-    }
-
     this.chartState.setSelectedID(id);
 
     const thermometerDataSubscription: Subscription = this.chartState.fetchThermometersData(id)
