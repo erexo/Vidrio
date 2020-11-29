@@ -4,7 +4,7 @@
   <ion-card-header>
     <ng-container *ngIf="menuHidden else menuContainer">
       <ion-card-title text-wrap>
-        {{ title }}
+        {{ sensor.name }}
       </ion-card-title>
     </ng-container>
 
@@ -28,6 +28,12 @@
   </ion-card-header>
 
   <ion-card-content>
-    <ng-content></ng-content>
+    <div [ngSwitch]="sensorType">
+      <app-tile-temperature
+        *ngSwitchCase="SensorType.Temperature"
+        [thermometer]="sensor"
+      >
+      </app-tile-temperature>
+    </div>
   </ion-card-content>
 </ion-card>

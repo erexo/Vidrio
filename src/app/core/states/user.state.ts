@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 
+import { Observable, of } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
+import { Computed, DataAction, Payload, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
-import { Computed, DataAction, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
 
 import { UserService } from '@core/services/user.service';
 
-import { ILoginUser } from '@core/interfaces/login/login-user.interface';
-import { User } from '@core/models/user/user.model';
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 import { UserRole } from '@core/enums/user/user-role.enum';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ILoginInfo } from '../interfaces/login/login-info.interface';
-import { Observable, of } from 'rxjs';
-import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
+
+import { ILoginInfo } from '@core/interfaces/login/login-info.interface';
+import { ILoginUser } from '@core/interfaces/login/login-user.interface';
+
+import { User } from '@core/models/user/user.model';
+import { LocalState } from './local.state';
 
 export interface UserModel {
-  accessToken: string;
   user: User;
 }
 
@@ -26,23 +28,17 @@ export interface UserModel {
 @State({
   name: 'user',
   defaults: {
-    accessToken: null,
     user: null
   }
 })
 
 @Injectable()
 export class UserState extends NgxsDataRepository<UserModel> {
-  constructor(private userService: UserService) {
+  constructor(
+    private localState: LocalState,
+    private userService: UserService
+  ) {
     super();
-  }
-
-  @Computed()
-  public get userAccessHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.snapshot.accessToken}`
-    });
   }
 
   @Computed()
@@ -54,8 +50,9 @@ export class UserState extends NgxsDataRepository<UserModel> {
     return this.userService.login(user).pipe(
       filter((res: HttpResponse<ILoginInfo>) => !!res.body),
       tap((res: HttpResponse<ILoginInfo>) => {
+        this.localState.setAccessToken(res.body.accessToken);
+        
         this.patchState({
-          accessToken: res.body.accessToken,
           user: new User(user.password, res.body.role, user.username)
         })
       }),

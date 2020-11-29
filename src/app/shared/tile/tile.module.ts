@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TileComponent } from './tile.component';
+import { TileTemperatureComponent } from './tile-temperature/tile-temperature.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { TileComponent } from './tile.component';
     CommonModule
   ],
   declarations: [
-    TileComponent
+    TileComponent,
+    TileTemperatureComponent
   ],
   exports: [
     TileComponent

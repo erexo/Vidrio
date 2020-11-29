@@ -28,6 +28,18 @@
 /* Font face */
 @import "../src/theme/fonts.scss";
 
+input {
+  &:-webkit-autofill {
+    transition: background-color 5000s;
+  }
+
+  &:-webkit-autofill::first-line {
+    font-family: "Source Sans Pro";
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
 ion-card {
   background: rgba(var(--ion-card-background-rgb), 0.4);
   backdrop-filter: blur(6px);
@@ -74,6 +86,7 @@ ion-header {
         -4px 4px 8px rgba(0,0,0,0.07), 
         -8px 8px 16px rgba(0,0,0,0.07);
       color: rgba(var(--ion-text-color-rgb), 0.7);
+      user-select: none;
     }
   }
 }

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
-import { DataState } from '@app/core/states/data.state';
 import { UserState } from '@app/core/states/user.state';
 
 import { IonPullUpFooterState } from 'ionic-pullup';
+import { SensorType } from '@app/core/enums/data/sensor-type.enum';
+import { LocalState } from '@app/core/states/local.state';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class DashboardPage implements OnInit {
   public minBottomVisible: number;
 
   constructor(
-    private dataState: DataState,
+    private localState: LocalState,
     private platform: Platform,
     private router: Router,
     private userState: UserState
@@ -31,7 +32,8 @@ export class DashboardPage implements OnInit {
 
   public openItemMenu(): void {
     const urlPath: string[] = this.router.url.split('/');
-    this.dataState.itemMenuOpened(urlPath[urlPath.length - 1]);
+    const sensorType: SensorType = <SensorType>urlPath[urlPath.length - 1];
+    this.localState.setSensorType(sensorType);
   }
 
   public toggleFooter(): void {

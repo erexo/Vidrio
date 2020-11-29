@@ -1,72 +1,72 @@
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
+import { Observable, of } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
-import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
-import { Computed, DataAction, StateRepository } from '@ngxs-labs/data/decorators';
-
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Thermometer } from '../models/temperature/thermometer.model';
-import { TemperatureService } from '../services/temperature.service';
-import { APIResponse } from '../models/http/api-response.model';
-import { ThermometerInfo } from '../models/temperature/thermometer-info.model';
-import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
 import { patch, removeItem, updateItem } from '@ngxs/store/operators';
+import { Computed, StateRepository } from '@ngxs-labs/data/decorators';
+import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
+
+import { SensorService } from '@app/core/services/sensor.service';
+
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
+
+import { APIResponse } from '@core/models/http/api-response.model';
+import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
+import { Sensor } from '../models/sensor/sensor.model';
 
 export interface DataModel {
-  thermometers: Thermometer[];
-  itemMenu: string;
+  sensors: any[];
 }
 
 @StateRepository()
 @State({
   name: 'data',
   defaults: {
-    thermometers: [],
-    itemMenu: null
+    sensors: []
   }
 })
 
 @Injectable()
 export class DataState extends NgxsDataRepository<DataModel> {
-  constructor(private temperatureService: TemperatureService) {
+  constructor(private sensorService: SensorService) {
     super();
   }
 
   @Computed()
-  public get thermometers(): Thermometer[] {
-    return this.snapshot.thermometers;
+  public get sensors(): Sensor[] {
+    return this.snapshot.sensors;
   }
 
-  public fetchThermometers(): Observable<APIResponse<Thermometer[]>> {
-    return this.temperatureService.fetchThermometers().pipe(
-      filter((res: HttpResponse<Thermometer[]>) => !!res.body),
-      tap((res: HttpResponse<Thermometer[]>) => {
+  public fetchSensors(): Observable<APIResponse<Sensor[]>> {
+    return this.sensorService.fetchSensors().pipe(
+      filter((res: HttpResponse<Sensor[]>) => !!res.body),
+      tap((res: HttpResponse<Sensor[]>) => {
         this.patchState({
-          thermometers: res.body
+          sensors: res.body
         });
       }),
-      map((res: HttpResponse<Thermometer[]>) => new APIResponse(res.body, res.status)),
+      map((res: HttpResponse<Sensor[]>) => new APIResponse(res.body, res.status)),
       catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
     );
   }
 
-  public createThermometer(info: ThermometerInfo): Observable<APIResponse<void>> {
-    return this.temperatureService.createThermometer(info).pipe(
-      tap(_ => this.fetchThermometers()),
+  public createSensor(sensorInfo: SensorInfo): Observable<APIResponse<void>> {
+    return this.sensorService.createSensor(sensorInfo).pipe(
+      tap(_ => this.fetchSensors()),
       map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
       catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
     );
   }
 
-  public updateThermometer(updatedThermometer: Thermometer): Observable<APIResponse<void>> {
-    return this.temperatureService.updateThermometer(updatedThermometer).pipe(
+  public updateSensor(updatedSensor: Sensor): Observable<APIResponse<void>> {
+    return this.sensorService.updateSensor(updatedSensor).pipe(
       tap(_ => {
         this.setState(
           patch({
-            thermometers: updateItem<Thermometer>(thermometer => thermometer.id === updatedThermometer.id, updatedThermometer)
+            sensors: updateItem<Sensor>(sensor => sensor.id === updatedSensor.id, updatedSensor)
           })
         );
       }),
@@ -75,12 +75,12 @@ export class DataState extends NgxsDataRepository<DataModel> {
     );
   }
 
-  public deleteThermometer(id: number): Observable<APIResponse<void>> {
-    return this.temperatureService.deleteThermometer(id).pipe(
+  public deleteSensor(id: number): Observable<APIResponse<void>> {
+    return this.sensorService.deleteSensor(id).pipe(
       tap(_ => {
         this.setState(
           patch({
-            thermometers: removeItem<Thermometer>(thermometer => thermometer.id === id)
+            sensors: removeItem<Sensor>(sensor => sensor.id === id)
           })
         );
       }),
@@ -89,17 +89,10 @@ export class DataState extends NgxsDataRepository<DataModel> {
     );
   }
 
-  public changeThermometersOrder(ids: number[]): Observable<APIResponse<void>> {
-    return this.temperatureService.changeThermometersOrder(ids).pipe(
+  public changeSensorsOrder(sensorIDs: number[]): Observable<APIResponse<void>> {
+    return this.sensorService.changeSensorsOrder(sensorIDs).pipe(
       map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
       catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
     );
-  }
-
-  @DataAction()
-  itemMenuOpened(itemMenu: string): void {
-    this.ctx.patchState({
-      itemMenu
-    });
   }
 }

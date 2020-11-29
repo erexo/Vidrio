@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ getSensorTitle() }}
+    </ion-title>
+    <ion-chip>
+      <ion-label *ngIf="sensors?.length else noSensors">
+        No. of sensors: {{ sensors.length }}
+      </ion-label>
+      <ng-template #noSensors>
+        <ion-label>
+          You should consider adding some data
+        </ion-label>
+      </ng-template>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher
+    (ionRefresh)="fetchSensors(false, $event)"
+    [disabled]="tileMove"
+    slot="fixed"
+  >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div
+    (dragulaModelChange)="onTileMove($event)"
+    [dragula]="dragModel"
+    [dragulaModel]="sensors"
+    class="grid"
+  >
+    <app-tile
+      *ngFor="let sensor of sensors"
+      (itemDoubleTapped)="fetchSensorData(sensor.id)"
+      (itemEdited)="onItemEdit(sensor.id)"
+      (itemDeleted)="onItemDelete(sensor.id)"
+      [sensor]="sensor"
+      [sensorType]="sensorType"
+    >
+    </app-tile>
+  </div>
+</ion-content>

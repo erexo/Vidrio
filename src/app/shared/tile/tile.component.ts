@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { SensorType } from '@app/core/enums/data/sensor-type.enum';
+import { Sensor } from '@app/core/models/sensor/sensor.model';
 
 @Component({
   selector: 'app-tile',
@@ -8,12 +10,15 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class TileComponent {
 
-  @Input() title: string;
   @Input() dataLoading: boolean;
+  @Input() sensor: Sensor;
+  @Input() sensorType: SensorType;
 
   @Output() itemDoubleTapped: EventEmitter<void> = new EventEmitter<void>();
   @Output() itemEdited: EventEmitter<void> = new EventEmitter<void>();
   @Output() itemDeleted: EventEmitter<void> = new EventEmitter<void>();
+
+  public readonly SensorType = SensorType;
 
   public tileDetailed = false;
   public menuHidden = true;

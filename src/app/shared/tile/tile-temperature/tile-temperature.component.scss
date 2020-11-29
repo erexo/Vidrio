@@ -1,0 +1,28 @@
+.temperature {
+  font-weight: 700;
+  line-height: 54px;
+
+  &--data {
+    color: rgba(var(--ion-text-color-rgb), 0.7);
+    font-size: 4em;
+  }
+
+  &--no-data {
+    color: rgba(var(--ion-text-color-rgb), 0.5);
+    font-size: 2em;
+  }
+
+  sup {
+    font-size: 40%;
+    left: -0.3em;
+    top: -0.9em;
+  }
+}
+
+.loader {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}

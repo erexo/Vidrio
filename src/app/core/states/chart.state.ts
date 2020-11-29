@@ -8,13 +8,12 @@ import { Computed, DataAction, Payload, StateRepository } from '@ngxs-labs/data/
 
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { TemperatureService } from '../services/temperature.service';
+import { SensorService } from '../services/sensor.service';
 import { APIResponse } from '../models/http/api-response.model';
 import { ThermometerData } from '../models/temperature/thermometer-data.model';
 import { IThermometerData } from '../interfaces/temperature/thermometer-data.interface';
-import { patch, append, insertItem } from '@ngxs/store/operators';
+import { patch, insertItem } from '@ngxs/store/operators';
 import { getUnixTime, sub } from 'date-fns';
-import { last } from 'lodash-es';
 
 export interface ChartModel {
   dateOffset: number;
@@ -34,7 +33,7 @@ export interface ChartModel {
 
 @Injectable()
 export class ChartState extends NgxsDataRepository<ChartModel> {
-  constructor(private temperatureService: TemperatureService) {
+  constructor(private sensorService: SensorService) {
     super();
   }
 
@@ -68,7 +67,7 @@ export class ChartState extends NgxsDataRepository<ChartModel> {
     const endDate: number = getUnixTime(sub(new Date(), { days: this.dateOffset - 1 }));
     const data: ThermometerData = new ThermometerData(id, startDate, endDate);
 
-    return this.temperatureService.fetchThermometersData(data).pipe(
+    return this.sensorService.fetchThermometerData(data).pipe(
       filter((res: HttpResponse<IThermometerData[]>) => !!res.body),
       tap((res: HttpResponse<IThermometerData[]>) => {
         this.setState(

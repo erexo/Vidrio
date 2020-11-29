@@ -9,15 +9,15 @@ const routes: Routes = [
     component: DashboardPage,
     children: [
       {
-        path: 'temperature',
+        path: 'thermal',
         loadChildren: () => import('@shared/temperature/temperature.module').then(m => m.TemperaturePageModule)
       },
       {
-        path: 'blinds',
+        path: 'sunblind',
         loadChildren: () => import('@shared/blinds/blinds.module').then(m => m.BlindsPageModule)
       },
       {
-        path: 'lights',
+        path: 'light',
         loadChildren: () => import('@shared/lights/lights.module').then(m => m.LightsPageModule)
       },
       {
@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/dashboard/temperature',
+        redirectTo: '/dashboard/thermal',
         pathMatch: 'full'
       }
     ]
