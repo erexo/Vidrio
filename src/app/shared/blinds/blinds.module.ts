@@ -5,13 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { BlindsPage } from './blinds.page';
 
 import { BlindsPageRoutingModule } from './blinds-routing.module';
+import { DragulaModule } from 'ng2-dragula';
+import { TileModule } from '../tile/tile.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    BlindsPageRoutingModule
+    DragulaModule,
+    BlindsPageRoutingModule,
+    TileModule
   ],
   declarations: [BlindsPage]
 })

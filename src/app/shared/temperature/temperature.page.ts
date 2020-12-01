@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 
 import { DragulaService } from 'ng2-dragula';
@@ -27,7 +27,7 @@ import { SensorType } from '@app/core/enums/data/sensor-type.enum';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TemperaturePage extends SensorComponent implements OnInit {
+export class TemperaturePage extends SensorComponent {
 
   constructor(
     protected alertController: AlertController,
@@ -48,11 +48,7 @@ export class TemperaturePage extends SensorComponent implements OnInit {
       toastController
     );
     
-    this.sensorType = SensorType.Temperature;
-  }
-
-  ngOnInit() {
-    super.ngOnInit();
+    this.localState.setSensorType(SensorType.Temperature);
   }
 
   protected async fetchSensorData(sensorID: number): Promise<void> {
@@ -62,7 +58,7 @@ export class TemperaturePage extends SensorComponent implements OnInit {
 
     this.chartState.setSelectedID(sensorID);
 
-    const thermometerDataSubscription: Subscription = this.chartState.fetchThermometersData(sensorID)
+    const thermometerDataSubscription: Subscription = this.chartState.fetchThermometersData()
       .pipe(
         filter(res => responseFilter(toastInstance, res.status, ResponseType.Read, 'Thermometers data', true))
       )

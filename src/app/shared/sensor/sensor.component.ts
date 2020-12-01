@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { IonPullUpFooterState } from 'ionic-pullup';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
@@ -17,12 +17,12 @@ import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
   selector: 'app-sensor',
   templateUrl: './sensor.component.html',
   styleUrls: ['./sensor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SensorComponent implements OnInit, OnDestroy {
+export class SensorComponent implements ViewDidEnter, ViewDidLeave {
   protected readonly dragModel = 'SENSORS';
 
   public sensors: Sensor[] = [];
-  public sensorType: SensorType;
   public tileMove = false;
 
   protected dataSubscription: Subscription = new Subscription();
@@ -38,19 +38,19 @@ export class SensorComponent implements OnInit, OnDestroy {
     protected toastController: ToastController,
   ) {}
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this.footerState = IonPullUpFooterState.Collapsed;
     this.fetchSensors(true);
     this.addMenuListener();
     this.addTileDragListener();
   }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
     this.dataSubscription.unsubscribe();
   }
 
   public getSensorTitle(): string {
-    return capitalize(this.sensorType)
+    return capitalize(this.localState.sensorType)
   }
 
   public async fetchSensors(errorOnly = false, event?: any): Promise<void> {
@@ -136,11 +136,10 @@ export class SensorComponent implements OnInit, OnDestroy {
   protected async presentAlertPrompt(sensorID?: number) {}
 
   private addMenuListener(): void {
-    const itemMenuSubscription: Subscription = this.localState.state$.pipe(
-      skip(1),
-      map(state => state.sensorType),
-      filter(sensorType => sensorType === this.sensorType)
-    ).subscribe(_ => this.presentAlertPrompt());
+    const itemMenuSubscription: Subscription = this.localState.menuOpened$
+      .subscribe(_ => {
+        this.presentAlertPrompt()
+      });
 
     this.dataSubscription.add(itemMenuSubscription);
   }

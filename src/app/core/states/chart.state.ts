@@ -14,6 +14,7 @@ import { ThermometerData } from '../models/temperature/thermometer-data.model';
 import { IThermometerData } from '../interfaces/temperature/thermometer-data.interface';
 import { patch, insertItem } from '@ngxs/store/operators';
 import { getUnixTime, sub } from 'date-fns';
+import { SensorType } from '../enums/data/sensor-type.enum';
 
 export interface ChartModel {
   dateOffset: number;
@@ -62,10 +63,10 @@ export class ChartState extends NgxsDataRepository<ChartModel> {
     return this.snapshot.selectedID;
   }
 
-  public fetchThermometersData(id: number): Observable<APIResponse<IThermometerData[]>> {
+  public fetchThermometersData(): Observable<APIResponse<IThermometerData[]>> {
     const startDate: number = getUnixTime(sub(new Date(), { days: this.dateOffset }));
     const endDate: number = getUnixTime(sub(new Date(), { days: this.dateOffset - 1 }));
-    const data: ThermometerData = new ThermometerData(id, startDate, endDate);
+    const data: ThermometerData = new ThermometerData(this.selectedID, startDate, endDate);
 
     return this.sensorService.fetchThermometerData(data).pipe(
       filter((res: HttpResponse<IThermometerData[]>) => !!res.body),
@@ -81,12 +82,12 @@ export class ChartState extends NgxsDataRepository<ChartModel> {
     );
   }
 
-  public fetchData(pageName: string): Observable<APIResponse<any[]>> {
+  public fetchData(pageName: SensorType): Observable<APIResponse<any[]>> {
     let fetchedData$: Observable<APIResponse<any[]>>;
 
     switch (pageName) {
-      case 'temperature':
-        fetchedData$ = this.fetchThermometersData(this.selectedID);
+      case SensorType.Temperature:
+        fetchedData$ = this.fetchThermometersData();
         break;
     }
 

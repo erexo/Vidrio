@@ -59,7 +59,9 @@ ion-card {
 }
 
 ion-content {
-  --background: url('../src/assets/images/login-background.jpg') no-repeat center center / cover;
+  &::part(background) {
+    background: url('../src/assets/images/login-background.jpg') no-repeat center center / cover;
+  }
 }
 
 ion-header {

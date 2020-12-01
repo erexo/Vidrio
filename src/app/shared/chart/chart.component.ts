@@ -1,12 +1,8 @@
-import { flatten } from '@angular/compiler';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { ChartState } from '@app/core/states/chart.state';
 import { NavParams, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
-
-import { last } from 'lodash-es';
 
 import { Chart } from 'chart.js';
 import { Subscription } from 'rxjs';
@@ -32,7 +28,6 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private router: Router,
     private chartState: ChartState,
     private elementRef: ElementRef,
     private navParams: NavParams,
@@ -61,9 +56,8 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
   public async loadData(): Promise<void> {
     this.chartState.incrementChartDateOffset();
 
-    const pageName: string = last(this.router.url.split('/'));
     const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
-    const dataSubscription: Subscription = this.chartState.fetchData(pageName).pipe(
+    const dataSubscription: Subscription = this.chartState.fetchThermometersData().pipe(
       filter(res =>
         responseFilter(toastInstance, res.status, ResponseType.Read, 'Thermometers data', true) && this.chart),
       map(res => res.body)
@@ -103,7 +97,7 @@ export class ChartComponent implements ViewDidEnter, ViewDidLeave {
     this.chart = new Chart(this.chartContainer.nativeElement, {
       type: 'line',
       data: {
-        labels: labels,
+        labels,
         datasets: [{
           borderWidth: 0,
           data: values,

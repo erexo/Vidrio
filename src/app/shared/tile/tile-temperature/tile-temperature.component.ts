@@ -12,7 +12,7 @@ import { Thermometer } from '@app/core/models/temperature/thermometer.model';
 })
 export class TileTemperatureComponent {
   
-  @Input() thermometer: Thermometer;
+  @Input() sensor: Thermometer;
 
   constructor(public chartState: ChartState) { }
 

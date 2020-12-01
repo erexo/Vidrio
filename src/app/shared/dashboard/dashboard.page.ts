@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { Platform, ViewDidEnter } from '@ionic/angular';
 
 import { UserState } from '@app/core/states/user.state';
 
@@ -11,29 +11,24 @@ import { LocalState } from '@app/core/states/local.state';
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.page.html',
-  styleUrls: ['dashboard.page.scss']
+  styleUrls: ['dashboard.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements ViewDidEnter {
 
   public footerState: IonPullUpFooterState;
   public minBottomVisible: number;
 
   constructor(
-    private localState: LocalState,
+    public localState: LocalState,
     private platform: Platform,
     private router: Router,
     private userState: UserState
   ) {}
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this.footerState = IonPullUpFooterState.Collapsed;
     this.minBottomVisible = -112;
-  }
-
-  public openItemMenu(): void {
-    const urlPath: string[] = this.router.url.split('/');
-    const sensorType: SensorType = <SensorType>urlPath[urlPath.length - 1];
-    this.localState.setSensorType(sensorType);
   }
 
   public toggleFooter(): void {

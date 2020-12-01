@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
@@ -9,7 +9,8 @@ const { DarkMode } = Plugins;
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   constructor(

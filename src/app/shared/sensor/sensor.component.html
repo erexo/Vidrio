@@ -37,7 +37,7 @@
       (itemEdited)="onItemEdit(sensor.id)"
       (itemDeleted)="onItemDelete(sensor.id)"
       [sensor]="sensor"
-      [sensorType]="sensorType"
+      [sensorType]="localState.sensorType"
     >
     </app-tile>
   </div>
