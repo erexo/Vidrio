@@ -42,6 +42,7 @@ export class TemperaturePage extends SensorComponent {
     super(
       alertController,
       changeDetectorRef,
+      chartState,
       dataState,
       dragulaService,
       localState,
@@ -56,13 +57,19 @@ export class TemperaturePage extends SensorComponent {
     const thermometer: Thermometer
       = <Thermometer>this.sensors.find(sensor => sensor.id === sensorID);
 
+    this.loaderVisible = true;
+    this.changeDetectorRef.markForCheck();
     this.chartState.setSelectedID(sensorID);
 
     const thermometerDataSubscription: Subscription = this.chartState.fetchThermometersData()
       .pipe(
         filter(res => responseFilter(toastInstance, res.status, ResponseType.Read, 'Thermometers data', true))
       )
-      .subscribe(res => this.presentPopover(`${thermometer.name} temperature`, res.body));
+      .subscribe(res => {
+        this.loaderVisible = false;
+        this.changeDetectorRef.markForCheck();
+        this.presentPopover(`${thermometer.name} temperature`, res.body);
+      });
 
     this.dataSubscription.add(thermometerDataSubscription);
   }

@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { ChartState } from '@app/core/states/chart.state';
-
 import { Thermometer } from '@app/core/models/temperature/thermometer.model';
 
 @Component({
@@ -12,8 +10,8 @@ import { Thermometer } from '@app/core/models/temperature/thermometer.model';
 })
 export class TileTemperatureComponent {
   
-  @Input() sensor: Thermometer;
+  @Input() thermometer: Thermometer;
 
-  constructor(public chartState: ChartState) { }
+  constructor() { }
 
 }

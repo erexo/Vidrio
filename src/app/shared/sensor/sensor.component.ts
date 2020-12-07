@@ -1,17 +1,25 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { SensorType } from '@app/core/enums/data/sensor-type.enum';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+
+import { IonPullUpFooterState } from 'ionic-pullup';
+
+import { capitalize } from 'lodash-es';
+
+import { DragulaService } from 'ng2-dragula';
+
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
-import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
-import { IonPullUpFooterState } from 'ionic-pullup';
-import { DragulaService } from 'ng2-dragula';
-import { Subscription } from 'rxjs';
-import { filter, map, skip } from 'rxjs/operators';
-import { capitalize } from 'lodash-es';
+
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+
 import { Sensor } from '@app/core/models/sensor/sensor.model';
 import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
+
+import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { ChartState } from '@app/core/states/chart.state';
 
 @Component({
   selector: 'app-sensor',
@@ -23,6 +31,7 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
   protected readonly dragModel = 'SENSORS';
 
   public sensors: Sensor[] = [];
+  public loaderVisible = false;
   public tileMove = false;
 
   protected dataSubscription: Subscription = new Subscription();
@@ -32,6 +41,7 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
   constructor(
     protected alertController: AlertController,
     protected changeDetectorRef: ChangeDetectorRef,
+    protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
     protected localState: LocalState,
@@ -50,7 +60,7 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
   }
 
   public getSensorTitle(): string {
-    return capitalize(this.localState.sensorType)
+    return capitalize(this.localState.sensorType);
   }
 
   public async fetchSensors(errorOnly = false, event?: any): Promise<void> {
@@ -131,9 +141,12 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
     this.dataSubscription.add(updateThermometerSubscription);
   }
 
-  protected async fetchSensorData(sensorID: number) {}
+  public getSensorLoaderState(sensorID: number): boolean {
+    return this.chartState.selectedID === sensorID && this.loaderVisible;
+  }
 
-  protected async presentAlertPrompt(sensorID?: number) {}
+  protected async fetchSensorData(sensorID: number): Promise<void> {}
+  protected async presentAlertPrompt(sensorID?: number): Promise<void> {}
 
   private addMenuListener(): void {
     const itemMenuSubscription: Subscription = this.localState.menuOpened$

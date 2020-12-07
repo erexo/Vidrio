@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { SensorType } from '@app/core/enums/data/sensor-type.enum';
+
 import { Sensor } from '@app/core/models/sensor/sensor.model';
 
 @Component({
@@ -10,7 +12,7 @@ import { Sensor } from '@app/core/models/sensor/sensor.model';
 })
 export class TileComponent {
 
-  @Input() dataLoading: boolean;
+  @Input() loaderVisible: boolean;
   @Input() sensor: Sensor;
   @Input() sensorType: SensorType;
 

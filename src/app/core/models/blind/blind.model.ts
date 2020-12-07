@@ -1,4 +1,4 @@
-import { Sensor } from '../sensor/sensor.model';
+import { Sensor } from '@core/models/sensor/sensor.model';
 
 export class Blind extends Sensor {
   constructor(

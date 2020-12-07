@@ -1,6 +1,4 @@
-<ion-card
-  (tap)="onTileTap($event)"
->
+<ion-card>
   <ion-card-header>
     <ng-container *ngIf="menuHidden else menuContainer">
       <ion-card-title text-wrap>
@@ -27,13 +25,25 @@
     </ion-button>
   </ion-card-header>
 
-  <ion-card-content>
+  <ion-card-content (tap)="onTileTap($event)">
     <div [ngSwitch]="sensorType">
       <app-tile-temperature
         *ngSwitchCase="SensorType.Temperature"
         [thermometer]="sensor"
       >
       </app-tile-temperature>
+      <app-tile-blinds
+        *ngSwitchCase="SensorType.Blinds"
+        [blind]="sensor"
+      >
+      </app-tile-blinds>
+    </div>
+
+    <div
+      *ngIf="loaderVisible"
+      class="loader"
+    >
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
     </div>
   </ion-card-content>
 </ion-card>

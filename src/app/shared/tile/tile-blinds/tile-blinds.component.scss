@@ -1,0 +1,18 @@
+ion-list {
+  background: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  
+  ion-item {
+    --background: transparent;
+    --border-color: transparent;
+  }
+
+  ion-label {
+    color: rgba(var(--ion-text-color-rgb), 0.6);
+    font-size: 14px;
+    letter-spacing: initial;
+    text-transform: none;
+  }
+}

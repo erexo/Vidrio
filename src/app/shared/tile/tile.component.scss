@@ -65,6 +65,14 @@
       height: calc(100% - 45px);
       justify-content: center;
       padding: 10px 16px;
+
+      .loader {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
     }
   }
 }

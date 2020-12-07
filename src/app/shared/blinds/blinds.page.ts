@@ -32,6 +32,7 @@ export class BlindsPage extends SensorComponent {
     super(
       alertController,
       changeDetectorRef,
+      chartState,
       dataState,
       dragulaService,
       localState,

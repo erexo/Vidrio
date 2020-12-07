@@ -33,9 +33,10 @@
   >
     <app-tile
       *ngFor="let sensor of sensors"
+      (itemDeleted)="onItemDelete(sensor.id)"
       (itemDoubleTapped)="fetchSensorData(sensor.id)"
       (itemEdited)="onItemEdit(sensor.id)"
-      (itemDeleted)="onItemDelete(sensor.id)"
+      [loaderVisible]="getSensorLoaderState(sensor.id)"
       [sensor]="sensor"
       [sensorType]="localState.sensorType"
     >
