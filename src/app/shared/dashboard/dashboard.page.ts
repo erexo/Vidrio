@@ -1,12 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Platform, ViewDidEnter } from '@ionic/angular';
+
+import { last } from 'lodash-es';
 
 import { UserState } from '@app/core/states/user.state';
 
 import { IonPullUpFooterState } from 'ionic-pullup';
-import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 import { LocalState } from '@app/core/states/local.state';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,20 +18,31 @@ import { LocalState } from '@app/core/states/local.state';
   styleUrls: ['dashboard.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardPage implements ViewDidEnter {
+export class DashboardPage implements OnInit, OnDestroy, ViewDidEnter {
 
   public footerState: IonPullUpFooterState;
   public minBottomVisible: number;
+
+  private routeChangeSubscription: Subscription = new Subscription();
 
   constructor(
     public localState: LocalState,
     private platform: Platform,
     private router: Router,
     private userState: UserState
-  ) {}
+  ) {
+    this.footerState = IonPullUpFooterState.Expanded;
+  }
+
+  ngOnInit() {
+    this.addRouteChangeListener();
+  }
+
+  ngOnDestroy() {
+    this.routeChangeSubscription.unsubscribe();
+  }
 
   ionViewDidEnter() {
-    this.footerState = IonPullUpFooterState.Collapsed;
     this.minBottomVisible = -112;
   }
 
@@ -45,6 +60,16 @@ export class DashboardPage implements ViewDidEnter {
     this.footerState = IonPullUpFooterState.Collapsed;
     this.userState.logout();
     this.router.navigate(['login']);
+  }
+
+  private addRouteChangeListener(): void {
+    this.routeChangeSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    )
+      .subscribe((event: NavigationEnd) => {
+        const sensorType: SensorType = last(event.urlAfterRedirects.split('/'));
+        this.localState.setSensorType(sensorType);
+      });
   }
 
 }

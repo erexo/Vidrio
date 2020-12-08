@@ -3,4 +3,5 @@ export enum ResponseType {
   Read = 'fetched',
   Update = 'changed',
   Delete = 'deleted',
+  Toggle = 'toggled'
 }

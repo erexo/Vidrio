@@ -26,7 +26,7 @@
   </ion-card-header>
 
   <ion-card-content (tap)="onTileTap($event)">
-    <div [ngSwitch]="sensorType">
+    <ng-container [ngSwitch]="sensorType">
       <app-tile-temperature
         *ngSwitchCase="SensorType.Temperature"
         [thermometer]="sensor"
@@ -34,10 +34,17 @@
       </app-tile-temperature>
       <app-tile-blinds
         *ngSwitchCase="SensorType.Blinds"
+        (sensorToggled)="onSensorToggle($event)"
         [blind]="sensor"
       >
       </app-tile-blinds>
-    </div>
+      <app-tile-lights
+        *ngSwitchCase="SensorType.Lights"
+        (sensorToggled)="onSensorToggle()"
+        [light]="sensor"
+      >
+      </app-tile-lights>
+    </ng-container>
 
     <div
       *ngIf="loaderVisible"

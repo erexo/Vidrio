@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
 import { Blind } from '@app/core/models/blind/blind.model';
 
@@ -8,12 +10,18 @@ import { Blind } from '@app/core/models/blind/blind.model';
   styleUrls: ['./tile-blinds.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TileBlindsComponent implements OnInit {
+export class TileBlindsComponent {
   
   @Input() blind: Blind;
 
+  @Output() sensorToggled: EventEmitter<SensorToggleDirection> = new EventEmitter<SensorToggleDirection>();
+
+  public SensorToggleDirection = SensorToggleDirection;
+
   constructor() { }
 
-  ngOnInit() {}
+  public toggleBlind(sensorToggleDirection: SensorToggleDirection): void {
+    this.sensorToggled.emit(sensorToggleDirection);
+  }
 
 }

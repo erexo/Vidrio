@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
-import { IonPullUpFooterState } from 'ionic-pullup';
 
 import { capitalize } from 'lodash-es';
 
@@ -20,6 +19,8 @@ import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
 
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { ChartState } from '@app/core/states/chart.state';
+import { NavigationEnd, Router } from '@angular/router';
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
 @Component({
   selector: 'app-sensor',
@@ -36,8 +37,6 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
 
   protected dataSubscription: Subscription = new Subscription();
 
-  private footerState: IonPullUpFooterState;
-
   constructor(
     protected alertController: AlertController,
     protected changeDetectorRef: ChangeDetectorRef,
@@ -45,12 +44,15 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
     protected dataState: DataState,
     protected dragulaService: DragulaService,
     protected localState: LocalState,
-    protected toastController: ToastController,
+    protected router: Router,
+    protected toastController: ToastController
   ) {}
 
-  ionViewDidEnter() {
-    this.footerState = IonPullUpFooterState.Collapsed;
+  ngOnInit() {
     this.fetchSensors(true);
+  }
+
+  ionViewDidEnter() {
     this.addMenuListener();
     this.addTileDragListener();
   }
@@ -78,17 +80,11 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
     this.dataSubscription.add(sensorSubscription);
   }
 
-  public toggleFooter(): void {
-    this.footerState = this.footerState === IonPullUpFooterState.Collapsed
-      ? IonPullUpFooterState.Expanded
-      : IonPullUpFooterState.Collapsed;
-  }
-
-  public onItemEdit(sensorID?: number): void {
+  public editSensor(sensorID?: number): void {
     this.presentAlertPrompt(sensorID);
   }
 
-  public async onItemDelete(id: number): Promise<void> {
+  public async deleteSensor(id: number): Promise<void> {
     const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const deleteSensorSubscription: Subscription = this.dataState.deleteSensor(id)
       .pipe(
@@ -115,7 +111,7 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
     this.changeDetectorRef.detectChanges();
   }
 
-  public async createSensor(sensorInfo: SensorInfo): Promise<void> {
+  public async createSensor(sensorInfo: any): Promise<void> {
     const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
     const createSensorSubscription: Subscription = this.dataState.createSensor(sensorInfo)
       .pipe(
@@ -147,6 +143,7 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
 
   protected async fetchSensorData(sensorID: number): Promise<void> {}
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {}
+  protected async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {}
 
   private addMenuListener(): void {
     const itemMenuSubscription: Subscription = this.localState.menuOpened$

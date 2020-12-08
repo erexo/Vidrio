@@ -12,6 +12,7 @@ import { IThermometerData } from '@core/interfaces/temperature/thermometer-data.
 import { ThermometerData } from '@core/models/temperature/thermometer-data.model';
 import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
 import { Sensor } from '@core/models/sensor/sensor.model';
+import { SensorToggleDirection } from '../enums/data/sensor-toggle-direction.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -23,64 +24,83 @@ export class SensorService {
   ) {}
 
   public fetchSensors(): Observable<HttpResponse<Sensor[]>> {
-    const { apiKey, sensorType } = this.localState;
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
 
     return <Observable<HttpResponse<Sensor[]>>>
       this.httpClient.post(`${apiKey}/${sensorType}/browse`, {}, {
-        headers: this.localState.userAccessHeaders,
+        headers: userAccessHeaders,
         observe: 'response'
       });
   }
 
-  public createSensor(info: SensorInfo): Observable<HttpResponse<HTTPStatusCode>> {
-    const { apiKey, sensorType } = this.localState;
+  public createSensor(info: any): Observable<HttpResponse<HTTPStatusCode>> {
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
 
     return <Observable<HttpResponse<HTTPStatusCode>>>
       this.httpClient.post(`${apiKey}/${sensorType}/create`, info, {
-        headers: this.localState.userAccessHeaders,
+        headers: userAccessHeaders,
         observe: 'response'
       });
   }
 
   public updateSensor(sensor: Sensor): Observable<HttpResponse<HTTPStatusCode>> {
-    const { apiKey, sensorType } = this.localState;
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
     const { id } = sensor;
 
     return <Observable<HttpResponse<HTTPStatusCode>>>
       this.httpClient.patch(`${apiKey}/${sensorType}/update/${id}`, sensor, {
-        headers: this.localState.userAccessHeaders,
+        headers: userAccessHeaders,
         observe: 'response'
       });
   }
 
   public changeSensorsOrder(sensorIDs: number[]): Observable<HttpResponse<HTTPStatusCode>> {
-    const { apiKey, sensorType } = this.localState;
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
 
     return <Observable<HttpResponse<HTTPStatusCode>>>
       this.httpClient.post(`${apiKey}/${sensorType}/order`, sensorIDs, {
-        headers: this.localState.userAccessHeaders,
+        headers: userAccessHeaders,
         observe: 'response'
       });
   }
 
   public deleteSensor(sensorID: number): Observable<HttpResponse<HTTPStatusCode>> {
-    const { apiKey, sensorType } = this.localState;
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
 
     return <Observable<HttpResponse<HTTPStatusCode>>>
       this.httpClient.delete(`${apiKey}/${sensorType}/delete/${sensorID}`, {
-        headers: this.localState.userAccessHeaders,
+        headers: userAccessHeaders,
         observe: 'response'
       });
   }
 
   // Custom endpoints
-
   public fetchThermometerData(data: ThermometerData): Observable<HttpResponse<IThermometerData[]>> {
-    const { apiKey, sensorType } = this.localState;
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
 
     return <Observable<HttpResponse<IThermometerData[]>>>
       this.httpClient.post(`${apiKey}/${sensorType}/data`, data, {
-        headers: this.localState.userAccessHeaders,
+        headers: userAccessHeaders,
+        observe: 'response'
+      });
+  }
+
+  public toggleSunblind(sensorID: number, sensorToggleDirection: SensorToggleDirection): Observable<HttpResponse<HTTPStatusCode>> {
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
+
+    return <Observable<HttpResponse<HTTPStatusCode>>>
+      this.httpClient.post(`${apiKey}/${sensorType}/toggle/${sensorID}/${sensorToggleDirection}`, null, {
+        headers: userAccessHeaders,
+        observe: 'response'
+      });
+  }
+
+  public toggleLight(sensorID: number): Observable<HttpResponse<HTTPStatusCode>> {
+    const { apiKey, sensorType, userAccessHeaders } = this.localState;
+
+    return <Observable<HttpResponse<HTTPStatusCode>>>
+      this.httpClient.post(`${apiKey}/${sensorType}/toggle/${sensorID}`, null, {
+        headers: userAccessHeaders,
         observe: 'response'
       });
   }

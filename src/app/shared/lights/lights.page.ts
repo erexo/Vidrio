@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { SensorType } from '@app/core/enums/data/sensor-type.enum';
+import { Router } from '@angular/router';
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { Light } from '@app/core/models/light/light.model';
 import { ChartState } from '@app/core/states/chart.state';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { SensorComponent } from '../sensor/sensor.component';
 
 @Component({
@@ -27,6 +31,7 @@ export class LightsPage extends SensorComponent {
     protected dragulaService: DragulaService,
     protected localState: LocalState,
     protected popoverController: PopoverController,
+    protected router: Router,
     protected toastController: ToastController,
   ) {
     super(
@@ -36,10 +41,9 @@ export class LightsPage extends SensorComponent {
       dataState,
       dragulaService,
       localState,
+      router,
       toastController
     );
-    
-    this.localState.setSensorType(SensorType.Lights);
   }
 
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {
@@ -83,6 +87,18 @@ export class LightsPage extends SensorComponent {
     });
 
     await alert.present();
+  }
+
+  protected async toggleSensor(sensorID: number): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
+
+    const toggleSensorSubscription: Subscription = this.dataState.toggleLight(sensorID)
+      .pipe(
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Toggle, 'Light', false))
+      )
+      .subscribe();
+
+    this.dataSubscription.add(toggleSensorSubscription);
   }
 
 }

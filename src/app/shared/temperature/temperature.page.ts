@@ -16,7 +16,7 @@ import { ChartState } from '@app/core/states/chart.state';
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { SensorComponent } from '../sensor/sensor.component';
 import { LocalState } from '@app/core/states/local.state';
-import { SensorType } from '@app/core/enums/data/sensor-type.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-temperature',
@@ -37,6 +37,7 @@ export class TemperaturePage extends SensorComponent {
     protected dragulaService: DragulaService,
     protected localState: LocalState,
     protected popoverController: PopoverController,
+    protected router: Router,
     protected toastController: ToastController,
   ) {
     super(
@@ -46,10 +47,9 @@ export class TemperaturePage extends SensorComponent {
       dataState,
       dragulaService,
       localState,
+      router,
       toastController
     );
-    
-    this.localState.setSensorType(SensorType.Temperature);
   }
 
   protected async fetchSensorData(sensorID: number): Promise<void> {

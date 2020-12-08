@@ -16,6 +16,7 @@ import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 import { APIResponse } from '@core/models/http/api-response.model';
 import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
 import { Sensor } from '../models/sensor/sensor.model';
+import { SensorToggleDirection } from '../enums/data/sensor-toggle-direction.enum';
 
 export interface DataModel {
   sensors: any[];
@@ -53,7 +54,7 @@ export class DataState extends NgxsDataRepository<DataModel> {
     );
   }
 
-  public createSensor(sensorInfo: SensorInfo): Observable<APIResponse<void>> {
+  public createSensor(sensorInfo: any): Observable<APIResponse<void>> {
     return this.sensorService.createSensor(sensorInfo).pipe(
       tap(_ => this.fetchSensors()),
       map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
@@ -91,6 +92,20 @@ export class DataState extends NgxsDataRepository<DataModel> {
 
   public changeSensorsOrder(sensorIDs: number[]): Observable<APIResponse<void>> {
     return this.sensorService.changeSensorsOrder(sensorIDs).pipe(
+      map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
+      catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
+    );
+  }
+
+  public toggleSunblind(sensorID: number, sensorToggleDirection: SensorToggleDirection): Observable<APIResponse<void>> {
+    return this.sensorService.toggleSunblind(sensorID, sensorToggleDirection).pipe(
+      map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
+      catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
+    );
+  }
+
+  public toggleLight(sensorID: number): Observable<APIResponse<void>> {
+    return this.sensorService.toggleLight(sensorID).pipe(
       map((res: HttpResponse<HTTPStatusCode>) => new APIResponse(null, res.status)),
       catchError((err: HttpErrorResponse) => of(new APIResponse(null, err.status)))
     );

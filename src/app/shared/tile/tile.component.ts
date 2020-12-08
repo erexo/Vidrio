@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
 import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 
@@ -16,9 +17,10 @@ export class TileComponent {
   @Input() sensor: Sensor;
   @Input() sensorType: SensorType;
 
-  @Output() itemDoubleTapped: EventEmitter<void> = new EventEmitter<void>();
-  @Output() itemEdited: EventEmitter<void> = new EventEmitter<void>();
-  @Output() itemDeleted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() sensorDeleted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() sensorDoubleTapped: EventEmitter<void> = new EventEmitter<void>();
+  @Output() sensorEdited: EventEmitter<void> = new EventEmitter<void>();
+  @Output() sensorToggled: EventEmitter<SensorToggleDirection | void> = new EventEmitter<SensorToggleDirection | void>();
 
   public readonly SensorType = SensorType;
 
@@ -28,13 +30,17 @@ export class TileComponent {
   constructor() { }
 
   public onTileTap(event: any): void {
-    if (event.tapCount === 2) {
+    if (event.tapCount === 2 && this.sensorType === SensorType.Lights) {
       this.tileDetailed = !this.tileDetailed;
 
       if (this.tileDetailed) {
-        this.itemDoubleTapped.emit();
+        this.sensorDoubleTapped.emit();
       }
     }
+  }
+
+  public onSensorToggle(event?: SensorToggleDirection): void {
+    this.sensorToggled.emit(event);
   }
 
   public toggleMenu(): void {
@@ -49,11 +55,11 @@ export class TileComponent {
 
   public editItem(): void {
     this.menuHidden = true;
-    this.itemEdited.emit();
+    this.sensorEdited.emit();
   }
 
   public deleteItem(): void {
-    this.itemDeleted.emit();
+    this.sensorDeleted.emit();
   }
 
 }

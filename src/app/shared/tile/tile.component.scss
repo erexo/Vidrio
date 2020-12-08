@@ -5,6 +5,7 @@
   position: relative;
   
   ion-card {
+    height: 100%;
     flex: 1;
     margin: 0;
 
@@ -64,7 +65,7 @@
       display: flex;
       height: calc(100% - 45px);
       justify-content: center;
-      padding: 10px 16px;
+      padding: 0;
 
       .loader {
         height: 100%;

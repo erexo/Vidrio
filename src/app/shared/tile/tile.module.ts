@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TileComponent } from './tile.component';
 import { TileTemperatureComponent } from './tile-temperature/tile-temperature.component';
 import { TileBlindsComponent } from './tile-blinds/tile-blinds.component';
+import { TileLightsComponent } from './tile-lights/tile-lights.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { TileBlindsComponent } from './tile-blinds/tile-blinds.component';
   declarations: [
     TileComponent,
     TileTemperatureComponent,
-    TileBlindsComponent
+    TileBlindsComponent,
+    TileLightsComponent
   ],
   exports: [
     TileComponent

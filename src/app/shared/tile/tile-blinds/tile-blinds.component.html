@@ -1,21 +1,26 @@
-<ion-list>
-  <ion-item>
-    <ion-label color="dark">Input Down Pin</ion-label>
-    <ion-toggle></ion-toggle>
-  </ion-item>
+<ion-button
+  (click)="toggleBlind(SensorToggleDirection.Up)"
+  [disabled]
+  color="dark"
+  expand="full"
+  fill="clear"
+>
+  <ion-icon
+    name="chevron-up-outline"
+    slot="icon-only"
+  >
+  </ion-icon>
+</ion-button>
 
-  <ion-item>
-    <ion-label color="dark">Input Up Pin</ion-label>
-    <ion-toggle></ion-toggle>
-  </ion-item>
-
-  <ion-item>
-    <ion-label color="dark">Output Down Pin</ion-label>
-    <ion-toggle></ion-toggle>
-  </ion-item>
-
-  <ion-item>
-    <ion-label color="dark">Output Up Pin</ion-label>
-    <ion-toggle></ion-toggle>
-  </ion-item>
-</ion-list>
+<ion-button
+  (click)="toggleBlind(SensorToggleDirection.Down)"
+  color="dark"
+  expand="full"
+  fill="clear"
+>
+  <ion-icon
+    name="chevron-down-outline"
+    slot="icon-only"
+  >
+  </ion-icon>
+</ion-button>
