@@ -18,7 +18,7 @@ import { SensorType } from '@app/core/enums/data/sensor-type.enum';
   styleUrls: ['dashboard.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardPage implements OnInit, OnDestroy, ViewDidEnter {
+export class DashboardPage implements OnInit, OnDestroy {
 
   public footerState: IonPullUpFooterState;
   public minBottomVisible: number;
@@ -33,16 +33,13 @@ export class DashboardPage implements OnInit, OnDestroy, ViewDidEnter {
   ) {}
 
   ngOnInit() {
-    this.addRouteChangeListener();
+    this.minBottomVisible = -112;
     this.footerState = IonPullUpFooterState.Expanded;
+    this.addRouteChangeListener();
   }
 
   ngOnDestroy() {
     this.routeChangeSubscription.unsubscribe();
-  }
-
-  ionViewDidEnter() {
-    this.minBottomVisible = -112;
   }
 
   public toggleFooter(): void {
