@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Platform, ViewDidEnter } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 import { last } from 'lodash-es';
 
