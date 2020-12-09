@@ -41,7 +41,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    }, { updateOn: 'blur' });
+    }, { updateOn: 'submit' });
   }
 
   ionViewDidEnter() {
@@ -92,7 +92,8 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
           {
             name: 'apiKey',
             type: 'text',
-            placeholder: 'Api Key'
+            placeholder: 'Api Key',
+            value: 'localhost:4235'
           }
         ],
         buttons: [

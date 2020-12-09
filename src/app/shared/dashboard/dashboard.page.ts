@@ -30,12 +30,11 @@ export class DashboardPage implements OnInit, OnDestroy, ViewDidEnter {
     private platform: Platform,
     private router: Router,
     private userState: UserState
-  ) {
-    this.footerState = IonPullUpFooterState.Expanded;
-  }
+  ) {}
 
   ngOnInit() {
     this.addRouteChangeListener();
+    this.footerState = IonPullUpFooterState.Expanded;
   }
 
   ngOnDestroy() {
