@@ -25,7 +25,7 @@ export const responseFilter = (
 export const getToast = async (toastController: ToastController, message?: string): Promise<HTMLIonToastElement> => {
   const toast: Promise<HTMLIonToastElement> = toastController.create({
     color: 'light',
-    cssClass: 'toast',
+    cssClass: 'toast-container',
     duration: 2000,
     message,
     translucent: true

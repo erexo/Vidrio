@@ -1,6 +1,6 @@
 <ion-button
   (click)="toggleBlind(SensorToggleDirection.Up)"
-  [disabled]
+  [disabled]="upButtonDisabled"
   color="dark"
   expand="full"
   fill="clear"
@@ -14,6 +14,7 @@
 
 <ion-button
   (click)="toggleBlind(SensorToggleDirection.Down)"
+  [disabled]="downButtonDisabled"
   color="dark"
   expand="full"
   fill="clear"

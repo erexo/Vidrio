@@ -14,7 +14,6 @@ import { SensorService } from '@app/core/services/sensor.service';
 import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 
 import { APIResponse } from '@core/models/http/api-response.model';
-import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
 import { Sensor } from '../models/sensor/sensor.model';
 import { SensorToggleDirection } from '../enums/data/sensor-toggle-direction.enum';
 

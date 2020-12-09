@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
@@ -17,11 +17,25 @@ export class TileBlindsComponent {
   @Output() sensorToggled: EventEmitter<SensorToggleDirection> = new EventEmitter<SensorToggleDirection>();
 
   public SensorToggleDirection = SensorToggleDirection;
+  public upButtonDisabled = false;
+  public downButtonDisabled = true;
 
-  constructor() { }
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   public toggleBlind(sensorToggleDirection: SensorToggleDirection): void {
+    sensorToggleDirection === SensorToggleDirection.Up
+      ? this.upButtonDisabled = true
+      : this.downButtonDisabled = true;
+    
     this.sensorToggled.emit(sensorToggleDirection);
+
+    setTimeout(_ => {
+      sensorToggleDirection === SensorToggleDirection.Up
+        ? this.downButtonDisabled = false
+        : this.upButtonDisabled = false;
+      
+      this.changeDetectorRef.markForCheck();
+    }, 5000)
   }
 
 }
