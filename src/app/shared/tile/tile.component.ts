@@ -30,7 +30,7 @@ export class TileComponent {
   constructor() { }
 
   public onTileTap(event: any): void {
-    if (event.tapCount === 2 && this.sensorType === SensorType.Lights) {
+    if (event.tapCount === 2 && this.sensorType === SensorType.Temperature) {
       this.tileDetailed = !this.tileDetailed;
 
       if (this.tileDetailed) {

@@ -45,7 +45,6 @@ export class DataState extends NgxsDataRepository<DataModel> {
   }
 
   public openMenu(): void {
-    console.log("fweffweef")
     this.menuOpened.next();
   }
 
