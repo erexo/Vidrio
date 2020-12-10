@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { LocalState } from '@app/core/states/local.state';
-
 import { ILoginInfo } from '@core/interfaces/login/login-info.interface';
 import { ILoginUser } from '@core/interfaces/login/login-user.interface';
 
@@ -13,12 +11,11 @@ import { ILoginUser } from '@core/interfaces/login/login-user.interface';
 })
 export class UserService {
   constructor(
-    private httpClient: HttpClient,
-    private localState: LocalState
+    private httpClient: HttpClient
   ) { }
 
   public login(user: ILoginUser): Observable<HttpResponse<ILoginInfo>> {
     return <Observable<HttpResponse<ILoginInfo>>>
-      this.httpClient.post(`${this.localState.apiKey}/login`, user, { observe: 'response' });
+      this.httpClient.post(`/login`, user, { observe: 'response' });
   }
 }

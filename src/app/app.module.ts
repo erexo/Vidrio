@@ -1,17 +1,20 @@
 import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule, HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+
+import { DragulaModule, DragulaService } from 'ng2-dragula';
+
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
-import { DragulaModule, DragulaService } from 'ng2-dragula';
+import { APIInterceptor } from './core/interceptors/api.interceptor';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -44,6 +47,11 @@ export class MyHammerConfig extends HammerGestureConfig {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: APIInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
