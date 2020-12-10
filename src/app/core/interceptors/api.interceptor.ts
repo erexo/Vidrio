@@ -10,7 +10,7 @@ export class APIInterceptor implements HttpInterceptor {
   constructor(private localState: LocalState) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    req = req.clone({ url: `${this.localState.apiKey}${req.url}` });
+    req = req.clone({ url: `http://${this.localState.apiKey}${req.url}` });
     return next.handle(req);
   }
 }
