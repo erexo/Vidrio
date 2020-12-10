@@ -1,4 +1,9 @@
-<ion-tabs>
+<ion-tabs
+  swipeTab
+  #dashboardTabs
+  (ionTabsDidChange)="ionTabsDidChange($event)"
+  (tabChange)="onTabChange($event)"
+>
   
   <lib-ionic-pullup
     [(state)]="footerState"
@@ -6,7 +11,7 @@
     [minBottomVisible]="-112"
   >
     <ion-fab
-      (click)="localState.openMenu()"
+      (click)="dataState.openMenu()"
       class="footer-icon"
       horizontal="end"
       slot="fixed"

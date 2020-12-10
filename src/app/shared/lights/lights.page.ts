@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators';
 import { SensorComponent } from '../sensor/sensor.component';
 
 @Component({
-  selector: 'app-lights',
+  selector: 'app-light',
   templateUrl: '../sensor/sensor.component.html',
   styleUrls: [
     '../sensor/sensor.component.scss',

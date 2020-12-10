@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LightsPage } from './lights.page';
 
-import { LightsPageRoutingModule } from './lights-routing.module'
+import { LightsPageRoutingModule } from './lights-routing.module';
+
 import { DragulaModule } from 'ng2-dragula';
+
 import { TileModule } from '../tile/tile.module';
 
 @NgModule({

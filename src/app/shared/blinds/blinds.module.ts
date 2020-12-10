@@ -6,6 +6,7 @@ import { BlindsPage } from './blinds.page';
 
 import { BlindsPageRoutingModule } from './blinds-routing.module';
 import { DragulaModule } from 'ng2-dragula';
+
 import { TileModule } from '../tile/tile.module';
 
 @NgModule({

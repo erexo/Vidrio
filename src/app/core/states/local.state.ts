@@ -5,7 +5,6 @@ import { State } from '@ngxs/store';
 import { Computed, DataAction, Payload, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
 import { SensorType } from '../enums/data/sensor-type.enum';
-import { Observable, Subject } from 'rxjs';
 
 export interface LocalModel {
   accessToken: string;
@@ -26,10 +25,6 @@ export interface LocalModel {
 
 @Injectable()
 export class LocalState extends NgxsDataRepository<LocalModel> {
-  private menuOpened: Subject<void> = new Subject<void>();
-
-  public menuOpened$: Observable<void> = this.menuOpened.asObservable();
-
   constructor() {
     super();
   }
@@ -40,6 +35,11 @@ export class LocalState extends NgxsDataRepository<LocalModel> {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.snapshot.accessToken}`
     });
+  }
+
+  @Computed()
+  public get accessToken(): string {
+    return this.snapshot.accessToken;
   }
 
   @Computed()
@@ -71,10 +71,5 @@ export class LocalState extends NgxsDataRepository<LocalModel> {
     this.ctx.patchState({
       sensorType
     });
-  }
-
-  @DataAction()
-  openMenu(): void {
-    this.menuOpened.next();
   }
 }

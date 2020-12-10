@@ -19,7 +19,7 @@ import { LocalState } from '@app/core/states/local.state';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-temperature',
+  selector: 'app-thermal',
   templateUrl: '../sensor/sensor.component.html',
   styleUrls: [
     '../sensor/sensor.component.scss',

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
-import { Computed, DataAction, Payload, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
+import { Computed, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
 
 import { UserService } from '@core/services/user.service';
@@ -59,10 +59,5 @@ export class UserState extends NgxsDataRepository<UserModel> {
       map((res: HttpResponse<ILoginInfo>) => res.status),
       catchError((err: HttpErrorResponse) => of(err.status))
     );
-  }
-
-  @DataAction()
-  logout(): void {
-    this.reset();
   }
 }

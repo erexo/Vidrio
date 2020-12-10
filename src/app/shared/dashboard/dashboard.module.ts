@@ -7,6 +7,8 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { IonicPullupModule } from 'ionic-pullup';
 
+import { SwipeTabModule } from '@app/core/directives/swipe-tab/swipe-tab.module';
+
 import { DashboardPage } from './dashboard.page';
 
 @NgModule({
@@ -15,7 +17,8 @@ import { DashboardPage } from './dashboard.page';
     CommonModule,
     FormsModule,
     DashboardPageRoutingModule,
-    IonicPullupModule
+    IonicPullupModule,
+    SwipeTabModule
   ],
   declarations: [DashboardPage]
 })

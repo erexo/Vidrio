@@ -11,7 +11,6 @@ export class APIInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({ url: `${this.localState.apiKey}${req.url}` });
-    console.log(`🚀 => req`, req);
     return next.handle(req);
   }
 }

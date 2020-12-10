@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-
 import { DragulaModule, DragulaService } from 'ng2-dragula';
 
 import { AppRoutingModule } from './app-routing.module';

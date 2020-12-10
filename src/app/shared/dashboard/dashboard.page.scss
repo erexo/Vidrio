@@ -3,6 +3,11 @@
   max-width: 600px;
 }
 
+::ng-deep .swipe-area {
+  height: 100%;
+  width: 100%;
+}
+
 .footer-icon {
   top: -70px;
 }

@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 
 import { TemperaturePageRoutingModule } from './temperature-routing.module';
 
-import { ChartModule } from '../chart/chart.module';
 import { DragulaModule } from 'ng2-dragula';
-import { TemperaturePage } from './temperature.page';
+
+import { ChartModule } from '../chart/chart.module';
 import { TileModule } from '../tile/tile.module';
+
+import { TemperaturePage } from './temperature.page';
 
 
 @NgModule({

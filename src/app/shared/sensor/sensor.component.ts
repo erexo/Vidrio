@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
-
 
 import { capitalize } from 'lodash-es';
 
@@ -15,11 +14,10 @@ import { LocalState } from '@app/core/states/local.state';
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 
 import { Sensor } from '@app/core/models/sensor/sensor.model';
-import { SensorInfo } from '@app/core/models/sensor/sensor-info.model';
 
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 import { ChartState } from '@app/core/states/chart.state';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
 @Component({
@@ -48,11 +46,9 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
     protected toastController: ToastController
   ) {}
 
-  ngOnInit() {
-    this.fetchSensors(true);
-  }
-
   ionViewDidEnter() {
+    this.dataSubscription = new Subscription();
+    !this.sensors.length && this.fetchSensors(true);
     this.addMenuListener();
     this.addTileDragListener();
   }
@@ -146,7 +142,7 @@ export class SensorComponent implements ViewDidEnter, ViewDidLeave {
   protected async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {}
 
   private addMenuListener(): void {
-    const itemMenuSubscription: Subscription = this.localState.menuOpened$
+    const itemMenuSubscription: Subscription = this.dataState.menuOpened$
       .subscribe(_ => {
         this.presentAlertPrompt()
       });

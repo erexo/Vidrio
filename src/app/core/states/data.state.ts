@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
 import { patch, removeItem, updateItem } from '@ngxs/store/operators';
-import { Computed, StateRepository } from '@ngxs-labs/data/decorators';
+import { Computed, DataAction, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
 
 import { SensorService } from '@app/core/services/sensor.service';
@@ -31,6 +31,10 @@ export interface DataModel {
 
 @Injectable()
 export class DataState extends NgxsDataRepository<DataModel> {
+  private menuOpened: Subject<void> = new Subject<void>();
+
+  public menuOpened$: Observable<void> = this.menuOpened.asObservable();
+
   constructor(private sensorService: SensorService) {
     super();
   }
@@ -38,6 +42,11 @@ export class DataState extends NgxsDataRepository<DataModel> {
   @Computed()
   public get sensors(): Sensor[] {
     return this.snapshot.sensors;
+  }
+
+  public openMenu(): void {
+    console.log("fweffweef")
+    this.menuOpened.next();
   }
 
   public fetchSensors(): Observable<APIResponse<Sensor[]>> {

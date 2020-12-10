@@ -18,7 +18,7 @@ export class TileBlindsComponent {
 
   public SensorToggleDirection = SensorToggleDirection;
   public upButtonDisabled = false;
-  public downButtonDisabled = true;
+  public downButtonDisabled = false;
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -31,8 +31,8 @@ export class TileBlindsComponent {
 
     setTimeout(_ => {
       sensorToggleDirection === SensorToggleDirection.Up
-        ? this.downButtonDisabled = false
-        : this.upButtonDisabled = false;
+        ? this.upButtonDisabled = false
+        : this.downButtonDisabled = false;
       
       this.changeDetectorRef.markForCheck();
     }, 5000)

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { IonTabs, NavController, Platform } from '@ionic/angular';
 
 import { last } from 'lodash-es';
 
@@ -11,6 +11,8 @@ import { LocalState } from '@app/core/states/local.state';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { SensorType } from '@app/core/enums/data/sensor-type.enum';
+import { DataState } from '@app/core/states/data.state';
+import { SwipeTabDirective } from '@app/core/directives/swipe-tab/swipe-tab.directive';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,27 +21,39 @@ import { SensorType } from '@app/core/enums/data/sensor-type.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPage implements OnInit, OnDestroy {
+  @ViewChild(SwipeTabDirective) swipeTabDirective: SwipeTabDirective;
+  @ViewChild('dashboardTabs') dashboardTabs: IonTabs;
+
+  private readonly menuHeight = 127;
 
   public footerState: IonPullUpFooterState;
-  public minBottomVisible: number;
 
   private routeChangeSubscription: Subscription = new Subscription();
 
   constructor(
-    public localState: LocalState,
+    public dataState: DataState,
+    private localState: LocalState,
     private platform: Platform,
+    private navController: NavController,
     private router: Router,
     private userState: UserState
   ) {}
 
   ngOnInit() {
-    this.minBottomVisible = -112;
     this.footerState = IonPullUpFooterState.Expanded;
     this.addRouteChangeListener();
   }
 
   ngOnDestroy() {
     this.routeChangeSubscription.unsubscribe();
+  }
+
+  ionTabsDidChange($event) {
+    this.swipeTabDirective.onTabInitialized($event.tab);
+  }
+
+  onTabChange($event) {
+    this.dashboardTabs.select($event);
   }
 
   public toggleFooter(): void {
@@ -49,13 +63,14 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   public getTopMargin(): number {
-    return this.platform.height() - 127;
+    return this.platform.height() - this.menuHeight;
   }
 
   public logout(): void {
     this.footerState = IonPullUpFooterState.Collapsed;
-    this.userState.logout();
-    this.router.navigate(['login']);
+    this.localState.setAccessToken(null);
+    this.userState.reset();
+    this.navController.navigateBack('login');
   }
 
   private addRouteChangeListener(): void {

@@ -14,7 +14,7 @@ import { filter } from 'rxjs/operators';
 import { SensorComponent } from '../sensor/sensor.component';
 
 @Component({
-  selector: 'app-blinds',
+  selector: 'app-sunblind',
   templateUrl: '../sensor/sensor.component.html',
   styleUrls: [
     '../sensor/sensor.component.scss',
