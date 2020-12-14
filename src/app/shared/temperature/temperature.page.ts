@@ -24,8 +24,8 @@ import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-thermal',
-  templateUrl: '../sensor/sensor.component.html',
-  styleUrls: ['../sensor/sensor.component.scss'],
+  templateUrl: '../sensor/sensor.page.html',
+  styleUrls: ['../sensor/sensor.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TemperaturePage extends SensorPage {

@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { Plugins } from '@capacitor/core';
 
-// import 'capacitor-dark-mode';
+import 'capacitor-dark-mode';
 
 const { DarkMode } = Plugins;
 

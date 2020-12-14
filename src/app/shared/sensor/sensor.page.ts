@@ -23,8 +23,8 @@ import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-sensor',
-  templateUrl: './sensor.component.html',
-  styleUrls: ['./sensor.component.scss'],
+  templateUrl: './sensor.page.html',
+  styleUrls: ['./sensor.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SensorPage implements ViewDidEnter, ViewDidLeave {

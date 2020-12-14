@@ -12,7 +12,7 @@ import { ChartState } from '@app/core/states/chart.state';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
 
-import { SensorPage } from '../sensor/sensor.page';
+import { SensorPage } from '@app/shared/sensor/sensor.page';
 
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
@@ -23,8 +23,8 @@ import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-sunblind',
-  templateUrl: '../sensor/sensor.component.html',
-  styleUrls: ['../sensor/sensor.component.scss'],
+  templateUrl: '../sensor/sensor.page.html',
+  styleUrls: ['../sensor/sensor.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlindsPage extends SensorPage {
