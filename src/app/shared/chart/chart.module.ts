@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
+
 import { ChartComponent } from '@app/shared/chart/chart.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ],
   declarations: [
     ChartComponent

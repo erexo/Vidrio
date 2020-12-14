@@ -16,6 +16,8 @@ import { ResponseType } from '@app/core/enums/http/response-type.enum';
 
 import { SensorPage } from '@app/shared/sensor/sensor.page';
 
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
+
 import { Light } from '@app/core/models/light/light.model';
 
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
@@ -94,7 +96,7 @@ export class LightsPage extends SensorPage {
     await alert.present();
   }
 
-  public async toggleSensor(sensorID: number): Promise<void> {
+  public async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {
     const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
 
     const toggleSensorSubscription: Subscription = this.dataState.toggleLight(sensorID)

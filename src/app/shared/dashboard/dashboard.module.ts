@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { IonicPullupModule } from 'ionic-pullup';
 
 import { DashboardPageRoutingModule } from '@app/shared/dashboard/dashboard-routing.module';
+import { SensorPageModule } from '@app/shared/sensor/sensor.module';
 import { SwipeTabModule } from '@app/core/directives/swipe-tab/swipe-tab.module';
 
 import { DashboardPage } from '@app/shared/dashboard/dashboard.page';
@@ -18,7 +19,8 @@ import { DashboardPage } from '@app/shared/dashboard/dashboard.page';
     FormsModule,
     DashboardPageRoutingModule,
     IonicPullupModule,
-    SwipeTabModule
+    SwipeTabModule,
+    SensorPageModule
   ],
   declarations: [DashboardPage]
 })
