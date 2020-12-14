@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-
 import { Plugins } from '@capacitor/core';
 
 import 'capacitor-dark-mode';
@@ -20,18 +17,13 @@ export class AppComponent {
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private platform: Platform,
-    private renderer: Renderer2,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private renderer: Renderer2
   ) {
     this.initializeApp();
   }
 
   private initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-
       if (this.platform.is("android") || this.platform.is("ios")) {
         this.initializeThemeListener();
       }

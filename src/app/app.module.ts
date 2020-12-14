@@ -1,28 +1,19 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Injectable, NgModule } from '@angular/core';
-import { BrowserModule, HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule, HammerModule } from '@angular/platform-browser';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { IonicModule } from '@ionic/angular';
 
 import { DragulaModule, DragulaService } from 'ng2-dragula';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { CoreModule } from '@app/core/core.module';
 
-import { APIInterceptor } from '@app/core/interceptors/api.interceptor';
+import { APIInterceptorProvider } from '@app/core/providers/api-interceptor.provider';
+import { HammerGestureProvider } from '@app/core/providers/hammer-gesture.provider';
 
 import { AppComponent } from '@app/app.component';
-
-@Injectable()
-export class MyHammerConfig extends HammerGestureConfig {
-  overrides = <any> {
-    swipe: { direction: Hammer.DIRECTION_ALL },
-  };
-}
+import { IonicRouteProvider } from './core/providers/ionic-route.provider';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,21 +29,9 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   providers: [
     DragulaService,
-    StatusBar,
-    SplashScreen,
-    {
-      provide: RouteReuseStrategy,
-      useClass: IonicRouteStrategy
-    },
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: MyHammerConfig
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: APIInterceptor,
-      multi: true,
-    }
+    IonicRouteProvider,
+    HammerGestureProvider,
+    APIInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
