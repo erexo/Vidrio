@@ -11,9 +11,9 @@ import { CoreModule } from '@app/core/core.module';
 
 import { APIInterceptorProvider } from '@app/core/providers/api-interceptor.provider';
 import { HammerGestureProvider } from '@app/core/providers/hammer-gesture.provider';
+import { IonicRouteProvider } from '@app/core/providers/ionic-route.provider';
 
 import { AppComponent } from '@app/app.component';
-import { IonicRouteProvider } from './core/providers/ionic-route.provider';
 
 @NgModule({
   declarations: [AppComponent],

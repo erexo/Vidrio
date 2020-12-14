@@ -28,7 +28,7 @@ import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SensorPage implements ViewDidEnter, ViewDidLeave {
-  protected readonly dragModel = 'SENSORS';
+  public readonly dragModel = 'SENSORS';
 
   public sensors: Sensor[] = [];
   public loaderVisible = false;
@@ -37,12 +37,12 @@ export class SensorPage implements ViewDidEnter, ViewDidLeave {
   protected dataSubscription: Subscription = new Subscription();
 
   constructor(
+    public localState: LocalState,
     protected alertController: AlertController,
     protected changeDetectorRef: ChangeDetectorRef,
     protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
-    protected localState: LocalState,
     protected router: Router,
     protected toastController: ToastController
   ) {}
@@ -138,9 +138,10 @@ export class SensorPage implements ViewDidEnter, ViewDidLeave {
     return this.chartState.selectedID === sensorID && this.loaderVisible;
   }
 
-  protected async fetchSensorData(sensorID: number): Promise<void> {}
+  public async fetchSensorData(sensorID: number): Promise<void> {}
+  public async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {}
+
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {}
-  protected async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {}
 
   private addMenuListener(): void {
     const itemMenuSubscription: Subscription = this.dataState.menuOpened$

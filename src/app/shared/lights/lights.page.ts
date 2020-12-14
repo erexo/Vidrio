@@ -29,23 +29,23 @@ import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 export class LightsPage extends SensorPage {
 
   constructor(
+    public localState: LocalState,
     protected alertController: AlertController,
     protected changeDetectorRef: ChangeDetectorRef,
     protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
-    protected localState: LocalState,
     protected popoverController: PopoverController,
     protected router: Router,
     protected toastController: ToastController,
   ) {
     super(
+      localState,
       alertController,
       changeDetectorRef,
       chartState,
       dataState,
       dragulaService,
-      localState,
       router,
       toastController
     );
@@ -94,7 +94,7 @@ export class LightsPage extends SensorPage {
     await alert.present();
   }
 
-  protected async toggleSensor(sensorID: number): Promise<void> {
+  public async toggleSensor(sensorID: number): Promise<void> {
     const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
 
     const toggleSensorSubscription: Subscription = this.dataState.toggleLight(sensorID)
