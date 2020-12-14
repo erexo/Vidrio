@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginGuardService } from '@app/core/guards/login-guard.service';
 
-import { LoginPage } from './login.page';
+import { LoginPage } from '@app/shared/login/login.page';
 
 const routes: Routes = [
   {

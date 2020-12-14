@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 import { capitalize } from 'lodash-es';
@@ -8,17 +10,16 @@ import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { ChartState } from '@app/core/states/chart.state';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
 
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
 import { Sensor } from '@app/core/models/sensor/sensor.model';
 
 import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { ChartState } from '@app/core/states/chart.state';
-import { Router } from '@angular/router';
-import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
 @Component({
   selector: 'app-sensor',
@@ -26,7 +27,7 @@ import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direct
   styleUrls: ['./sensor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SensorComponent implements ViewDidEnter, ViewDidLeave {
+export class SensorPage implements ViewDidEnter, ViewDidLeave {
   protected readonly dragModel = 'SENSORS';
 
   public sensors: Sensor[] = [];

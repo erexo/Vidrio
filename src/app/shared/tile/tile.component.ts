@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 
 import { Sensor } from '@app/core/models/sensor/sensor.model';

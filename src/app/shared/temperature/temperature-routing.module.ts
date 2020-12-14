@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TemperaturePage } from './temperature.page';
+
+import { TemperaturePage } from '@app/shared/temperature/temperature.page';
 
 const routes: Routes = [
   {

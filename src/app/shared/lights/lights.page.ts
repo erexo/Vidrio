@@ -1,27 +1,32 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { Light } from '@app/core/models/light/light.model';
+
+import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+
+import { DragulaService } from 'ng2-dragula';
+
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 import { ChartState } from '@app/core/states/chart.state';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
-import { DragulaService } from 'ng2-dragula';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { SensorComponent } from '../sensor/sensor.component';
+
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+
+import { SensorPage } from '@app/shared/sensor/sensor.page';
+
+import { Light } from '@app/core/models/light/light.model';
+
+import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-light',
   templateUrl: '../sensor/sensor.component.html',
-  styleUrls: [
-    '../sensor/sensor.component.scss',
-    'lights.page.scss'
-  ],
+  styleUrls: ['../sensor/sensor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LightsPage extends SensorComponent {
+export class LightsPage extends SensorPage {
 
   constructor(
     protected alertController: AlertController,

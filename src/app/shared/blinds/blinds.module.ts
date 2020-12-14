@@ -1,13 +1,15 @@
-import { IonicModule } from '@ionic/angular';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BlindsPage } from './blinds.page';
 
-import { BlindsPageRoutingModule } from './blinds-routing.module';
+import { IonicModule } from '@ionic/angular';
+
 import { DragulaModule } from 'ng2-dragula';
 
-import { TileModule } from '../tile/tile.module';
+import { BlindsPageRoutingModule } from './blinds-routing.module';
+import { TileModule } from '@app/shared/tile/tile.module';
+
+import { BlindsPage } from '@app/shared/blinds/blinds.page';
 
 @NgModule({
   imports: [

@@ -1,14 +1,15 @@
-import { IonicModule } from '@ionic/angular';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LightsPage } from './lights.page';
 
-import { LightsPageRoutingModule } from './lights-routing.module';
+import { IonicModule } from '@ionic/angular';
 
 import { DragulaModule } from 'ng2-dragula';
 
-import { TileModule } from '../tile/tile.module';
+import { LightsPageRoutingModule } from '@app/shared/lights/lights-routing.module';
+import { TileModule } from '@app/shared/tile/tile.module';
+
+import { LightsPage } from '@app/shared/lights/lights.page';
 
 @NgModule({
   imports: [

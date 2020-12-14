@@ -1,14 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { ChartState } from '@app/core/states/chart.state';
+
 import { NavParams, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 import { Chart } from 'chart.js';
-import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+
 import 'chartjs-adapter-date-fns';
 import { fromUnixTime, format } from 'date-fns';
+
+import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+
+import { ChartState } from '@app/core/states/chart.state';
+
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+
+import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+
 
 @Component({
   selector: 'app-chart',

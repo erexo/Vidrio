@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LightsPage } from './lights.page';
+
+import { LightsPage } from '@app/shared/lights/lights.page';
 
 const routes: Routes = [
   {

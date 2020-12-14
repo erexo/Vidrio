@@ -1,18 +1,22 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+
 import { IonTabs, NavController, Platform } from '@ionic/angular';
+
+import { IonPullUpFooterState } from 'ionic-pullup';
 
 import { last } from 'lodash-es';
 
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+import { DataState } from '@app/core/states/data.state';
+import { LocalState } from '@app/core/states/local.state';
 import { UserState } from '@app/core/states/user.state';
 
-import { IonPullUpFooterState } from 'ionic-pullup';
-import { LocalState } from '@app/core/states/local.state';
-import { filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { SensorType } from '@app/core/enums/data/sensor-type.enum';
-import { DataState } from '@app/core/states/data.state';
 import { SwipeTabDirective } from '@app/core/directives/swipe-tab/swipe-tab.directive';
+
+import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 
 @Component({
   selector: 'app-dashboard',

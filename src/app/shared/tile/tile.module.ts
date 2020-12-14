@@ -1,11 +1,12 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TileComponent } from './tile.component';
-import { TileTemperatureComponent } from './tile-temperature/tile-temperature.component';
-import { TileBlindsComponent } from './tile-blinds/tile-blinds.component';
-import { TileLightsComponent } from './tile-lights/tile-lights.component';
+import { IonicModule } from '@ionic/angular';
+
+import { TileBlindsComponent } from '@app/shared/tile/tile-blinds/tile-blinds.component';
+import { TileComponent } from '@app/shared/tile/tile.component';
+import { TileLightsComponent } from '@app/shared/tile/tile-lights/tile-lights.component';
+import { TileTemperatureComponent } from '@app/shared/tile/tile-temperature/tile-temperature.component';
 
 @NgModule({
   imports: [

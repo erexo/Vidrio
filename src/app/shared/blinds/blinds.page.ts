@@ -1,28 +1,33 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { Blind } from '@app/core/models/blind/blind.model';
+
+import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+
+import { DragulaService } from 'ng2-dragula';
+
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 import { ChartState } from '@app/core/states/chart.state';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
-import { DragulaService } from 'ng2-dragula';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { SensorComponent } from '../sensor/sensor.component';
+
+import { SensorPage } from '../sensor/sensor.page';
+
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
+
+import { Blind } from '@app/core/models/blind/blind.model';
+
+import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-sunblind',
   templateUrl: '../sensor/sensor.component.html',
-  styleUrls: [
-    '../sensor/sensor.component.scss',
-    'blinds.page.scss'
-  ],
+  styleUrls: ['../sensor/sensor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlindsPage extends SensorComponent {
+export class BlindsPage extends SensorPage {
 
   constructor(
     protected alertController: AlertController,
