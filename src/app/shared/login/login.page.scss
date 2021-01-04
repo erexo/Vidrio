@@ -1,6 +1,6 @@
 .grid {
   align-items: center;
-  background: url('../../../assets/images/login-background.jpg') no-repeat center center / cover;
+  background: url('../../../assets/images/app-background.jpg') no-repeat center center / cover;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -11,41 +11,5 @@
 
   .button-row {
     margin-top: 20px;
-  }
-
-  ion-item {
-    --background: none;
-    --border-color: transparent !important;
-    --border-width: 0 !important;
-    --highlight-height: 0;
-    background: rgba(var(--ion-color-light-contrast-rgb), 0.05);
-    border: 2px solid transparent;
-    border-radius: .5em;
-    --padding-bottom: 5px;
-
-    &:not(.item-has-focus).ion-touched.ion-invalid {
-      border: 2px solid var(--ion-color-danger);
-    }
-
-    &.item-has-focus {
-      border: 2px solid var(--ion-color-primary);
-
-      ion-input {
-        color: var(--ion-color-light-contrast);
-      }
-
-      ion-label {
-        color: var(--ion-color-primary);
-      }
-    }
-
-    ion-input {
-      color: rgba(var(--ion-color-light-contrast-rgb), 0.5);
-      height: 30px;
-    }
-
-    ion-label {
-      color: rgba(var(--ion-color-light-contrast-rgb), 0.2);
-    }
   }
 }

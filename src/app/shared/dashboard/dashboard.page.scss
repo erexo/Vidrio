@@ -1,6 +1,6 @@
 ::ng-deep .footer {
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 508px;
 }
 
 ::ng-deep .swipe-area {
@@ -73,9 +73,9 @@ ion-toolbar {
 ion-tab-bar {
   --background: rgba(var(--ion-card-background-rgb), 0.4);
   backdrop-filter: blur(6px);
-  border-color: rgb(0 0 0 / 4%);
-  border-style: solid;
-  border-width: 0 2px;
+  border: 0;
+  flex-wrap: wrap;
+  height: 112px;
 
   .rotate-180 {
     transform: rotate(180deg);
@@ -84,6 +84,8 @@ ion-tab-bar {
   ion-tab-button {
     --background: transparent;
     color: rgba(var(--ion-text-color-rgb), 0.6);
+    flex: 0 1 33.33%;
+    height: 56px;
 
     &.tab-selected {
       color: var(--ion-color-primary);

@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AlertController, IonInput, NavController, ToastController, ViewDidEnter } from '@ionic/angular';
+import { AlertController, IonInput, NavController, Platform, ToastController, ViewDidEnter } from '@ionic/angular';
 
 import { Subscription } from 'rxjs';
 
 import { LocalState } from '@app/core/states/local.state';
-import { UserState } from '@app/core/states/user.state';
 
 import { HTTPStatusCode } from '@app/core/enums/http/http-status-code.enum';
 
 import { getToast } from '@app/core/helpers/response-helpers';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -30,12 +30,14 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
     private formBuilder: FormBuilder,
     private localState: LocalState,
     private navController: NavController,
-    private toastController: ToastController,
-    private userState: UserState
+    private platform: Platform,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
-    this.checkApiKey();
+    if (this.platform.is("android") || this.platform.is("ios") || !environment.production) {
+      this.checkApiKey();
+    }
 
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -60,7 +62,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
     form.markAllAsTouched();
 
     if (form.valid) {
-      this.loginSubscription = this.userState.login(form.value)
+      this.loginSubscription = this.localState.login(form.value)
         .subscribe(async (status: HTTPStatusCode) => {
           if (status === HTTPStatusCode.OK || status === HTTPStatusCode.Accepted) {
             this.navController.navigateRoot(['dashboard']);
@@ -90,7 +92,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
         inputs: [
           {
             name: 'apiKey',
-            type: 'text',
+            type: 'url',
             placeholder: 'Api Key',
             value: 'localhost:4235'
           }

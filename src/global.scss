@@ -42,20 +42,24 @@ input {
 
 ion-card {
   background: rgba(var(--ion-card-background-rgb), 0.4);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
   border-radius: 1.5em;
   box-shadow: -1px 1px 2px rgba(0,0,0,0.07), 
     -2px 2px 4px rgba(0,0,0,0.07), 
     -4px 4px 8px rgba(0,0,0,0.07), 
     -8px 8px 16px rgba(0,0,0,0.07);
   transition: all .2s ease-in-out;
+}
 
-  ion-card-title {
-    color: rgba(var(--ion-color-dark-rgb), 0.6);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+ion-card ion-card-title, ion-list-header ion-label {
+  color: rgba(var(--ion-color-dark-rgb), 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+ion-list-header ion-label {
+  font-size: 1.5em;
 }
 
 ion-header {
@@ -94,24 +98,105 @@ ion-fab-button {
     -8px 8px 16px rgba(var(--ion-color-primary-rgb), 0.07);
 }
 
+ion-item.internal {
+  --background: none;
+  --border-color: transparent !important;
+  --border-width: 0 !important;
+  --highlight-height: 0;
+  align-items: center;
+  background: rgba(var(--ion-color-light-contrast-rgb), 0.05);
+  border: 2px solid transparent;
+  border-radius: .5em;
+  display: flex;
+  height: 55px;
+
+  &::part(native) {
+    height: 55px;
+  }
+
+  ion-input {
+    color: rgba(var(--ion-color-light-contrast-rgb), 0.5) !important;
+    height: 30px;
+  }
+
+  ion-label {
+    color: rgba(var(--ion-color-light-contrast-rgb), 0.2) !important;
+  }
+
+  ion-select {
+    &::part(text), &::part(placeholder) {
+      margin-right: .5em;
+    }
+
+    &::part(text) {
+      color: rgba(var(--ion-color-light-contrast-rgb), 0.5) !important;
+    }
+  }
+
+  &:not(.item-has-focus).ion-touched.ion-invalid {
+    border: 2px solid var(--ion-color-danger);
+  }
+
+  &.item-has-focus, &.ion-focused {
+    border: 2px solid var(--ion-color-primary);
+
+    ion-input {
+      color: var(--ion-color-light-contrast) !important;
+    }
+
+    ion-label {
+      color: var(--ion-color-primary) !important;
+    }
+  }
+}
+
+.alert-radio-group.sc-ion-alert-md, .alert-checkbox-group.sc-ion-alert-md {
+  border: 0;
+
+  .alert-radio-label.sc-ion-alert-md {
+    color: rgba(var(--ion-color-light-contrast-rgb), 0.4) !important;
+  }
+
+  [aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+    color: var(--ion-color-primary) !important;
+  }
+}
+
+ion-modal {
+  --height: auto !important;
+
+  .modal-wrapper {
+    border-radius: .5em !important;
+    margin: 1em;
+    max-width: 400px !important;
+
+    .ion-page {
+      contain: content;
+      max-height: 90vh;
+      padding: 1em !important;
+      position: relative;
+
+      .modal-content {
+        overflow: auto;
+      }
+    }
+  }
+}
+
 .toast-container {
   --max-width: 500px;
   text-align: center;
 }
 
 .popover-container .popover-content {
+  --max-height: 500px;
+  --max-width: 500px;
   background: var(--ion-card-background);
   border-radius: 1.5em;
   transition: all .2s ease-in-out;
-  --max-height: 500px;
   height: 90vw;
-  --max-width: 500px;
   width: 90vw;
   padding: 15px;
-}
-
-.shadow {
-  box-shadow: 0 2px 0 rgba(0,0,0,0.04);
 }
 
 // Dragulla styles

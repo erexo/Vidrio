@@ -12,7 +12,6 @@ import { filter } from 'rxjs/operators';
 
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
-import { UserState } from '@app/core/states/user.state';
 
 import { SwipeTabDirective } from '@app/core/directives/swipe-tab/swipe-tab.directive';
 
@@ -36,15 +35,13 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   constructor(
     public dataState: DataState,
-    private localState: LocalState,
+    public localState: LocalState,
     private platform: Platform,
-    private navController: NavController,
-    private router: Router,
-    private userState: UserState
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.footerState = IonPullUpFooterState.Expanded;
+    this.footerState = IonPullUpFooterState.Collapsed;
     this.addRouteChangeListener();
   }
 
@@ -55,26 +52,19 @@ export class DashboardPage implements OnInit, OnDestroy {
   ionTabsDidChange($event) {
     this.swipeTabDirective.onTabInitialized($event.tab);
   }
-
-  onTabChange($event) {
+  
+  public onTabChange($event): void {
     this.dashboardTabs.select($event);
-  }
-
-  public toggleFooter(): void {
-    this.footerState = this.footerState === IonPullUpFooterState.Collapsed
-      ? IonPullUpFooterState.Expanded
-      : IonPullUpFooterState.Collapsed;
   }
 
   public getTopMargin(): number {
     return this.platform.height() - this.menuHeight;
   }
 
-  public logout(): void {
-    this.footerState = IonPullUpFooterState.Collapsed;
-    this.localState.setAccessToken(null);
-    this.userState.reset();
-    this.navController.navigateBack('login');
+  public toggleFooter(): void {
+    this.footerState = this.footerState === IonPullUpFooterState.Collapsed
+      ? IonPullUpFooterState.Expanded
+      : IonPullUpFooterState.Collapsed;
   }
 
   private addRouteChangeListener(): void {

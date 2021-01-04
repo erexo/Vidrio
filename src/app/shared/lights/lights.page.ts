@@ -39,7 +39,7 @@ export class LightsPage extends SensorPage {
     protected dragulaService: DragulaService,
     protected popoverController: PopoverController,
     protected router: Router,
-    protected toastController: ToastController,
+    protected toastController: ToastController
   ) {
     super(
       localState,

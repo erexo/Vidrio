@@ -16,7 +16,10 @@
     </ng-template>
   
     
-    <ion-button (click)="toggleMenu()">
+    <ion-button
+      *ngIf="localState.isAdmin"
+      (click)="toggleMenu()"
+    >
       <ion-icon
         [name]="getToggleIconName()"
         slot="icon-only"

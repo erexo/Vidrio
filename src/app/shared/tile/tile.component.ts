@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { LocalState } from '@app/core/states/local.state';
+
 import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direction.enum';
 import { SensorType } from '@app/core/enums/data/sensor-type.enum';
 
@@ -27,7 +29,7 @@ export class TileComponent {
   public tileDetailed = false;
   public menuHidden = true;
 
-  constructor() { }
+  constructor(public localState: LocalState) { }
 
   public onTileTap(event: any): void {
     if (event.tapCount === 2 && this.sensorType === SensorType.Temperature) {

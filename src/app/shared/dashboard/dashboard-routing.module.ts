@@ -9,6 +9,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
     component: DashboardPage,
     children: [
       {
@@ -35,9 +36,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: '',
-    redirectTo: '/dashboard/thermal',
-    pathMatch: 'full'
+    path: '**',
+    redirectTo: '/dashboard/thermal'
   }
 ];
 

@@ -1,9 +1,44 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item
+      *ngFor="let user of users"
+      class="external"
+    >
+      <ion-label>{{ user.username }}</ion-label>
+      <ion-badge
+        *ngIf="menuHidden"
+        color="light"
+      >
+        {{ getUserRoleName(user.role) }}
+      </ion-badge>
 
+      <ng-container *ngIf="!menuHidden">
+        <ion-button>
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+  
+        <ion-button>
+          <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+        </ion-button>
+  
+        <ion-button>
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+
+      <ion-button (click)="toggleMenu()">
+        <ion-icon
+          [name]="getToggleIconName()"
+          slot="icon-only"
+        >
+        </ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

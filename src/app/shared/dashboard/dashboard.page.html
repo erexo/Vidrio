@@ -8,9 +8,10 @@
   <lib-ionic-pullup
     [(state)]="footerState"
     [toolbarTopMargin]="getTopMargin()"
-    [minBottomVisible]="-112"
+    [minBottomVisible]="-168"
   >
     <ion-fab
+      *ngIf="localState.isAdmin"
       (click)="dataState.openMenu()"
       class="footer-icon"
       horizontal="end"
@@ -54,19 +55,16 @@
         <ion-icon name="sunny-outline"></ion-icon>
         <ion-label>Lights</ion-label>
       </ion-tab-button>
-    </ion-tab-bar>
 
-    <ion-toolbar>
-      <ion-buttons>
-        <ion-button>
-          <ion-label>Settings</ion-label>
-          <ion-icon name="settings-outline"></ion-icon>
-        </ion-button>
-        <ion-button (click)="logout()">
-          <ion-label>Logout</ion-label>
-          <ion-icon name="log-out-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
+      <ion-tab-button tab="settings">
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="localState.logout()">
+        <ion-label>Logout</ion-label>
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
   </lib-ionic-pullup>
 </ion-tabs>

@@ -1,8 +1,8 @@
 :host {
-  background: url('../../../../src/assets/images/login-background.jpg') no-repeat center center / cover !important;
+  background: url('../../../../src/assets/images/app-background.jpg') no-repeat center center / cover !important;
 
   ion-toolbar, ion-content {
-    --background: transparent
+    --background: transparent;
   }
 
   .grid {

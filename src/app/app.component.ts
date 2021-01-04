@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
 
-// import 'capacitor-dark-mode';
+import 'capacitor-dark-mode';
 
 const { DarkMode } = Plugins;
 

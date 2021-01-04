@@ -1,0 +1,61 @@
+:host {
+  background: url('../../../../src/assets/images/app-background.jpg') no-repeat center center / cover !important;
+
+  ion-toolbar, ion-content {
+    --background: transparent;
+  }
+
+  ion-list {
+    background: transparent;
+    height: 100%;
+    padding: 0 2em;
+    display: grid;
+    grid-auto-rows: 48px;
+    grid-gap: .75em;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 100%;
+    padding: 0 .75em;
+
+    ion-item {
+      --background: none;
+      --border-color: transparent;
+      background: rgba(var(--ion-card-background-rgb), 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 0.5em;
+
+      ion-label {
+        color: rgba(var(--ion-text-color-rgb), 0.6);
+      }
+
+      ion-badge {
+        background: transparent;
+        border: 1px solid rgba(var(--ion-text-color-rgb), 0.6);
+        color: rgba(var(--ion-text-color-rgb), 0.6);
+        font-weight: 400;
+        letter-spacing: .1em;
+        margin-right: 1em;
+        padding: .25em 0.5em;
+        text-transform: uppercase;
+      }
+
+      ion-button {
+        --background: transparent;
+        --background-hover-opacity: 0;
+        --box-shadow: 0;
+        --ripple-color: var(--ion-color-primary);
+        height: 45px;
+        margin: 0;
+  
+        &:hover * {
+          color: var(--ion-color-primary);
+        }
+  
+        ion-icon {
+          color: rgba(var(--ion-text-color-rgb), 0.6);
+          height: 19px;
+          width: 19px;
+        }
+      }
+    }
+  }
+}

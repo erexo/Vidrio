@@ -1,0 +1,10 @@
+ion-list {
+  display: grid;
+  grid-template-rows: 45px repeat(2, 55px);
+  grid-row-gap: .75em;
+  padding: 0;
+
+  ion-item:first-child {
+    margin-bottom: .5em;
+  }
+}
