@@ -8,12 +8,10 @@
   ion-list {
     background: transparent;
     height: 100%;
-    padding: 0 2em;
     display: grid;
     grid-auto-rows: 48px;
     grid-gap: .75em;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    height: 100%;
     padding: 0 .75em;
 
     ion-item {
@@ -57,5 +55,11 @@
         }
       }
     }
+  }
+}
+
+@media(max-width: 768px) {
+  ion-list {
+    grid-template-columns: 1fr !important;
   }
 }

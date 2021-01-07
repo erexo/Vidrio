@@ -1,15 +1,22 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { UserRole } from '@app/core/enums/user/user-role.enum';
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { IUserInfo } from '@app/core/interfaces/user/user-info.interface';
-import { User } from '@app/core/models/user/user.model';
-import { DataState } from '@app/core/states/data.state';
-import { UsersState } from '@app/core/states/users.state';
 import { ModalController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { SettingsCreateUserComponent } from './settings-create-user/settings-create-user.component';
+
+import { DataState } from '@app/core/states/data.state';
+import { UsersState } from '@app/core/states/users.state';
+
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+import { UserRole } from '@app/core/enums/user/user-role.enum';
+
+import { IUserInfo } from '@app/core/interfaces/user/user-info.interface';
+
+import { FormControl } from '@app/core/models/form/form-control.model';
+import { User } from '@app/core/models/user/user.model';
+
+import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-settings',
@@ -83,12 +90,21 @@ export class SettingsPage implements ViewDidEnter, ViewDidLeave {
   }
 
   protected async presentUserCreateModal(): Promise<void> {
-    const modal: HTMLIonModalElement = await this.modalController.create({
-      component: SettingsCreateUserComponent,
-      cssClass: 'modal-container'
-    });
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [
+        new  FormControl(FormControlType.Text, 'username', '', 'Name'),
+        new  FormControl(FormControlType.Password, 'password', '', 'Password'),
+        new  FormControl(FormControlType.Select, 'role', UserRole.Guest, 'Role', '', UserRole)
+      ],
+      'Create an user'
+    );
 
     await modal.present();
+    
+    modal.onWillDismiss().then(event => {
+      this.createUser(event.data);
+    });
   }
 
   public editUser(): void {

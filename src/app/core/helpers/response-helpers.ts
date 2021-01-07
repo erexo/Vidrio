@@ -1,6 +1,11 @@
+import { ModalController, ToastController } from '@ionic/angular';
+
+import { ModalPage } from '@app/shared/modal/modal.page';
+
 import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 import { ResponseType } from '@core/enums/http/response-type.enum';
-import { ToastController } from '@ionic/angular';
+
+import { FormControl } from '@core/models/form/form-control.model';
 
 export const responseFilter = (
   toast: HTMLIonToastElement,
@@ -32,4 +37,17 @@ export const getToast = async (toastController: ToastController, message?: strin
   });
 
   return toast;
+}
+
+export const getModal = async (modalController: ModalController, controls: FormControl[], title?: string): Promise<HTMLIonModalElement> => {
+  const modal: Promise<HTMLIonModalElement> = modalController.create({
+    component: ModalPage,
+    cssClass: 'modal-container',
+    componentProps: {
+      controls,
+      title
+    }
+  });
+
+  return modal;
 }

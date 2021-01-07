@@ -4,17 +4,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SettingsPageRoutingModule } from './settings-routing.module';
+import { ModalPageRoutingModule } from './modal-routing.module';
 
-import { SettingsPage } from './settings.page';
+import { ModalPage } from './modal.page';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
-    SettingsPageRoutingModule
+    ModalPageRoutingModule
   ],
-  declarations: [SettingsPage]
+  declarations: [ModalPage]
 })
-export class SettingsPageModule {}
+export class ModalPageModule {}
