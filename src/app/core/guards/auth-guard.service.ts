@@ -23,6 +23,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
       this.navController.navigateRoot(['login']);
       return false;
     }
+
     return true;
   }
 
@@ -33,7 +34,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
 
     switch (userRole) {
       case UserRole.Guest:
-        canActivateChild = sensorPath === SensorType.Temperature;
+        canActivateChild = sensorPath === SensorType.Temperature || sensorPath === '';
         break;
       case UserRole.User:
         canActivateChild = sensorPath !== 'settings';

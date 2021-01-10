@@ -1,5 +1,5 @@
 <ion-list>
-  <ion-list-header>
+  <ion-list-header *ngIf="title">
     <ion-label>
       {{ title }}
     </ion-label>
@@ -40,13 +40,25 @@
         </ng-container>
       </ion-item>
     </ng-container>
-  
-    <ion-button
-      expand="block"
-      type="submit"
-    >
-      Submit
-    </ion-button>
+
+    <div class="buttons-container">
+      <ion-button
+        (click)="dismiss()"
+        class="button-dismiss"
+        expand="block"
+        type="button"
+      >
+        Cancel
+      </ion-button>
+    
+      <ion-button
+        [color]="submitColor"
+        expand="block"
+        type="submit"
+      >
+        {{ submitTitle }}
+      </ion-button>
+    </div>
   </form>
 
 </ion-list>

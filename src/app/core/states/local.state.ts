@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 import { State } from '@ngxs/store';
 import { Computed, DataAction, Payload, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
@@ -38,7 +38,8 @@ export interface LocalModel {
 export class LocalState extends NgxsDataRepository<LocalModel> {
   constructor(
     private navController: NavController,
-    private userService: UserService
+    private userService: UserService,
+    private zone: NgZone
   ) {
     super();
   }
@@ -65,7 +66,7 @@ export class LocalState extends NgxsDataRepository<LocalModel> {
 
   @Computed()
   public get isAdmin(): boolean {
-    return this.snapshot.user.role === UserRole.Admin;
+    return this.snapshot.user?.role === UserRole.Admin;
   }
 
   @DataAction()
@@ -96,7 +97,7 @@ export class LocalState extends NgxsDataRepository<LocalModel> {
       user: null
     });
     
-    this.navController.navigateBack('login');
+    this.zone.run(_ => this.navController.navigateBack('login'));
   }
   
   public login(user: ILoginUser): Observable<HTTPStatusCode> {

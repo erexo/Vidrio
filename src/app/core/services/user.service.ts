@@ -41,14 +41,14 @@ export class UserService {
 
   public updateUserPassword(userID: number, password: string): Observable<HttpResponse<HTTPStatusCode>> {
     return <Observable<HttpResponse<HTTPStatusCode>>>
-      this.httpClient.patch(`/user/update/password/${userID}`, password, {
+      this.httpClient.patch(`/user/update/password/${userID}`, { password }, {
         observe: 'response'
       });
   }
 
   public updateUserRole(userID: number, role: UserRole): Observable<HttpResponse<HTTPStatusCode>> {
     return <Observable<HttpResponse<HTTPStatusCode>>>
-      this.httpClient.patch(`/user/update/role/${userID}`, role, {
+      this.httpClient.patch(`/user/update/role/${userID}`, { role }, {
         observe: 'response'
       });
   }

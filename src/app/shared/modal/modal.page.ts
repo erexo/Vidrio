@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 import { keyBy, mapValues } from 'lodash-es';
 
-import { FormControl } from '@app/core/models/form/form-control.model';
 import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
+
+import { FormControl } from '@app/core/models/form/form-control.model';
 
 @Component({
   selector: 'app-modal',
@@ -15,6 +16,9 @@ import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 })
 export class ModalPage implements OnInit {
   @Input() controls: FormControl[];
+  @Input() submitColor: string = 'primary';
+  @Input() submitTitle: string = 'Submit';
+  @Input() title: string;
 
   public readonly FormControlType = FormControlType;
 
@@ -22,8 +26,7 @@ export class ModalPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private modalController: ModalController,
-    private toastController: ToastController
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -33,6 +36,10 @@ export class ModalPage implements OnInit {
     );
 
     this.form = this.formBuilder.group(controls, { updateOn: 'submit' });
+  }
+
+  public dismiss(): void {
+    this.modalController.dismiss();
   }
 
   public async onSubmit(form: FormGroup): Promise<void> {

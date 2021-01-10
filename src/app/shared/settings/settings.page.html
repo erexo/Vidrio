@@ -1,44 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Settings</ion-title>
+    <ion-title>Users</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item
+    <app-settings-tile
       *ngFor="let user of users"
-      class="external"
+      (userDeleted)="presentUserDeleteModal($event)"
+      (userPasswordEdited)="presentUserPasswordModal($event)"
+      (userRoleEdited)="presentUserRoleModal($event)"
+      [user]="user"
     >
-      <ion-label>{{ user.username }}</ion-label>
-      <ion-badge
-        *ngIf="menuHidden"
-        color="light"
-      >
-        {{ getUserRoleName(user.role) }}
-      </ion-badge>
-
-      <ng-container *ngIf="!menuHidden">
-        <ion-button>
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-        </ion-button>
-  
-        <ion-button>
-          <ion-icon slot="icon-only" name="people-outline"></ion-icon>
-        </ion-button>
-  
-        <ion-button>
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-        </ion-button>
-      </ng-container>
-
-      <ion-button (click)="toggleMenu()">
-        <ion-icon
-          [name]="getToggleIconName()"
-          slot="icon-only"
-        >
-        </ion-icon>
-      </ion-button>
-    </ion-item>
+    </app-settings-tile>
   </ion-list>
 </ion-content>

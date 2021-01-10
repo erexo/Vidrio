@@ -33,7 +33,7 @@
   >
     <app-tile
       *ngFor="let sensor of sensors"
-      (sensorDeleted)="deleteSensor(sensor.id)"
+      (sensorDeleted)="presentSensorDeleteModal(sensor.id)"
       (sensorDoubleTapped)="fetchSensorData(sensor.id)"
       (sensorEdited)="editSensor(sensor.id)"
       (sensorToggled)="toggleSensor(sensor.id, $event)"

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlertController, IonInput, NavController, Platform, ToastController, ViewDidEnter } from '@ionic/angular';
@@ -31,7 +31,8 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
     private localState: LocalState,
     private navController: NavController,
     private platform: Platform,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -65,7 +66,7 @@ export class LoginPage implements OnInit, OnDestroy, ViewDidEnter {
       this.loginSubscription = this.localState.login(form.value)
         .subscribe(async (status: HTTPStatusCode) => {
           if (status === HTTPStatusCode.OK || status === HTTPStatusCode.Accepted) {
-            this.navController.navigateRoot(['dashboard']);
+            this.zone.run(_ => this.navController.navigateForward(['dashboard']));
           } else {
             const toastInstance = await getToast(
               this.toastController,

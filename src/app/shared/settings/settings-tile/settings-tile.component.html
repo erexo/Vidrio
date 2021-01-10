@@ -1,0 +1,57 @@
+<ion-item
+  [ngStyle]="{ zIndex: menuHidden ? '0' : '1' }"
+  class="external"
+>
+  <div class="settings-wrapper">
+    <div class="settings-header">
+      <ion-label>{{ user.username }}</ion-label>
+    
+      <ion-badge 
+        *ngIf="menuHidden"
+        color="light"
+      >
+        {{ getUserRoleName(user.role) }}
+      </ion-badge>
+  
+      <ion-button (click)="toggleMenu(user.id)">
+        <ion-icon
+          [name]="getToggleIconName()"
+          slot="icon-only"
+        >
+        </ion-icon>
+      </ion-button>
+    </div>
+  
+    <div
+      *ngIf="!menuHidden"
+      class="settings-buttons"
+    >
+      <ion-button (click)="updateUserPassword()">
+        <ion-icon
+          name="create-outline"
+          slot="start"
+        >
+        </ion-icon>
+        Edit a password
+      </ion-button>
+  
+      <ion-button (click)="updateUserRole()">
+        <ion-icon
+          name="people-outline"
+          slot="start"
+        >
+        </ion-icon>
+        Edit a role
+      </ion-button>
+  
+      <ion-button (click)="deleteUser()">
+        <ion-icon
+          name="trash-outline"
+          slot="start"
+        >
+        </ion-icon>
+        Delete an user
+      </ion-button>
+    </div>
+  </div>
+</ion-item>

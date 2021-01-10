@@ -27,8 +27,6 @@ import { getModal, getToast, responseFilter } from '@app/core/helpers/response-h
 export class SettingsPage implements ViewDidEnter, ViewDidLeave {
 
   public users: IUserInfo[] = [];
-  public menuHidden = true;
-
   private dataSubscription: Subscription;
 
   constructor(
@@ -47,20 +45,6 @@ export class SettingsPage implements ViewDidEnter, ViewDidLeave {
 
   ionViewDidLeave() {
     this.dataSubscription.unsubscribe();
-  }
-
-  public getUserRoleName(role: UserRole): string {
-    return UserRole[role];
-  }
-
-  public toggleMenu(): void {
-    this.menuHidden = !this.menuHidden;
-  }
-
-  public getToggleIconName(): string {
-    return this.menuHidden
-      ? 'menu-outline'
-      : 'close-outline';
   }
 
   public async fetchUsers(errorOnly = false, event?: any): Promise<void> {
@@ -89,26 +73,106 @@ export class SettingsPage implements ViewDidEnter, ViewDidLeave {
     this.dataSubscription.add(createUserSubscription);
   }
 
+  public async deleteUser(userID: number): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
+    const deleteUserSubscription: Subscription = this.usersState.deleteUser(userID)
+      .pipe(
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Delete, 'User'))
+      )
+      .subscribe(_ => this.fetchUsers());
+
+    this.dataSubscription.add(deleteUserSubscription);
+  }
+
+  public async updateUserPassword(userID: number, password: string): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
+    const updateUserPasswordSubscription: Subscription = this.usersState.updateUserPassword(userID, password)
+      .pipe(
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Update, 'User password'))
+      )
+      .subscribe(_ => this.fetchUsers());
+
+    this.dataSubscription.add(updateUserPasswordSubscription);
+  }
+
+  public async updateUserRole(userID: number, role: UserRole): Promise<void> {
+    const toastInstance: HTMLIonToastElement = await getToast(this.toastController);
+    const updateUserRoleSubscription: Subscription = this.usersState.updateUserRole(userID, role)
+      .pipe(
+        filter(res => responseFilter(toastInstance, res.status, ResponseType.Update, 'User role'))
+      )
+      .subscribe(_ => this.fetchUsers());
+
+    this.dataSubscription.add(updateUserRoleSubscription);
+  }
+
   protected async presentUserCreateModal(): Promise<void> {
     const modal: HTMLIonModalElement = await getModal(
       this.modalController,
       [
-        new  FormControl(FormControlType.Text, 'username', '', 'Name'),
-        new  FormControl(FormControlType.Password, 'password', '', 'Password'),
-        new  FormControl(FormControlType.Select, 'role', UserRole.Guest, 'Role', '', UserRole)
+        new FormControl(FormControlType.Text, 'username', '', 'Name'),
+        new FormControl(FormControlType.Password, 'password', '', 'Password'),
+        new FormControl(FormControlType.Select, 'role', UserRole.Guest, 'Role', '', UserRole)
       ],
-      'Create an user'
+      'Create an user',
+      'Create'
     );
-
-    await modal.present();
     
     modal.onWillDismiss().then(event => {
-      this.createUser(event.data);
+      event.data && this.createUser(event.data);
     });
+
+    await modal.present();
+  }
+  
+  protected async presentUserDeleteModal(userID: number): Promise<void> {
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [],
+      'Are you sure?',
+      'Delete',
+      'danger'
+    );
+    
+    modal.onWillDismiss().then(event => {
+      event.data && this.deleteUser(userID);
+    });
+
+    await modal.present();
   }
 
-  public editUser(): void {
+  protected async presentUserPasswordModal(userID: number): Promise<void> {
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [
+        new FormControl(FormControlType.Password, 'password', '', 'Password')
+      ],
+      'Change a password',
+      'Change'
+    );
+    
+    modal.onWillDismiss().then(event => {
+      event.data && this.updateUserPassword(userID, event.data.password);
+    });
 
+    await modal.present();
+  }
+
+  protected async presentUserRoleModal(userInfo: IUserInfo): Promise<void> {
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [
+        new FormControl(FormControlType.Select, 'role', userInfo.role, 'Role', '', UserRole)
+      ],
+      'Change a role',
+      'Change'
+    );
+    
+    modal.onWillDismiss().then(event => {
+      event.data && this.updateUserRole(userInfo.id, event.data.role);
+    });
+
+    await modal.present();
   }
   
   private addMenuListener(): void {

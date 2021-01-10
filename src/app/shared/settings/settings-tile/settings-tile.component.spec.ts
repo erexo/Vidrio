@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SettingsCreateUserComponent } from './settings-create-user.component';
+import { SettingsTileComponent } from './settings-tile.component';
 
-describe('SettingsCreateUserComponent', () => {
-  let component: SettingsCreateUserComponent;
-  let fixture: ComponentFixture<SettingsCreateUserComponent>;
+describe('SettingsTileComponent', () => {
+  let component: SettingsTileComponent;
+  let fixture: ComponentFixture<SettingsTileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsCreateUserComponent ],
+      declarations: [ SettingsTileComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingsCreateUserComponent);
+    fixture = TestBed.createComponent(SettingsTileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

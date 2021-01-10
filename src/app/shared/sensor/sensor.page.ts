@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { AlertController, ModalController, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 
 import { capitalize } from 'lodash-es';
 
@@ -19,7 +19,7 @@ import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direct
 
 import { Sensor } from '@app/core/models/sensor/sensor.model';
 
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-sensor',
@@ -43,6 +43,7 @@ export class SensorPage implements ViewDidEnter, ViewDidLeave {
     protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
+    protected modalController: ModalController,
     protected router: Router,
     protected toastController: ToastController
   ) {}
@@ -140,6 +141,22 @@ export class SensorPage implements ViewDidEnter, ViewDidLeave {
 
   public async fetchSensorData(sensorID: number): Promise<void> {}
   public async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {}
+
+  protected async presentSensorDeleteModal(sensorID: number): Promise<void> {
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [],
+      'Are you sure?',
+      'Delete',
+      'danger'
+    );
+    
+    modal.onWillDismiss().then(event => {
+      event.data && this.deleteSensor(sensorID);
+    });
+
+    await modal.present();
+  }
 
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {}
 

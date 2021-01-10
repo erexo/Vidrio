@@ -13,10 +13,20 @@ ion-list {
     ion-item:first-child {
       margin-bottom: .5em;
     }
+
+    .buttons-container {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: .75em;
+
+      .button-dismiss {
+        --background: rgba(var(--ion-color-light-contrast-rgb), 0.05);
+      }
   
-    ion-button {
-      --border-radius: .5em;
-      align-self: flex-end;
+      ion-button {
+        --border-radius: .5em;
+      }
     }
   }
 }

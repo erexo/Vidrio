@@ -39,15 +39,23 @@ export const getToast = async (toastController: ToastController, message?: strin
   return toast;
 }
 
-export const getModal = async (modalController: ModalController, controls: FormControl[], title?: string): Promise<HTMLIonModalElement> => {
-  const modal: Promise<HTMLIonModalElement> = modalController.create({
-    component: ModalPage,
-    cssClass: 'modal-container',
-    componentProps: {
-      controls,
-      title
-    }
-  });
+export const getModal = async (
+    modalController: ModalController,
+    controls: FormControl[],
+    title?: string,
+    submitTitle?: string,
+    submitColor?: string
+  ): Promise<HTMLIonModalElement> => {
+    const modal: Promise<HTMLIonModalElement> = modalController.create({
+      component: ModalPage,
+      cssClass: 'modal-container',
+      componentProps: {
+        controls,
+        title,
+        ...(submitTitle && {submitTitle}),
+        ...(submitColor && {submitColor})
+      }
+    });
 
-  return modal;
+    return modal;
 }

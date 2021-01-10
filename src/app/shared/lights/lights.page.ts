@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { DragulaService } from 'ng2-dragula';
 
@@ -20,7 +20,9 @@ import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direct
 
 import { Light } from '@app/core/models/light/light.model';
 
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { FormControl } from '@app/core/models/form/form-control.model';
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 
 @Component({
   selector: 'app-light',
@@ -37,6 +39,7 @@ export class LightsPage extends SensorPage {
     protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
+    protected modalController: ModalController,
     protected popoverController: PopoverController,
     protected router: Router,
     protected toastController: ToastController
@@ -48,6 +51,7 @@ export class LightsPage extends SensorPage {
       chartState,
       dataState,
       dragulaService,
+      modalController,
       router,
       toastController
     );
@@ -56,44 +60,24 @@ export class LightsPage extends SensorPage {
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {
     const sensor: Light
       = <Light>this.sensors.find(sensor => sensor.id === sensorID);
-    const alert: HTMLIonAlertElement = await this.alertController.create({
-      cssClass: 'alert-container',
-      header: sensorID === undefined ? 'Create a sensor' : 'Edit a sensor',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Name',
-          value: sensor?.name
-        },
-        {
-          name: 'inputPin',
-          type: 'text',
-          placeholder: 'Input Pin',
-          value: sensor?.inputPin
-        },
-        {
-          name: 'outputPin',
-          type: 'text',
-          placeholder: 'Output Pin',
-          value: sensor?.outputPin
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Ok',
-          handler: (data) => sensorID === undefined
-            ? this.createSensor(data)
-            : this.updateSensor(data, sensorID)
-        }
-      ]
-    });
 
-    await alert.present();
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [
+        new FormControl(FormControlType.Text, 'name', sensor?.name, 'Name'),
+        new FormControl(FormControlType.Text, 'inputUpPin', sensor?.inputPin, 'Input Pin'),
+        new FormControl(FormControlType.Text, 'inputDownPin', sensor?.outputPin, 'Output Pin')
+      ],
+      sensorID === undefined ? 'Create a light sensor' : 'Edit a light sensor'
+    );
+      
+    modal.onWillDismiss().then(event => {
+      event.data && sensorID === undefined
+        ? this.createSensor(event.data)
+        : this.updateSensor(event.data, sensorID);
+    });
+  
+    await modal.present();
   }
 
   public async toggleSensor(sensorID: number, event?: SensorToggleDirection): Promise<void> {

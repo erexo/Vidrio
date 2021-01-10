@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { DragulaService } from 'ng2-dragula';
 
@@ -19,7 +19,9 @@ import { SensorToggleDirection } from '@app/core/enums/data/sensor-toggle-direct
 
 import { Blind } from '@app/core/models/blind/blind.model';
 
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { FormControl } from '@app/core/models/form/form-control.model';
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 
 @Component({
   selector: 'app-sunblind',
@@ -36,6 +38,7 @@ export class BlindsPage extends SensorPage {
     protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
+    protected modalController: ModalController,
     protected popoverController: PopoverController,
     protected router: Router,
     protected toastController: ToastController
@@ -47,6 +50,7 @@ export class BlindsPage extends SensorPage {
       chartState,
       dataState,
       dragulaService,
+      modalController,
       router,
       toastController
     );
@@ -55,66 +59,36 @@ export class BlindsPage extends SensorPage {
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {
     const sensor: Blind
       = <Blind>this.sensors.find(sensor => sensor.id === sensorID);
-    const alert: HTMLIonAlertElement = await this.alertController.create({
-      cssClass: 'alert-container',
-      header: sensorID === undefined ? 'Create a sensor' : 'Edit a sensor',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Name',
-          value: sensor?.name
-        },
-        {
-          name: 'inputUpPin',
-          type: 'text',
-          placeholder: 'Input Up Pin',
-          value: sensor?.inputUpPin
-        },
-        {
-          name: 'inputDownPin',
-          type: 'text',
-          placeholder: 'Input Down Pin',
-          value: sensor?.inputDownPin
-        },
-        {
-          name: 'outputUpPin',
-          type: 'text',
-          placeholder: 'Output Up Pin',
-          value: sensor?.outputUpPin
-        },
-        {
-          name: 'outputDownPin',
-          type: 'text',
-          placeholder: 'Output Down Pin',
-          value: sensor?.outputDownPin
-        }
+
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [
+        new FormControl(FormControlType.Text, 'name', sensor?.name, 'Name'),
+        new FormControl(FormControlType.Text, 'inputUpPin', sensor?.inputUpPin, 'Input Up Pin'),
+        new FormControl(FormControlType.Text, 'inputDownPin', sensor?.inputDownPin, 'Input Down Pin'),
+        new FormControl(FormControlType.Text, 'outputUpPin', sensor?.outputUpPin, 'Output Up Pin'),
+        new FormControl(FormControlType.Text, 'outputDownPin', sensor?.outputDownPin, 'Output Down Pin')
       ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            const blind: any = {
-              name: data.name,
-              inputUpPin: +data.inputUpPin,
-              inputDownPin: +data.inputDownPin,
-              outputUpPin: +data.outputUpPin,
-              outputDownPin: +data.outputDownPin
-            }
-
-            sensorID === undefined
-              ? this.createSensor(blind)
-              : this.updateSensor(blind, sensorID);
-          }
-        }
-      ]
+      sensorID === undefined ? 'Create a blind sensor' : 'Edit a blind sensor'
+    );
+      
+    modal.onWillDismiss().then(event => {
+      if (event.data) {
+        const blind: any = {
+          name: event.data.name,
+          inputUpPin: +event.data.inputUpPin,
+          inputDownPin: +event.data.inputDownPin,
+          outputUpPin: +event.data.outputUpPin,
+          outputDownPin: +event.data.outputDownPin
+        };
+  
+        sensorID === undefined
+          ? this.createSensor(blind)
+          : this.updateSensor(blind, sensorID);
+      }
     });
-
-    await alert.present();
+  
+    await modal.present();
   }
 
   public async toggleSensor(sensorID: number, event: SensorToggleDirection): Promise<void> {

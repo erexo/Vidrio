@@ -9,9 +9,6 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./shared/dashboard/dashboard.module').then( m => m.DashboardPageModule)
-  },  {
-    path: 'modal',
-    loadChildren: () => import('./shared/modal/modal.module').then( m => m.ModalPageModule)
   }
 
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { DragulaService } from 'ng2-dragula';
 
@@ -20,7 +20,9 @@ import { Thermometer } from '@app/core/models/temperature/thermometer.model';
 
 import { ChartComponent } from '@app/shared/chart/chart.component';
 
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { FormControl } from '@app/core/models/form/form-control.model';
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 
 @Component({
   selector: 'app-thermal',
@@ -37,6 +39,7 @@ export class TemperaturePage extends SensorPage {
     protected chartState: ChartState,
     protected dataState: DataState,
     protected dragulaService: DragulaService,
+    protected modalController: ModalController,
     protected popoverController: PopoverController,
     protected router: Router,
     protected toastController: ToastController
@@ -48,6 +51,7 @@ export class TemperaturePage extends SensorPage {
       chartState,
       dataState,
       dragulaService,
+      modalController,
       router,
       toastController
     );
@@ -78,38 +82,24 @@ export class TemperaturePage extends SensorPage {
   protected async presentAlertPrompt(sensorID?: number): Promise<void> {
     const sensor: Thermometer
       = <Thermometer>this.sensors.find(sensor => sensor.id === sensorID);
-    const alert: HTMLIonAlertElement = await this.alertController.create({
-      cssClass: 'alert-container',
-      header: sensorID === undefined ? 'Create a sensor' : 'Edit a sensor',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Name',
-          value: sensor?.name
-        },
-        {
-          name: 'sensor',
-          type: 'text',
-          placeholder: 'Sensor',
-          value: sensor?.sensor
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Ok',
-          handler: (data) => sensorID === undefined
-            ? this.createSensor(data)
-            : this.updateSensor(data, sensorID)
-        }
-      ]
-    });
 
-    await alert.present();
+    const modal: HTMLIonModalElement = await getModal(
+      this.modalController,
+      [
+        new FormControl(FormControlType.Text, 'name', sensor?.name, 'Name'),
+        new FormControl(FormControlType.Text, 'sensor', sensor?.sensor, 'Sensor')
+      ],
+      sensorID === undefined ? 'Create a thermal sensor' : 'Edit a thermal sensor',
+      sensorID === undefined ? 'Create' : 'Update'
+    );
+      
+    modal.onWillDismiss().then(event => {
+      event.data && sensorID === undefined
+        ? this.createSensor(event.data)
+        : this.updateSensor(event.data, sensorID);
+    });
+  
+    await modal.present();
   }
 
   private async presentPopover(title: string, data: any[]): Promise<void> {
