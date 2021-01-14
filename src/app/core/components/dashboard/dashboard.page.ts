@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { IonTabs, Platform } from '@ionic/angular';
 
-import { IonPullUpFooterState } from 'ionic-pullup';
+import { CupertinoPane } from 'cupertino-pane';
 
 import { last } from 'lodash-es';
 
@@ -17,6 +17,7 @@ import { SwipeTabDirective } from '@app/core/directives/swipe-tab/swipe-tab.dire
 
 import { SensorType } from '@app/core/enums/data/sensor/sensor-type.enum';
 import { MenuItem } from '@app/core/models/menu/menu-item.model';
+import { PaneBreaks } from 'cupertino-pane/dist/models';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,31 +28,32 @@ import { MenuItem } from '@app/core/models/menu/menu-item.model';
 export class DashboardPage implements OnInit, OnDestroy {
   @ViewChild(SwipeTabDirective) swipeTabDirective: SwipeTabDirective;
   @ViewChild('dashboardTabs') dashboardTabs: IonTabs;
+  @ViewChild('menuPane', { static: true }) menuPane: ElementRef;
 
-  private readonly menuHeight = 127;
+  public menuContainer: CupertinoPane;
+  public menuItems: MenuItem[];
 
-  public menu: MenuItem[] = [
-    new MenuItem('thermal', 'Thermal', 'thermometer-outline'),
-    new MenuItem('sunblind', 'Blinds', 'book-outline'),
-    new MenuItem('light', 'Lights', 'sunny-outline'),
-    new MenuItem('settings', 'Settings', 'settings-outline'),
-    new MenuItem(undefined, 'Logout', 'log-out-outline', true)
-  ];
-
-  public footerState: IonPullUpFooterState;
-
+  private menuHeight: number;
+  private menuRowsCount: number;
   private routeChangeSubscription: Subscription = new Subscription();
 
   constructor(
     public dataState: DataState,
     public localState: LocalState,
-    private platform: Platform,
+    private changeDetectorRef: ChangeDetectorRef,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.footerState = IonPullUpFooterState.Collapsed;
+    const activeMenuItems: MenuItem[] = this.localState.activeMenu;
+
+    this.menuItems = activeMenuItems;
+    this.menuHeight = activeMenuItems.length > 3 ? 152 : 76;
+    this.menuRowsCount = activeMenuItems.length > 3 ? 2 : 1;
+    this.changeDetectorRef.markForCheck();
+
     this.addRouteChangeListener();
+    this.initMenu();
   }
 
   ngOnDestroy() {
@@ -60,20 +62,41 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ionTabsDidChange($event) {
     this.swipeTabDirective.onTabInitialized($event.tab);
+    this.menuRowsCount === 2 && this.menuContainer.moveToBreak('middle');
+  }
+
+  public initMenu(): void {
+    this.menuContainer = new CupertinoPane(
+      this.menuPane.nativeElement,
+      {
+        breaks: this.getMenuBreakpoints(),
+        buttonClose: false,
+        draggableOver: false,
+        initialBreak: this.menuRowsCount === 2 ? 'middle' : 'top'
+      }
+    );
+
+    this.menuRowsCount === 1 && this.menuContainer.disableDrag();
+    this.menuContainer.present({ animate: true });
+    this.changeDetectorRef.markForCheck();
   }
   
   public onTabChange($event): void {
     this.dashboardTabs.select($event);
   }
 
-  public getTopMargin(): number {
-    return this.platform.height() - this.menuHeight;
-  }
-
-  public toggleFooter(): void {
-    this.footerState = this.footerState === IonPullUpFooterState.Collapsed
-      ? IonPullUpFooterState.Expanded
-      : IonPullUpFooterState.Collapsed;
+  private getMenuBreakpoints(): PaneBreaks {
+    return this.menuRowsCount === 2
+      ? {
+          top: { enabled: true, height: this.menuHeight - 20, bounce: true },
+          middle: { enabled: true, height: this.menuHeight / 2 },
+          bottom: { enabled: false },
+        }
+      : {
+        top: { enabled: true, height: this.menuHeight },
+        middle: { enabled: false },
+        bottom: { enabled: false },
+      };
   }
 
   private addRouteChangeListener(): void {

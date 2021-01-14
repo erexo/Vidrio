@@ -200,6 +200,20 @@ ion-modal {
   padding: 15px;
 }
 
+// Cupertino Pane styles
+
+.cupertino-pane-wrapper .pane {
+  backdrop-filter: blur(6px);
+  background: rgba(var(--ion-card-background-rgb), 0.4) !important;
+
+  .move {
+    background-color: rgba(var(--ion-text-color-rgb), 0.6) !important;
+    border-radius: 5px !important;
+    height: 3px !important;
+    width: 48px !important;
+  }
+}
+
 // Dragulla styles
 .gu-mirror {
   position: fixed !important;

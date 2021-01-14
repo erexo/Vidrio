@@ -12,70 +12,13 @@
   top: -70px;
 }
 
-ion-toolbar {
-  --background: rgba(var(--ion-card-background-rgb), 0.4);
-  backdrop-filter: blur(6px);
-
-  &.toolbar {
-    border-radius: 15px 15px 0 0;
-    cursor: pointer;
-    height: 15px;
-    
-    .handle {
-      align-items: center;
-      display: flex;
-      height: 15px;
-      justify-content: center;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    
-      .bar {
-        background-color: rgba(var(--ion-text-color-rgb), 0.6);
-        border-radius: 5px;
-        height: 3px;
-        width: 48px;
-      }
-    }
-  }
-
-  ion-buttons {
-    height: 56px;
-    justify-content: center;
-
-    ion-button {
-      --background-hover-opacity: 0;
-      --ripple-color: var(--ion-color-primary);
-      height: 56px;
-      max-width: 168px;
-      width: 100%;
-
-      &:hover * {
-        color: var(--ion-color-primary);
-      }
-
-      ion-label {
-        color: rgba(var(--ion-text-color-rgb), 0.6);
-        font-size: 12px;
-        letter-spacing: initial;
-        margin-right: 5px;
-        text-transform: none;
-      }
-
-      ion-icon {
-        color: rgba(var(--ion-text-color-rgb), 0.6);
-      }
-    }
-  }
-  
-}
-
 ion-tab-bar {
-  --background: rgba(var(--ion-card-background-rgb), 0.4);
-  backdrop-filter: blur(6px);
+  --background: transparent;
+  align-items: flex-start;
   border: 0;
+  display: flex;
   flex-wrap: wrap;
-  height: 112px;
+  height: 100%;
 
   .rotate-180 {
     transform: rotate(180deg);
@@ -85,7 +28,7 @@ ion-tab-bar {
     --background: transparent;
     color: rgba(var(--ion-text-color-rgb), 0.6);
     flex: 0 1 33.33%;
-    height: 56px;
+    height: var(--menu-button-height);
 
     &.tab-selected {
       color: var(--ion-color-primary);

@@ -125,14 +125,13 @@ export class LocalState extends NgxsDataRepository<LocalModel> {
     return this.userService.login(user).pipe(
       filter((res: HttpResponse<ILoginInfo>) => !!res.body.accessToken),
       tap((res: HttpResponse<ILoginInfo>) => {
-        console.log(`🚀 => tap`, res);
         this.patchState({
           accessToken: res.body.accessToken,
+          activeMenu: this.getActiveMenu(res.body.role),
           user: new User(user.password, res.body.role, user.username)
         });
       }),
       map((res: HttpResponse<ILoginInfo>) => {
-        console.log(`🚀 => map`, res);
         return res.status;
       }),
       catchError((err: HttpErrorResponse) => of(err.status))
