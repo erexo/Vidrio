@@ -5,7 +5,8 @@ import {
 	EventEmitter,
 	OnInit,
 	Renderer2,
-	OnDestroy
+	OnDestroy,
+  AfterViewChecked
 } from '@angular/core';
 
 import 'hammerjs';
@@ -14,7 +15,7 @@ import 'hammerjs';
 	selector: '[swipeTab]',
 })
 
-export class SwipeTabDirective implements OnInit, OnDestroy {
+export class SwipeTabDirective implements AfterViewChecked, OnDestroy {
 	@Output() tabChange = new EventEmitter();
 	
 	public tabNames: String[] = [];
@@ -31,7 +32,7 @@ export class SwipeTabDirective implements OnInit, OnDestroy {
 		private renderer: Renderer2
 		) {}
 		
-		ngOnInit() {
+		ngAfterViewChecked() {
 			const tabsList = this.elementRef.nativeElement.querySelectorAll('ion-tab-button');
 			
 			for (let i = 0, len = tabsList.length; i < len; i += 1) {

@@ -1,8 +1,7 @@
 {
   "name": "Vidrio",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "0.9.0",
+  "author": "Vidrio",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -1,6 +1,6 @@
 import { ModalController, ToastController } from '@ionic/angular';
 
-import { ModalPage } from '@app/shared/modal/modal.page';
+import { ModalPage } from '@app/shared/components/modal/modal.page';
 
 import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 import { ResponseType } from '@core/enums/http/response-type.enum';
@@ -43,18 +43,21 @@ export const getModal = async (
     modalController: ModalController,
     controls: FormControl[],
     title?: string,
+    noCancel = false,
     submitTitle?: string,
-    submitColor?: string
+    submitColor?: string,
   ): Promise<HTMLIonModalElement> => {
     const modal: Promise<HTMLIonModalElement> = modalController.create({
+      backdropDismiss: !noCancel,
       component: ModalPage,
-      cssClass: 'modal-container',
       componentProps: {
         controls,
         title,
+        noCancel,
         ...(submitTitle && {submitTitle}),
         ...(submitColor && {submitColor})
-      }
+      },
+      cssClass: 'modal-container'
     });
 
     return modal;

@@ -1,0 +1,50 @@
+<ion-tabs
+  swipeTab
+  #dashboardTabs
+  (ionTabsDidChange)="ionTabsDidChange($event)"
+  (tabChange)="onTabChange($event)"
+>
+  
+  <lib-ionic-pullup
+    [(state)]="footerState"
+    [minBottomVisible]="-168"
+    [toolbarTopMargin]="getTopMargin()"
+  >
+    <ion-fab
+      *ngIf="localState.isAdmin"
+      (click)="dataState.openMenu()"
+      class="footer-icon"
+      horizontal="end"
+      slot="fixed"
+      vertical="top"
+    >
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+    <ion-toolbar
+      #ionDragFooter
+      (click)="toggleFooter()"
+      class="toolbar"
+    >
+      <div class="handle">
+        <div class="bar"></div>
+      </div>
+    </ion-toolbar>
+
+    <ion-tab-bar
+      #ionDragFooter
+      slot="bottom"
+    >
+      <ion-tab-button
+        *ngFor="let menuItem of menu"
+        (click)="menuItem.isLogout && localState.logout()"
+        [tab]="menuItem.tabName"
+      >
+        <ion-icon [name]="menuItem.iconName"></ion-icon>
+        <ion-label>{{ menuItem.label }}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </lib-ionic-pullup>
+</ion-tabs>

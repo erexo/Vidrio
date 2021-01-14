@@ -1,0 +1,34 @@
+ion-list {
+  display: grid;
+  grid-template-rows: 45px auto;
+  grid-row-gap: .75em;
+  padding: 0;
+
+  form {
+    display: grid;
+    grid-auto-rows: 55px;
+    grid-row-gap: .75em;
+    padding: 0;
+
+    ion-item:first-child {
+      margin-bottom: .5em;
+    }
+
+    .buttons-container {
+      display: flex;
+      align-items: center;
+      gap: .75em;
+      justify-content: space-between;
+
+      .button-dismiss {
+        --background: rgba(var(--ion-color-light-contrast-rgb), 0.05);
+      }
+  
+      ion-button {
+        --border-radius: .5em;
+        flex: 1;
+        margin: 0;
+      }
+    }
+  }
+}

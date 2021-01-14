@@ -11,7 +11,7 @@ import { IThermometerData } from '@core/interfaces/temperature/thermometer-data.
 
 import { ThermometerData } from '@core/models/temperature/thermometer-data.model';
 import { Sensor } from '@core/models/sensor/sensor.model';
-import { SensorToggleDirection } from '../enums/data/sensor-toggle-direction.enum';
+import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';
 
 @Injectable({
   providedIn: 'root'

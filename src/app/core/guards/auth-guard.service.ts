@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 
 import { LocalState } from '@core/states/local.state';
 
-import { SensorType } from '@core/enums/data/sensor-type.enum';
+import { SensorType } from '@app/core/enums/data/sensor/sensor-type.enum';
 import { UserRole } from '@core/enums/user/user-role.enum';
 
 @Injectable({

@@ -4,11 +4,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./shared/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./core/components/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: '',
-    loadChildren: () => import('./shared/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    loadChildren: () => import('./core/components/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   }
 
 

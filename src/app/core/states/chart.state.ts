@@ -10,11 +10,11 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { SensorService } from '../services/sensor.service';
 import { APIResponse } from '../models/http/api-response.model';
-import { ThermometerData } from '../models/temperature/thermometer-data.model';
+import { ThermometerData } from '../models/sensor/temperature/thermometer-data.model';
 import { IThermometerData } from '../interfaces/temperature/thermometer-data.interface';
 import { patch, insertItem } from '@ngxs/store/operators';
 import { getUnixTime, sub } from 'date-fns';
-import { SensorType } from '../enums/data/sensor-type.enum';
+import { SensorType } from '../enums/data/sensor/sensor-type.enum';
 
 export interface ChartModel {
   dateOffset: number;

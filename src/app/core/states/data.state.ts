@@ -6,7 +6,7 @@ import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
 import { patch, removeItem, updateItem } from '@ngxs/store/operators';
-import { Computed, DataAction, StateRepository } from '@ngxs-labs/data/decorators';
+import { Computed, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
 
 import { SensorService } from '@app/core/services/sensor.service';
@@ -15,7 +15,7 @@ import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 
 import { APIResponse } from '@core/models/http/api-response.model';
 import { Sensor } from '../models/sensor/sensor.model';
-import { SensorToggleDirection } from '../enums/data/sensor-toggle-direction.enum';
+import { SensorToggleDirection } from '../enums/data/sensor/sensor-toggle-direction.enum';
 
 export interface DataModel {
   sensors: any[];
