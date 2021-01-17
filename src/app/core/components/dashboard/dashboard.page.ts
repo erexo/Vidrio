@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { IonTabs, Platform } from '@ionic/angular';
+import { IonTabs } from '@ionic/angular';
 
 import { CupertinoPane } from 'cupertino-pane';
 
 import { last } from 'lodash-es';
 
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
@@ -18,6 +18,7 @@ import { SwipeTabDirective } from '@app/core/directives/swipe-tab/swipe-tab.dire
 import { SensorType } from '@app/core/enums/data/sensor/sensor-type.enum';
 import { MenuItem } from '@app/core/models/menu/menu-item.model';
 import { PaneBreaks } from 'cupertino-pane/dist/models';
+import { UserRole } from '@app/core/enums/user/user-role.enum';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,12 +31,16 @@ export class DashboardPage implements OnInit, OnDestroy {
   @ViewChild('dashboardTabs') dashboardTabs: IonTabs;
   @ViewChild('menuPane', { static: true }) menuPane: ElementRef;
 
+  private readonly menuDoubleRowHeight = 152;
+  private readonly menuSingleRowHeight = 76;
+
+  public addButtonHidden: boolean;
   public menuContainer: CupertinoPane;
   public menuItems: MenuItem[];
 
   private menuHeight: number;
   private menuRowsCount: number;
-  private routeChangeSubscription: Subscription = new Subscription();
+  private dataSubscription: Subscription = new Subscription();
 
   constructor(
     public dataState: DataState,
@@ -48,16 +53,17 @@ export class DashboardPage implements OnInit, OnDestroy {
     const activeMenuItems: MenuItem[] = this.localState.activeMenu;
 
     this.menuItems = activeMenuItems;
-    this.menuHeight = activeMenuItems.length > 3 ? 152 : 76;
+    this.menuHeight = activeMenuItems.length > 3 ? this.menuDoubleRowHeight : this.menuSingleRowHeight;
     this.menuRowsCount = activeMenuItems.length > 3 ? 2 : 1;
     this.changeDetectorRef.markForCheck();
 
+    this.addRoleChangeListener();
     this.addRouteChangeListener();
     this.initMenu();
   }
 
   ngOnDestroy() {
-    this.routeChangeSubscription.unsubscribe();
+    this.dataSubscription.unsubscribe();
   }
 
   ionTabsDidChange($event) {
@@ -66,23 +72,34 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   public initMenu(): void {
+    if (this.menuContainer) {
+      this.menuContainer.destroy();
+    }
+
     this.menuContainer = new CupertinoPane(
       this.menuPane.nativeElement,
       {
         breaks: this.getMenuBreakpoints(),
         buttonClose: false,
         draggableOver: false,
-        initialBreak: this.menuRowsCount === 2 ? 'middle' : 'top'
+        initialBreak: this.menuRowsCount === 2 ? 'middle' : 'top',
+        ...(!this.addButtonHidden && { followerElement: 'ion-fab' })
       }
     );
 
     this.menuRowsCount === 1 && this.menuContainer.disableDrag();
     this.menuContainer.present({ animate: true });
+
     this.changeDetectorRef.markForCheck();
   }
   
   public onTabChange($event): void {
     this.dashboardTabs.select($event);
+  }
+
+  public getAddButtonPosition(): string {
+    const menuLeftOffset: number = this.menuPane.nativeElement.getBoundingClientRect().left
+    return `${menuLeftOffset}px`;
   }
 
   private getMenuBreakpoints(): PaneBreaks {
@@ -99,14 +116,29 @@ export class DashboardPage implements OnInit, OnDestroy {
       };
   }
 
+  private addRoleChangeListener(): void {
+    const roleChangeSubscription: Subscription = this.localState.state$.pipe(
+      map(state => state.user.role),
+      filter(role => !!role)
+    )
+      .subscribe(role => {
+        this.addButtonHidden = role !== UserRole.Admin;
+        this.changeDetectorRef.markForCheck();
+      });
+
+    this.dataSubscription.add(roleChangeSubscription);
+  }
+
   private addRouteChangeListener(): void {
-    this.routeChangeSubscription = this.router.events.pipe(
+    const routeChangeSubscription: Subscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     )
       .subscribe((event: NavigationEnd) => {
         const sensorType: SensorType = last(event.urlAfterRedirects.split('/'));
         this.localState.setSensorType(sensorType);
       });
+
+    this.dataSubscription.add(routeChangeSubscription);
   }
 
 }

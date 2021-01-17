@@ -28,6 +28,10 @@
 /* Font face */
 @import "../src/theme/fonts.scss";
 
+html {
+  font-size: var(--base-font-size);
+}
+
 input {
   &:-webkit-autofill {
     transition: background-color 5000s;
@@ -35,15 +39,15 @@ input {
 
   &:-webkit-autofill::first-line {
     font-family: "Source Sans Pro";
-    font-size: 16px;
-    font-weight: 400;
+    font-size: var(--input-autofill-font-size);
+    font-weight: var(--input-autofill-font-weight);
   }
 }
 
 ion-card {
   background: rgba(var(--ion-card-background-rgb), 0.4);
-  backdrop-filter: blur(10px);
-  border-radius: 1.5em;
+  backdrop-filter: blur(var(--background-blur-size));
+  border-radius: var(--card-border-radius);
   box-shadow: -1px 1px 2px rgba(0,0,0,0.07), 
     -2px 2px 4px rgba(0,0,0,0.07), 
     -4px 4px 8px rgba(0,0,0,0.07), 
@@ -59,11 +63,11 @@ ion-card ion-card-title, ion-list-header ion-label {
 }
 
 ion-list-header ion-label {
-  font-size: 1.5em;
+  font-size: var(--list-header-font-size);
 }
 
 ion-header {
-  --min-height: 20vh;
+  --min-height: var(--header-height);
   text-align: center;
 
   &::after {
@@ -72,12 +76,12 @@ ion-header {
 
   ion-title {
     color: rgba(var(--ion-text-color-rgb), 0.7);
-    font-size: 2em;
+    font-size: var(--header-font-size);
   }
 
   ion-toolbar {
     --background: transparent;
-    --min-height: 20vh;
+    --min-height: var(--header-height);
 
     ion-chip {
       background: rgba(var(--ion-card-background-rgb), 0.2);
@@ -106,17 +110,17 @@ ion-item.internal {
   align-items: center;
   background: rgba(var(--ion-color-light-contrast-rgb), 0.05);
   border: 2px solid transparent;
-  border-radius: .5em;
+  border-radius: var(--item-border-radius);
   display: flex;
-  height: 55px;
+  height: 100%;
 
   &::part(native) {
-    height: 55px;
+    height: 100%;
   }
 
   ion-input {
     color: rgba(var(--ion-color-light-contrast-rgb), 0.5) !important;
-    height: 30px;
+    height: var(--input-height);
   }
 
   ion-label {
@@ -125,7 +129,7 @@ ion-item.internal {
 
   ion-select {
     &::part(text), &::part(placeholder) {
-      margin-right: .5em;
+      margin-right: var(--select-spacing);
     }
 
     &::part(text) {
@@ -166,14 +170,14 @@ ion-modal {
   --height: auto !important;
 
   .modal-wrapper {
-    border-radius: .5em !important;
-    margin: 1em;
-    max-width: 400px !important;
+    border-radius: var(--modal-border-radius) !important;
+    margin: var(--modal-margin);
+    max-width: var(--modal-width) !important;
 
     .ion-page {
       contain: content;
-      max-height: 90vh;
-      padding: 1em !important;
+      max-height: var(--modal-page-height);
+      padding: var(--modal-page-vertical-spacing) var(--modal-page-horizontal-spacing) !important;
       position: relative;
 
       .modal-content {
@@ -184,33 +188,32 @@ ion-modal {
 }
 
 .toast-container {
-  --max-width: 500px;
+  --max-width: var(--toast-width);
   --width: auto;
   text-align: center;
 }
 
 .popover-container .popover-content {
-  --max-height: 500px;
-  --max-width: 500px;
+  --max-height: var(--popover-height);
+  --max-width: var(--popover-width);
   background: var(--ion-card-background);
-  border-radius: 1.5em;
+  border-radius: var(--popover-border-radius);
   transition: all .2s ease-in-out;
-  height: 90vw;
-  width: 90vw;
-  padding: 15px;
+  height: var(--popover-max-height);
+  width: var(--popover-max-width);
+  padding: var(--popover-spacing);
 }
 
 // Cupertino Pane styles
-
 .cupertino-pane-wrapper .pane {
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(var(--menu-background-blur-size));
   background: rgba(var(--ion-card-background-rgb), 0.4) !important;
 
   .move {
     background-color: rgba(var(--ion-text-color-rgb), 0.6) !important;
-    border-radius: 5px !important;
-    height: 3px !important;
-    width: 48px !important;
+    border-radius: var(--menu-drag-border-radius) !important;
+    height: var(--menu-drag-height) !important;
+    width: var(--menu-drag-width) !important;
   }
 }
 

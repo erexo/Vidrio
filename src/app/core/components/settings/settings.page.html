@@ -8,9 +8,11 @@
   <ion-list>
     <app-settings-tile
       *ngFor="let user of users"
+      (menuOpened)="activeMenuID = $event"
       (userDeleted)="presentUserDeleteModal($event)"
       (userPasswordEdited)="presentUserPasswordModal($event)"
       (userRoleEdited)="presentUserRoleModal($event)"
+      [menuHidden]="activeMenuID === user.id"
       [user]="user"
     >
     </app-settings-tile>

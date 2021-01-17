@@ -30,6 +30,7 @@ import { getModal, getToast, responseFilter } from '@app/core/helpers/response-h
 export class SensorPage implements ViewDidEnter, ViewDidLeave {
   public readonly dragModel = 'SENSORS';
 
+  public activeSensorID: number;
   public sensors: Sensor[] = [];
   public loaderVisible = false;
   public tileMove = false;

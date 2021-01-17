@@ -12,17 +12,16 @@ import { ChartState } from '@app/core/states/chart.state';
 import { DataState } from '@app/core/states/data.state';
 import { LocalState } from '@app/core/states/local.state';
 
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-
 import { SensorPage } from '@core/components/sensor/sensor.page';
 
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
 import { SensorToggleDirection } from '@app/core/enums/data/sensor/sensor-toggle-direction.enum';
 
+import { FormControl } from '@app/core/models/form/form-control.model';
 import { Light } from '@app/core/models/sensor/light/light.model';
 
 import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { FormControl } from '@app/core/models/form/form-control.model';
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 
 @Component({
   selector: 'app-light',

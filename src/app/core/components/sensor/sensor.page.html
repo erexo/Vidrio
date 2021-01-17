@@ -33,10 +33,12 @@
   >
     <app-tile
       *ngFor="let sensor of sensors"
+      (menuOpened)="activeSensorID = $event"
       (sensorDeleted)="presentSensorDeleteModal(sensor.id)"
       (sensorDoubleTapped)="fetchSensorData(sensor.id)"
       (sensorEdited)="editSensor(sensor.id)"
       (sensorToggled)="toggleSensor(sensor.id, $event)"
+      [menuHidden]="activeSensorID !== sensor.id"
       [loaderVisible]="getSensorLoaderState(sensor.id)"
       [sensor]="sensor"
       [sensorType]="localState.sensorType"

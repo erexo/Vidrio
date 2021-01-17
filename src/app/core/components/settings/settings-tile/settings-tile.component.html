@@ -1,5 +1,5 @@
 <ion-item
-  [ngStyle]="{ zIndex: menuHidden ? '0' : '1' }"
+  [ngStyle]="{ zIndex: !_menuHidden ? '0' : '1' }"
   class="external"
 >
   <div class="settings-wrapper">
@@ -7,7 +7,7 @@
       <ion-label>{{ user.username }}</ion-label>
     
       <ion-badge 
-        *ngIf="menuHidden"
+        *ngIf="!_menuHidden"
         color="light"
       >
         {{ getUserRoleName(user.role) }}
@@ -23,7 +23,7 @@
     </div>
   
     <div
-      *ngIf="!menuHidden"
+      *ngIf="_menuHidden"
       class="settings-buttons"
     >
       <ion-button (click)="updateUserPassword()">

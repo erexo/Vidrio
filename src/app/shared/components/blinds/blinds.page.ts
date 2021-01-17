@@ -14,14 +14,14 @@ import { LocalState } from '@app/core/states/local.state';
 
 import { SensorPage } from '@app/core/components/sensor/sensor.page';
 
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 import { ResponseType } from '@app/core/enums/http/response-type.enum';
 import { SensorToggleDirection } from '@app/core/enums/data/sensor/sensor-toggle-direction.enum';
 
 import { Blind } from '@app/core/models/sensor/blind/blind.model';
+import { FormControl } from '@app/core/models/form/form-control.model';
 
 import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { FormControl } from '@app/core/models/form/form-control.model';
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 
 @Component({
   selector: 'app-sunblind',

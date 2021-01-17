@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlertController, IonInput, ModalController, NavController, Platform, ToastController, ViewDidEnter } from '@ionic/angular';
@@ -7,12 +7,14 @@ import { Subscription } from 'rxjs';
 
 import { LocalState } from '@app/core/states/local.state';
 
+import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
 import { HTTPStatusCode } from '@app/core/enums/http/http-status-code.enum';
 
-import { getModal, getToast } from '@app/core/helpers/response-helpers';
-import { environment } from 'src/environments/environment';
 import { FormControl } from '@app/core/models/form/form-control.model';
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
+
+import { getModal, getToast } from '@app/core/helpers/response-helpers';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',

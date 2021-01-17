@@ -1,6 +1,6 @@
 ::ng-deep .footer {
   margin: 0 auto;
-  max-width: 508px;
+  max-width: var(--footer-width);
 }
 
 ::ng-deep .swipe-area {
@@ -9,7 +9,7 @@
 }
 
 .footer-icon {
-  top: -70px;
+  bottom: var(--footer-icon-bottom-position);
 }
 
 ion-tab-bar {

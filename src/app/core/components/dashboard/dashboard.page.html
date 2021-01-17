@@ -4,23 +4,24 @@
   (ionTabsDidChange)="ionTabsDidChange($event)"
   (tabChange)="onTabChange($event)"
 >
+  <ion-fab
+    #menuAddButton
+    [ngStyle]="{ 'right': getAddButtonPosition() }"
+    [hidden]="addButtonHidden"
+    (click)="dataState.openMenu()"
+    class="footer-icon"
+    horizontal="end"
+    vertical="bottom"
+  >
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <div
     #menuPane
     class="cupertino-pane"
   >
-    <ion-fab
-      *ngIf="localState.isAdmin"
-      (click)="dataState.openMenu()"
-      class="footer-icon"
-      horizontal="end"
-      slot="fixed"
-      vertical="top"
-    >
-      <ion-fab-button>
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-
     <ion-tab-bar slot="bottom">
       <ion-tab-button
         *ngFor="let menuItem of menuItems"

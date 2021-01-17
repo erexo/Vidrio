@@ -95,9 +95,96 @@
   --ion-card-background: #f2f2f2;
   --ion-card-background-rgb: 242,242,242;
 
-  // Elements variables
+  // Basic elements variables
+  --base-font-size: 10px;
 
+  --background-blur-size: 1rem;
+
+  --grid-gap: .75rem;
+  --grid-padding: .75rem;
+  --grid-row-height: 13rem;
+
+  --input-autofill-font-size: 1.6rem;
+  --input-autofill-font-weight: 400;
+  --input-height: 3rem;
+
+  // Custom component variables
+  --login-container-width: 50rem;
+  --login-button-spacing: 1em;
+
+  --menu-background-blur-size: .6rem;
   --menu-button-height: 56px;
+  --menu-drag-border-radius: .5rem;
+  --menu-drag-height: .3rem;
+  --menu-drag-width: 5rem;
+
+  --tile-badge-font-weight: 400;
+  --tile-badge-horizontal-spacing: .75rem;
+  --tile-badge-letter-spacing: .15rem;
+  --tile-badge-margin: 1rem;
+  --tile-badge-vertical-spacing: .35rem;
+
+  --tile-button-label-size: 1.6rem;
+  --tile-header-border-spacing: 10px;
+  --tile-header-height: 4.5rem;
+  --tile-icon-height: 1.9rem;
+  --tile-icon-width: 1.9rem;
+  --tile-title-font-size: 1.8rem;
+  --tile-title-horizontal-spacing: 1.6rem;
+  --tile-title-vertical-spacing: 1rem;
+  
+  --light-tile-font-size: 2rem;
+  --light-tile-height: 8.8rem;
+
+  --temperature-tile-data-font-size: 6rem;
+  --temperature-tile-font-weight: 700;
+  --temperature-tile-line-height: 5.5rem;
+  --temperature-tile-no-data-font-size: 2rem;
+  --temperature-tile-sup-font-size: 3rem;
+  --temperature-tile-sup-left-position: -1rem;
+  --temperature-tile-sup-top-position: -2rem;
+
+  --settings-tile-item-letter-spacing: 0.05rem;
+
+  --footer-icon-bottom-position: 8.6rem;
+  --footer-width: 50rem;
+
+  // Ionic components variables
+  --card-border-radius: 1.5rem;
+
+  --header-font-size: 4rem;
+  --header-height: 20vh;
+
+  --item-border-radius: .5rem;
+  --item-height: 5.5rem;
+
+  --list-gap: .75rem;
+  --list-header-font-size: 2rem;
+  --list-padding: .75rem;
+  --list-row-height: 4.8rem;
+
+  --modal-border-radius: 1rem;
+  --modal-title-margin: .5rem;
+  --modal-grid-list-row-gap: .75rem;
+  --modal-grid-list-row-height: 4.5rem;
+  --modal-grid-row-height: 5.5rem;
+  --modal-grid-row-gap: 1rem;
+  --modal-margin: 1rem;
+  --modal-page-height: 90vh;
+  --modal-page-horizontal-spacing: 1.5rem;
+  --modal-page-vertical-spacing: 1rem;
+  --modal-width: 40rem;
+
+  --popover-border-radius: 1rem;
+  --popover-height: 50rem;
+  --popover-max-height: 90vh;
+  --popover-max-width: 90vh;
+  --popover-width: 50rem;
+  --popover-spacing: 1.5rem;
+
+  --select-spacing: .5em;
+
+  --toast-width: 50rem;
 }
 
 @media (prefers-color-scheme: dark) {

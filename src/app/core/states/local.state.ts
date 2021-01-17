@@ -1,20 +1,27 @@
 import { Injectable, NgZone } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+
+import { NavController } from '@ionic/angular';
+
+import { Observable, of } from 'rxjs';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
+
 import { Computed, DataAction, Payload, Persistence, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
-import { SensorType } from '../enums/data/sensor/sensor-type.enum';
-import { User } from '../models/user/user.model';
-import { UserRole } from '../enums/user/user-role.enum';
-import { ILoginUser } from '../interfaces/login/login-user.interface';
-import { Observable, of } from 'rxjs';
-import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ILoginInfo } from '../interfaces/login/login-info.interface';
-import { catchError, filter, map, tap } from 'rxjs/operators';
-import { UserService } from '../services/user.service';
-import { NavController } from '@ionic/angular';
-import { MenuItem } from '../models/menu/menu-item.model';
+
+import { UserService } from '@core/services/user.service';
+
+import { ILoginUser } from '@core/interfaces/login/login-user.interface';
+import { ILoginInfo } from '@core/interfaces/login/login-info.interface';
+
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
+import { SensorType } from '@core/enums/data/sensor/sensor-type.enum';
+import { UserRole } from '@core/enums/user/user-role.enum';
+
+import { MenuItem } from '@core/models/menu/menu-item.model';
+import { User } from '@core/models/user/user.model';
 
 export interface LocalModel {
   accessToken: string;

@@ -26,7 +26,9 @@ import { getModal, getToast, responseFilter } from '@app/core/helpers/response-h
 })
 export class SettingsPage implements ViewDidEnter, ViewDidLeave {
 
+  public activeMenuID: number;
   public users: IUserInfo[] = [];
+
   private dataSubscription: Subscription;
 
   constructor(

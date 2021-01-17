@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 
 import { LocalState } from '@app/core/states/local.state';
 
-import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
-
 import { IThermometerData } from '@core/interfaces/temperature/thermometer-data.interface';
+
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
+import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';
 
 import { ThermometerData } from '@core/models/temperature/thermometer-data.model';
 import { Sensor } from '@core/models/sensor/sensor.model';
-import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';
 
 @Injectable({
   providedIn: 'root'

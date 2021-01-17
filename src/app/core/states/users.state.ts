@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+
+import { Observable, of } from 'rxjs';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
+
 import { StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
 
-import { IUserInfo } from '../interfaces/user/user-info.interface';
-import { Observable, of } from 'rxjs';
-import { APIResponse } from '../models/http/api-response.model';
-import { UserService } from '../services/user.service';
-import { catchError, filter, map, tap } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { User } from '../models/user/user.model';
-import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
-import { UserRole } from '../enums/user/user-role.enum';
+import { UserService } from '@core/services/user.service';
+
+import { IUserInfo } from '@core/interfaces/user/user-info.interface';
+
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
+import { UserRole } from '@core/enums/user/user-role.enum';
+
+import { APIResponse } from '@core/models/http/api-response.model';
+import { User } from '@core/models/user/user.model';
 
 export interface UsersModel {
   users: IUserInfo[];

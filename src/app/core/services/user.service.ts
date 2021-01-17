@@ -5,10 +5,12 @@ import { Observable } from 'rxjs';
 
 import { ILoginInfo } from '@core/interfaces/login/login-info.interface';
 import { ILoginUser } from '@core/interfaces/login/login-user.interface';
-import { UserRole } from '../enums/user/user-role.enum';
-import { HTTPStatusCode } from '../enums/http/http-status-code.enum';
-import { IUserInfo } from '../interfaces/user/user-info.interface';
-import { User } from '../models/user/user.model';
+import { IUserInfo } from '@core/interfaces/user/user-info.interface';
+
+import { UserRole } from '@core/enums/user/user-role.enum';
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
+
+import { User } from '@core/models/user/user.model';
 
 @Injectable({
   providedIn: 'root'

@@ -5,15 +5,15 @@
     --background: none;
     --border-color: transparent;
     background: rgba(var(--ion-card-background-rgb), 0.4);
-    backdrop-filter: blur(10px);
-    border-radius: .5em;
+    backdrop-filter: blur(var(--background-blur-size));
+    border-radius: var(--item-border-radius);
     transition: max-height 0.15s ease-out;
     box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.07), -2px 2px 4px rgba(0, 0, 0, 0.07), -4px 4px 8px rgba(0, 0, 0, 0.07), -8px 8px 16px rgba(0, 0, 0, 0.07);
 
     .settings-wrapper {
       display: flex;
       flex-direction: column;
-      font-size: 18px;
+      font-size: var(--tile-title-font-size);
       width: 100%;
 
       .settings-header {
@@ -30,10 +30,10 @@
           background: transparent;
           border: 1px solid rgba(var(--ion-text-color-rgb), 0.6);
           color: rgba(var(--ion-text-color-rgb), 0.6);
-          font-weight: 400;
-          letter-spacing: .1em;
-          margin-right: 1em;
-          padding: .25em 0.5em;
+          font-weight: var(--tile-badge-font-weight);
+          letter-spacing: var(--tile-badge-letter-spacing);
+          margin-right: var(--tile-badge-margin);
+          padding: var(--tile-badge-vertical-spacing) var(--tile-badge-horizontal-spacing);
           text-transform: uppercase;
         }
       }
@@ -55,7 +55,7 @@ ion-button {
   --ripple-color: var(--ion-color-primary);
   color: rgba(var(--ion-text-color-rgb), 0.6);
   height: 48px;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--settings-tile-item-letter-spacing);
   margin: 0;
   text-transform: none;
 
@@ -65,7 +65,7 @@ ion-button {
 
   ion-icon {
     color: rgba(var(--ion-text-color-rgb), 0.6);
-    height: 19px;
-    width: 19px;
+    height: var(--tile-icon-height);
+    width: var(--tile-icon-width);
   }
 }

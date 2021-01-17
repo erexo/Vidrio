@@ -1,20 +1,20 @@
 .temperature {
-  font-weight: 700;
-  line-height: 54px;
+  font-weight: var(--temperature-tile-font-weight);
+  line-height: var(--temperature-tile-line-height);
 
   &--data {
     color: rgba(var(--ion-text-color-rgb), 0.7);
-    font-size: 4.5em;
+    font-size: var(--temperature-tile-data-font-size);
   }
 
   &--no-data {
     color: rgba(var(--ion-text-color-rgb), 0.5);
-    font-size: 2em;
+    font-size: var(--temperature-tile-no-data-font-size);
   }
 
   sup {
-    font-size: 40%;
-    left: -0.3em;
-    top: -0.9em;
+    font-size: var(--temperature-tile-sup-font-size);
+    left: var(--temperature-tile-sup-left-position);
+    top: var(--temperature-tile-sup-top-position);
   }
 }

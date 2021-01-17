@@ -11,13 +11,23 @@ import { UserRole } from '@app/core/enums/user/user-role.enum';
 })
 export class SettingsTileComponent {
 
+  @Input() set menuHidden(value: boolean) {
+    this._menuHidden = value;
+    this.changeDetectorRef.markForCheck();
+  }
+
+  get menuHidden(): boolean {
+    return this._menuHidden;
+  }
+
   @Input() user: IUserInfo;
 
+  @Output() menuOpened: EventEmitter<number> = new EventEmitter<number>();
   @Output() userDeleted: EventEmitter<number> = new EventEmitter<number>();
   @Output() userPasswordEdited: EventEmitter<number> = new EventEmitter<number>();
   @Output() userRoleEdited: EventEmitter<IUserInfo> = new EventEmitter<IUserInfo>();
 
-  public menuHidden = true;
+  public _menuHidden = true;
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -26,12 +36,13 @@ export class SettingsTileComponent {
   }
 
   public toggleMenu(): void {
-    this.menuHidden = !this.menuHidden;
+    this._menuHidden = !this._menuHidden;
+    this.menuOpened.emit(this.user.id);
     this.changeDetectorRef.markForCheck();
   }
 
   public getToggleIconName(): string {
-    return !this.menuHidden
+    return this._menuHidden
       ? 'close-outline'
       : 'menu-outline';
   }

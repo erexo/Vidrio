@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { LocalState } from '@app/core/states/local.state';
 
@@ -15,10 +15,20 @@ import { Sensor } from '@app/core/models/sensor/sensor.model';
 })
 export class TileComponent {
 
+  @Input() set menuHidden(value: boolean) {
+    this._menuHidden = value;
+    this.changeDetectorRef.markForCheck();
+  }
+
+  get menuHidden(): boolean {
+    return this._menuHidden;
+  }
+
   @Input() loaderVisible: boolean;
   @Input() sensor: Sensor;
   @Input() sensorType: SensorType;
 
+  @Output() menuOpened: EventEmitter<number> = new EventEmitter<number>();
   @Output() sensorDeleted: EventEmitter<void> = new EventEmitter<void>();
   @Output() sensorDoubleTapped: EventEmitter<void> = new EventEmitter<void>();
   @Output() sensorEdited: EventEmitter<void> = new EventEmitter<void>();
@@ -27,13 +37,17 @@ export class TileComponent {
   public readonly SensorType = SensorType;
 
   public tileDetailed = false;
-  public menuHidden = true;
+  public _menuHidden = true;
 
-  constructor(public localState: LocalState) { }
+  constructor(
+    public localState: LocalState,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   public onTileTap(event: any): void {
     if (event.tapCount === 2 && this.sensorType === SensorType.Temperature) {
       this.tileDetailed = !this.tileDetailed;
+      this.changeDetectorRef.markForCheck();
 
       if (this.tileDetailed) {
         this.sensorDoubleTapped.emit();
@@ -46,7 +60,9 @@ export class TileComponent {
   }
 
   public toggleMenu(): void {
-    this.menuHidden = !this.menuHidden;
+    this._menuHidden = !this._menuHidden;
+    this.menuOpened.emit(this.sensor.id);
+    this.changeDetectorRef.markForCheck();
   }
 
   public getToggleIconName(): string {
@@ -57,6 +73,7 @@ export class TileComponent {
 
   public editItem(): void {
     this.menuHidden = true;
+    this.changeDetectorRef.markForCheck();
     this.sensorEdited.emit();
   }
 

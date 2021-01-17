@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
+
 import { NavController } from '@ionic/angular';
-import { LocalState } from '../states/local.state';
+
+import { LocalState } from '@core/states/local.state';
 
 @Injectable({
   providedIn: 'root'

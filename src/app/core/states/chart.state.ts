@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
+import { getUnixTime, sub } from 'date-fns';
+import { Observable, of } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { State } from '@ngxs/store';
-import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
-import { Computed, DataAction, Payload, StateRepository } from '@ngxs-labs/data/decorators';
-
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { SensorService } from '../services/sensor.service';
-import { APIResponse } from '../models/http/api-response.model';
-import { ThermometerData } from '../models/sensor/temperature/thermometer-data.model';
-import { IThermometerData } from '../interfaces/temperature/thermometer-data.interface';
 import { patch, insertItem } from '@ngxs/store/operators';
-import { getUnixTime, sub } from 'date-fns';
-import { SensorType } from '../enums/data/sensor/sensor-type.enum';
+
+import { Computed, DataAction, Payload, StateRepository } from '@ngxs-labs/data/decorators';
+import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
+
+import { SensorService } from '@core/services/sensor.service';
+
+import { IThermometerData } from '@core/interfaces/temperature/thermometer-data.interface';
+
+import { SensorType } from '@core/enums/data/sensor/sensor-type.enum';
+
+import { APIResponse } from '@core/models/http/api-response.model';
+import { ThermometerData } from '@core/models/sensor/temperature/thermometer-data.model';
 
 export interface ChartModel {
   dateOffset: number;

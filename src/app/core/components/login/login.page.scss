@@ -6,10 +6,10 @@
   justify-content: center;
 
   .grid-row {
-    flex: 0 1 500px;
+    flex: 0 1 var(--login-container-width);
   }
 
   .button-row {
-    margin-top: 20px;
+    margin-top: var(--login-button-spacing);
   }
 }

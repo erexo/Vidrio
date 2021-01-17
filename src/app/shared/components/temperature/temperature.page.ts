@@ -14,15 +14,15 @@ import { LocalState } from '@app/core/states/local.state';
 
 import { SensorPage } from '@core/components/sensor/sensor.page';
 
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-
-import { Thermometer } from '@app/core/models/sensor/temperature/thermometer.model';
-
 import { ChartComponent } from '@app/shared/components/chart/chart.component';
 
-import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
-import { FormControl } from '@app/core/models/form/form-control.model';
 import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
+import { ResponseType } from '@app/core/enums/http/response-type.enum';
+
+import { FormControl } from '@app/core/models/form/form-control.model';
+import { Thermometer } from '@app/core/models/sensor/temperature/thermometer.model';
+
+import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
 
 @Component({
   selector: 'app-thermal',

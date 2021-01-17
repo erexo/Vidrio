@@ -5,6 +5,7 @@ import { NavParams, ToastController, ViewDidEnter, ViewDidLeave } from '@ionic/a
 import { Chart } from 'chart.js';
 
 import 'chartjs-adapter-date-fns';
+
 import { fromUnixTime, format } from 'date-fns';
 
 import { Subscription } from 'rxjs';

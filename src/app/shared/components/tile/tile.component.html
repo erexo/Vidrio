@@ -1,6 +1,6 @@
 <ion-card>
   <ion-card-header>
-    <ng-container *ngIf="menuHidden else menuContainer">
+    <ng-container *ngIf="_menuHidden else menuContainer">
       <ion-card-title text-wrap>
         {{ sensor.name }}
       </ion-card-title>

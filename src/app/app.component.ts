@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
+
 import { Platform } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
