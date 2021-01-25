@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Light } from '@app/core/models/sensor/light/light.model';
+import { Light } from '@core/models/sensor/light/light.model';
 
 @Component({
   selector: 'app-tile-lights',

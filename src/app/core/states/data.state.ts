@@ -10,7 +10,7 @@ import { patch, removeItem, updateItem } from '@ngxs/store/operators';
 import { Computed, StateRepository } from '@ngxs-labs/data/decorators';
 import { NgxsDataRepository } from '@ngxs-labs/data/repositories';
 
-import { SensorService } from '@app/core/services/sensor.service';
+import { SensorService } from '@core/services/sensor.service';
 
 import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';

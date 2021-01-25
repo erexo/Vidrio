@@ -1,4 +1,4 @@
-import { HTTPStatusCode } from '@app/core/enums/http/http-status-code.enum';
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 
 export class APIResponse<T> {
   constructor(

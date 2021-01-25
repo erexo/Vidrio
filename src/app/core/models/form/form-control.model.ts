@@ -1,4 +1,4 @@
-import { FormControlType } from "@app/core/enums/form/form-control-type.enum";
+import { FormControlType } from "@core/enums/form/form-control-type.enum";
 
 export class FormControl {
   constructor(

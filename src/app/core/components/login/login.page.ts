@@ -5,14 +5,14 @@ import { AlertController, IonInput, ModalController, NavController, Platform, To
 
 import { Subscription } from 'rxjs';
 
-import { LocalState } from '@app/core/states/local.state';
+import { LocalState } from '@core/states/local.state';
 
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
-import { HTTPStatusCode } from '@app/core/enums/http/http-status-code.enum';
+import { FormControlType } from '@core/enums/form/form-control-type.enum';
+import { HTTPStatusCode } from '@core/enums/http/http-status-code.enum';
 
-import { FormControl } from '@app/core/models/form/form-control.model';
+import { FormControl } from '@core/models/form/form-control.model';
 
-import { getModal, getToast } from '@app/core/helpers/response-helpers';
+import { getModal, getToast } from '@core/helpers/response-helpers';
 
 import { environment } from 'src/environments/environment';
 

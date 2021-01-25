@@ -7,7 +7,7 @@ import { DragulaModule } from 'ng2-dragula';
 
 import { TileModule } from '@app/shared/components/tile/tile.module';
 
-import { SensorPage } from '@app/core/components/sensor/sensor.page';
+import { SensorPage } from '@core/components/sensor/sensor.page';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

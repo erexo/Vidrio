@@ -11,11 +11,11 @@ import { fromUnixTime, format } from 'date-fns';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { ChartState } from '@app/core/states/chart.state';
+import { ChartState } from '@core/states/chart.state';
 
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
+import { ResponseType } from '@core/enums/http/response-type.enum';
 
-import { getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getToast, responseFilter } from '@core/helpers/response-helpers';
 
 
 @Component({

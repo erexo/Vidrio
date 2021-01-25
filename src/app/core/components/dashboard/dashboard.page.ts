@@ -10,15 +10,15 @@ import { last } from 'lodash-es';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { DataState } from '@app/core/states/data.state';
-import { LocalState } from '@app/core/states/local.state';
+import { DataState } from '@core/states/data.state';
+import { LocalState } from '@core/states/local.state';
 
-import { SwipeTabDirective } from '@app/core/directives/swipe-tab/swipe-tab.directive';
+import { SwipeTabDirective } from '@core/directives/swipe-tab/swipe-tab.directive';
 
-import { SensorType } from '@app/core/enums/data/sensor/sensor-type.enum';
-import { MenuItem } from '@app/core/models/menu/menu-item.model';
+import { SensorType } from '@core/enums/data/sensor/sensor-type.enum';
+import { MenuItem } from '@core/models/menu/menu-item.model';
 import { PaneBreaks } from 'cupertino-pane/dist/models';
-import { UserRole } from '@app/core/enums/user/user-role.enum';
+import { UserRole } from '@core/enums/user/user-role.enum';
 
 @Component({
   selector: 'app-dashboard',

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { SensorToggleDirection } from '@app/core/enums/data/sensor/sensor-toggle-direction.enum';
+import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';
 
-import { Blind } from '@app/core/models/sensor/blind/blind.model';
+import { Blind } from '@core/models/sensor/blind/blind.model';
 
 @Component({
   selector: 'app-tile-blinds',

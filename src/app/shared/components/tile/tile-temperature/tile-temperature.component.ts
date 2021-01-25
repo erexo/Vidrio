@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Thermometer } from '@app/core/models/sensor/temperature/thermometer.model';
+import { Thermometer } from '@core/models/sensor/temperature/thermometer.model';
 
 @Component({
   selector: 'app-tile-temperature',

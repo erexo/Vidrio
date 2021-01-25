@@ -8,21 +8,21 @@ import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ChartState } from '@app/core/states/chart.state';
-import { DataState } from '@app/core/states/data.state';
-import { LocalState } from '@app/core/states/local.state';
+import { ChartState } from '@core/states/chart.state';
+import { DataState } from '@core/states/data.state';
+import { LocalState } from '@core/states/local.state';
 
 import { SensorPage } from '@core/components/sensor/sensor.page';
 
 import { ChartComponent } from '@app/shared/components/chart/chart.component';
 
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
+import { FormControlType } from '@core/enums/form/form-control-type.enum';
+import { ResponseType } from '@core/enums/http/response-type.enum';
 
-import { FormControl } from '@app/core/models/form/form-control.model';
-import { Thermometer } from '@app/core/models/sensor/temperature/thermometer.model';
+import { FormControl } from '@core/models/form/form-control.model';
+import { Thermometer } from '@core/models/sensor/temperature/thermometer.model';
 
-import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@core/helpers/response-helpers';
 
 @Component({
   selector: 'app-thermal',

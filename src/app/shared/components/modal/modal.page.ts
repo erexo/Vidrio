@@ -5,9 +5,9 @@ import { ModalController } from '@ionic/angular';
 
 import { keyBy, mapValues } from 'lodash-es';
 
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
+import { FormControlType } from '@core/enums/form/form-control-type.enum';
 
-import { FormControl } from '@app/core/models/form/form-control.model';
+import { FormControl } from '@core/models/form/form-control.model';
 
 @Component({
   selector: 'app-modal',

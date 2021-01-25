@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { LocalState } from '@app/core/states/local.state';
+import { LocalState } from '@core/states/local.state';
 
-import { SensorToggleDirection } from '@app/core/enums/data/sensor/sensor-toggle-direction.enum';
-import { SensorType } from '@app/core/enums/data/sensor/sensor-type.enum';
+import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';
+import { SensorType } from '@core/enums/data/sensor/sensor-type.enum';
 
-import { Sensor } from '@app/core/models/sensor/sensor.model';
+import { Sensor } from '@core/models/sensor/sensor.model';
 
 @Component({
   selector: 'app-tile',

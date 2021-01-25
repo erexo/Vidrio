@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { IUserInfo } from '@app/core/interfaces/user/user-info.interface';
+import { IUserInfo } from '@core/interfaces/user/user-info.interface';
 
-import { UserRole } from '@app/core/enums/user/user-role.enum';
+import { UserRole } from '@core/enums/user/user-role.enum';
 
 @Component({
   selector: 'app-settings-tile',

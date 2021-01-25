@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { LocalState } from '@app/core/states/local.state';
+import { LocalState } from '@core/states/local.state';
 
 import { IThermometerData } from '@core/interfaces/temperature/thermometer-data.interface';
 

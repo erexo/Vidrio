@@ -10,16 +10,16 @@ import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ChartState } from '@app/core/states/chart.state';
-import { DataState } from '@app/core/states/data.state';
-import { LocalState } from '@app/core/states/local.state';
+import { ChartState } from '@core/states/chart.state';
+import { DataState } from '@core/states/data.state';
+import { LocalState } from '@core/states/local.state';
 
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { SensorToggleDirection } from '@app/core/enums/data/sensor/sensor-toggle-direction.enum';
+import { ResponseType } from '@core/enums/http/response-type.enum';
+import { SensorToggleDirection } from '@core/enums/data/sensor/sensor-toggle-direction.enum';
 
-import { Sensor } from '@app/core/models/sensor/sensor.model';
+import { Sensor } from '@core/models/sensor/sensor.model';
 
-import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@core/helpers/response-helpers';
 
 @Component({
   selector: 'app-sensor',
@@ -178,8 +178,15 @@ export class SensorPage implements ViewDidEnter, ViewDidLeave {
         this.tileMove = true;
         this.changeDetectorRef.detectChanges();
       });
+
+    const tileDropSubscription: Subscription = this.dragulaService.cancel(this.dragModel)
+      .subscribe(_ => {
+        this.tileMove = false;
+        this.changeDetectorRef.detectChanges();
+      });
     
     this.dataSubscription.add(tileDragSubscription);
+    this.dataSubscription.add(tileDropSubscription);
   }
 
 }

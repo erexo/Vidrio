@@ -4,19 +4,19 @@ import { ModalController, ToastController, ViewDidEnter, ViewDidLeave } from '@i
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { DataState } from '@app/core/states/data.state';
-import { UsersState } from '@app/core/states/users.state';
+import { DataState } from '@core/states/data.state';
+import { UsersState } from '@core/states/users.state';
 
-import { FormControlType } from '@app/core/enums/form/form-control-type.enum';
-import { ResponseType } from '@app/core/enums/http/response-type.enum';
-import { UserRole } from '@app/core/enums/user/user-role.enum';
+import { FormControlType } from '@core/enums/form/form-control-type.enum';
+import { ResponseType } from '@core/enums/http/response-type.enum';
+import { UserRole } from '@core/enums/user/user-role.enum';
 
-import { IUserInfo } from '@app/core/interfaces/user/user-info.interface';
+import { IUserInfo } from '@core/interfaces/user/user-info.interface';
 
-import { FormControl } from '@app/core/models/form/form-control.model';
-import { User } from '@app/core/models/user/user.model';
+import { FormControl } from '@core/models/form/form-control.model';
+import { User } from '@core/models/user/user.model';
 
-import { getModal, getToast, responseFilter } from '@app/core/helpers/response-helpers';
+import { getModal, getToast, responseFilter } from '@core/helpers/response-helpers';
 
 @Component({
   selector: 'app-settings',

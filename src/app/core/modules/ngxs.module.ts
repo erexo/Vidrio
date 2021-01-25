@@ -7,8 +7,8 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 import { ChartState } from '@core/states/chart.state';
 import { DataState } from '@core/states/data.state';
-import { LocalState } from '@app/core/states/local.state';
-import { UsersState } from '@app/core/states/users.state';
+import { LocalState } from '@core/states/local.state';
+import { UsersState } from '@core/states/users.state';
 
 import { environment } from 'src/environments/environment';
 

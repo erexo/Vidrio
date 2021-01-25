@@ -1,4 +1,4 @@
-import { UserRole } from "@app/core/enums/user/user-role.enum";
+import { UserRole } from "@core/enums/user/user-role.enum";
 
 export interface IUserInfo {
   id: number,
