@@ -46,7 +46,11 @@ export interface LocalModel {
       new MenuItem('settings', 'Settings', 'settings-outline'),
       new MenuItem(undefined, 'Logout', 'log-out-outline', true)
     ],
-    activeMenu: [],
+    activeMenu: [
+      new MenuItem('thermal', 'Thermal', 'thermometer-outline'),
+      new MenuItem('settings', 'Settings', 'settings-outline'),
+      new MenuItem(undefined, 'Logout', 'log-out-outline', true)
+    ],
     sensorType: SensorType.Temperature,
     user: null
   }

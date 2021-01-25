@@ -64,10 +64,10 @@ export class BlindsPage extends SensorPage {
       this.modalController,
       [
         new FormControl(FormControlType.Text, 'name', sensor?.name, 'Name'),
-        new FormControl(FormControlType.Text, 'inputUpPin', sensor?.inputUpPin, 'Input Up Pin'),
-        new FormControl(FormControlType.Text, 'inputDownPin', sensor?.inputDownPin, 'Input Down Pin'),
-        new FormControl(FormControlType.Text, 'outputUpPin', sensor?.outputUpPin, 'Output Up Pin'),
-        new FormControl(FormControlType.Text, 'outputDownPin', sensor?.outputDownPin, 'Output Down Pin')
+        new FormControl(FormControlType.Text, 'inputUpPin', sensor?.inputuppin, 'Input Up Pin'),
+        new FormControl(FormControlType.Text, 'inputDownPin', sensor?.inputdownpin, 'Input Down Pin'),
+        new FormControl(FormControlType.Text, 'outputUpPin', sensor?.outputuppin, 'Output Up Pin'),
+        new FormControl(FormControlType.Text, 'outputDownPin', sensor?.outputdownpin, 'Output Down Pin')
       ],
       sensorID === undefined ? 'Create a blind sensor' : 'Edit a blind sensor'
     );

@@ -95,9 +95,11 @@ export class TemperaturePage extends SensorPage {
     );
       
     modal.onWillDismiss().then(event => {
-      event.data && sensorID === undefined
-        ? this.createSensor(event.data)
-        : this.updateSensor(event.data, sensorID);
+      if (event.data) {
+        sensorID === undefined
+          ? this.createSensor(event.data)
+          : this.updateSensor(event.data, sensorID);
+      }
     });
   
     await modal.present();

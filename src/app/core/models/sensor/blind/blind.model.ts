@@ -3,11 +3,11 @@ import { Sensor } from '@core/models/sensor/sensor.model';
 export class Blind extends Sensor {
   constructor(
     public id: number,
-    public inputDownPin: number,
-    public inputUpPin: number,
+    public inputdownpin: number,
+    public inputuppin: number,
     public name: string,
-    public outputDownPin: number,
-    public outputUpPin: number
+    public outputdownpin: number,
+    public outputuppin: number
   ) {
     super(id, name)
   }

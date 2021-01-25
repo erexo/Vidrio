@@ -64,16 +64,18 @@ export class LightsPage extends SensorPage {
       this.modalController,
       [
         new FormControl(FormControlType.Text, 'name', sensor?.name, 'Name'),
-        new FormControl(FormControlType.Text, 'inputUpPin', sensor?.inputPin, 'Input Pin'),
-        new FormControl(FormControlType.Text, 'inputDownPin', sensor?.outputPin, 'Output Pin')
+        new FormControl(FormControlType.Text, 'inputUpPin', sensor?.inputpin, 'Input Pin'),
+        new FormControl(FormControlType.Text, 'inputDownPin', sensor?.outputpin, 'Output Pin')
       ],
       sensorID === undefined ? 'Create a light sensor' : 'Edit a light sensor'
     );
       
     modal.onWillDismiss().then(event => {
-      event.data && sensorID === undefined
-        ? this.createSensor(event.data)
-        : this.updateSensor(event.data, sensorID);
+      if (event.data) {
+        sensorID === undefined
+          ? this.createSensor(event.data)
+          : this.updateSensor(event.data, sensorID);
+      }
     });
   
     await modal.present();

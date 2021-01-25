@@ -31,6 +31,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   @ViewChild('dashboardTabs') dashboardTabs: IonTabs;
   @ViewChild('menuPane', { static: true }) menuPane: ElementRef;
 
+  private readonly menuButtonOffset = 10;
   private readonly menuDoubleRowHeight = 152;
   private readonly menuSingleRowHeight = 76;
 
@@ -98,7 +99,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   public getAddButtonPosition(): string {
-    const menuLeftOffset: number = this.menuPane.nativeElement.getBoundingClientRect().left
+    const menuLeftOffset: number
+      = this.menuPane.nativeElement.getBoundingClientRect().left + this.menuButtonOffset;
     return `${menuLeftOffset}px`;
   }
 

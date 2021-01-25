@@ -71,6 +71,7 @@ export class SensorPage implements ViewDidEnter, ViewDidLeave {
         filter(res => responseFilter(toastInstance, res.status, ResponseType.Read, 'Sensors', errorOnly))
       )
       .subscribe(sensors => {
+        this.activeSensorID = null;
         this.sensors = sensors.body;
         this.changeDetectorRef.detectChanges();
         event?.target.complete();
